@@ -1,0 +1,91 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Cyber Victim Assistant - Project Summary v2</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;margin:48px 56px;color:#222;font-size:13.5px;line-height:1.55}
+h1{font-size:23px;margin:0 0 2px}h2{font-size:16.5px;margin:26px 0 8px;border-bottom:2px solid #1a5fb4;padding-bottom:3px;color:#1a5fb4}
+h3{font-size:14px;margin:16px 0 6px}
+table{border-collapse:collapse;width:100%;margin:8px 0}td,th{border:1px solid #bbb;padding:5px 8px;vertical-align:top;font-size:12.5px}
+th{background:#eaf2fb}
+.small{color:#555;font-size:11.5px}.strict{background:#fff3e0;border:1px solid #f0a050;border-left:5px solid #e07020;padding:8px 12px;margin:10px 0}
+</style></head><body>
+<h1>Cyber Victim Assistant</h1>
+<p class="small">An AI guide that stays with a cyber crime victim from the first hour until the case is closed. HackCBS 9.0 project summary &mdash; version 2. App name to be decided.</p>
+
+<h2>1. The problem</h2>
+<p>Victims of UPI fraud, hacked accounts, data breaches and photo leaks do not know what to do first. They lose evidence, report late, pick the wrong options on the cyber crime portal, file incomplete complaints, and then get lost in a long &ldquo;pending&rdquo; process. Money that could have been frozen in the first hours is gone.</p>
+
+<h2>2. What the app is</h2>
+<p>A phone app for non-technical victims. It builds the case from the victim&rsquo;s own evidence, shows how the attacker likely got in, guides the victim through the portal button by button &mdash; and with <b>v2</b>, <b>drives the portal itself</b>: AI selects buttons and fills forms using knowledge extracted directly from the live portal, and submits the evidence report into the correct section on the victim's behalf. The app never hacks, traces or investigates anyone. Banks and police take the action; the app makes the victim&rsquo;s case fast, complete and correctly filed.</p>
+
+<h2>3. Order of screens in the mobile app</h2>
+<table><tr><th>#</th><th>Screen</th><th>What the victim sees</th></tr>
+<tr><td>1</td><td>Home</td><td>Big &ldquo;I need help now&rdquo; button, status of the open case, next step due</td></tr>
+<tr><td>2</td><td>AI Case Guide</td><td>Chat in plain English. Asks simple questions, explains the situation, creates the case session automatically</td></tr>
+<tr><td>3</td><td>Evidence (Case Builder)</td><td>Upload screenshots, SMS, bank statements. AI extracts UPI IDs, numbers, timestamps and draws the money trail</td></tr>
+<tr><td>4</td><td>Portal Guide</td><td>AI-driven filling of the official portal with each step explained; pre-filled with a copy button. AI submits the evidence report section automatically</td></tr>
+<tr><td>5</td><td>Bank &amp; Cyber Cell Requests</td><td>Ready drafts: freeze request, unfreeze request, follow-ups, documents checklist</td></tr>
+<tr><td>6</td><td>Case Tracker &amp; Reminders</td><td>Timeline of the case, reminders for the next victim-side steps after submission</td></tr>
+<tr><td>7</td><td>PhoneTrace</td><td>Ranked list of suspicious apps and a timeline of how the attacker likely got in</td></tr>
+<tr><td>8</td><td>Exposure Warning</td><td>10-day check of the verified email, plain-language list, ranked action list</td></tr>
+<tr><td>9</td><td>Settings &amp; Privacy</td><td>Permissions, consent, data on the phone, language</td></tr></table>
+<p class="small">Bottom navigation: Home, Guide, Evidence, Requests, More (Portal Guide, Tracker, PhoneTrace, Exposure Warning and Settings).</p>
+
+<h2>4. Features</h2>
+<h3>4.1 AI Case Guide</h3>
+<p>Built only for cyber crime cases. Plain-English chat, auto-creates a case session, guides step by step, sends reminders, asks one simple question when unsure (Example: &ldquo;Did you lose money?&rdquo;) before recommending anything. Powered by the Gemini API with a strict cyber-crime-only grounding index stored in the app.</p>
+
+<h3>4.2 Case Builder (AI)</h3>
+<p>The victim uploads screenshots, SMS and bank statements. AI extracts UPI IDs, phone numbers, transaction references and timestamps; draws the money trail; creates the complaint pack for the bank and cyber cell. Every extracted fact links back to the original evidence.</p>
+
+<h3>&#9888; 4.3 Portal Guide &mdash; AI-Driven Filling and Strict Human Actions (v2 change)</h3>
+<div class="strict">
+<p><b>What changed from v1:</b> the app no longer merely &ldquo;shows which fields to fill&rdquo;. The AI now <b>operates the portal itself</b> from the victim&rsquo;s case data.</p>
+<ul>
+<li>The AI <b>taps navigation buttons</b>, opens the right category, and <b>auto-fills every form field</b> from the Case Builder.</li>
+<li>Portal knowledge is built <b>directly from the live portal</b> (cybercrime.gov.in): a crawler snapshots every screen&rsquo;s buttons, form schemas and category options with a &ldquo;last verified&rdquo; date. The AI picks only from the real list &mdash; it never invents buttons.</li>
+<li>The AI <b>composes and submits the evidence report</b> into the correct section of the complaint form itself (money trail, UPI IDs, TXN references, timestamps &mdash; each fact traced to source evidence). The victim does not re-type case facts.</li>
+</ul>
+</div>
+<div class="strict">
+<p><b>Strictly human-only, enforced in code (ActionExecutor blocklist):</b></p>
+<table>
+<tr><th>Action</th><th>Who presses</th></tr>
+<tr><td>Navigation, category selection, form field filling, evidence-report submission inside the complaint form</td><td><b>AI</b></td></tr>
+<tr><td>Registration / login credentials, captcha, OTP</td><td><b>Victim</b> (captcha can never be automated)</td></tr>
+<tr><td><b>Preview</b> of the final complaint (AI does a read-only consistency check first)</td><td><b>Victim</b></td></tr>
+<tr><td><b>Submit</b> of the final complaint</td><td><b>Victim only &mdash; hard-locked, the app cannot dispatch this tap</b> + extra confirmation dialog</td></tr>
+</table>
+<p>Portal screens change, so the guide shows its &ldquo;last verified&rdquo; date and has a &ldquo;my screen looks different&rdquo; option.</p>
+</div>
+
+<h3>4.7 AI Registration &amp; Evidence Driver (new in v2)</h3>
+<ul>
+<li>AI starts registration/login on the portal automatically based on the victim&rsquo;s case details and scenario.</li>
+<li>Portal credentials are entered by the victim once and stored in Android Keystore, biometric-locked.</li>
+<li>Every AI action is narrated: &ldquo;Choose this option because&hellip;&rdquo;, &ldquo;Submitting your evidence report to this section because&hellip;&rdquo;.</li>
+</ul>
+
+<h3>4.4 Bank and Cyber Cell Requests</h3>
+<p>Ready drafts: freeze request, unfreeze request, follow-ups, and the document checklist the cyber cell may ask for.</p>
+
+<h3>4.5 PhoneTrace</h3>
+<p>Joins three checks into one timeline: installed apps (install time/source/permissions), risky special access (Accessibility, overlay, notification-reading, device-admin), and the app usage timeline around the fraud. Suspicion score ranks apps; top app is labelled &ldquo;most likely entry point&rdquo;, never &ldquo;proven culprit&rdquo;. Weekly baseline snapshot of new/removed/changed apps. Reads data through normal Android APIs and does not use the Accessibility permission itself. Android only; iPhone users upload Apple&rsquo;s App Privacy Report.</p>
+
+<h3>4.6 10-Day Exposure Warning</h3>
+<p>Every 10 days, for a verified email (a code is sent first), scan against breach sources (Have I Been Pwned k-anonymity range API), show plain-language results, give a ranked action list, and add exposure to the case timeline. Never ask for or store the password; only a small part of the hash leaves the phone.</p>
+
+<h2>5. Safety rules</h2>
+<ul>
+<li>Everything is processed on the phone, with the user's consent, one permission at a time with a plain explanation.</li>
+<li>No silent background collection, and no passwords stored.</li>
+<li>The AI is grounded on the live portal snapshot; it never invents buttons and asks when unsure.</li>
+<li><b>The AI never presses Preview or Submit of the final complaint &mdash; these are always the victim&rsquo;s taps. The AI may submit the evidence report inside the complaint form.</b></li>
+<li><b>Captcha and OTP are entered by the victim only.</b></li>
+<li>Careful wording: &ldquo;likely&rdquo; and &ldquo;suspicious&rdquo;, never &ldquo;proven&rdquo;. Calm, simple language.</li>
+<li>The app prepares the case; it does not replace banks and police.</li>
+<li>Play Store rules limit access to the full app list and usage data; run as an APK for the hackathon.</li>
+</ul>
+
+<h2>6. Tech stack &amp; edge</h2>
+<p>Kotlin + Jetpack Compose (Android native APK), Gemini API for the AI, Firebase for the exposure-verification email code, on-device Room DB for case data, Playwright-based crawler for portal grounding. Edge: AI-driven portal operation that still keeps the final complaint submission in the victim&rsquo;s hands, plus evidence-fact traceability and the PhoneTrace entry-point analysis.</p>
+</body></html>

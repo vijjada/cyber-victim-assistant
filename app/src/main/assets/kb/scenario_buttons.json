@@ -1,0 +1,349 @@
+{
+ "lastVerified": "2026-10-22",
+ "note": "Starter scenario→button table. Grounded on the cybercrime.gov.in mapping in portal_map.json; the complaint-flow branch will be enriched once the SPA flow discovery is done (pending). The AI picks ONLY from these buttons and asks when unsure.",
+ "scenarios": [
+  {
+   "id": "upi_fraud_immediate_transfer",
+   "title": "UPI/bank transfer fraud, money sent within 48h",
+   "lost_money": true,
+   "buttons": [
+    "Register a Complaint",
+    "Report a Crime",
+    "Cyber Crime Related Complaint",
+    "Fraud related",
+    "Online Financial Fraud | UPI fraud payment"
+   ],
+   "extra_actions": [
+    "emergency freeze request to bank (Requests tab)",
+    "dial 1930 hint"
+   ],
+   "keywords": [
+    "upi",
+    "payment link",
+    "google pay",
+    "phonepe",
+    "paytm",
+    "qr",
+    "blocked me",
+    "money went",
+    "fraud transaction",
+    "refunded",
+    "sold my",
+    "buyer paid",
+    "fake payment pending",
+    "took otp",
+    "sent me a payment"
+   ],
+   "official_category": "Online Financial Fraud",
+   "official_sub_category": "Internet banking Related Fraud (UPI money-loss branch)",
+   "portal_fields": [
+    "Have you lost money? -> Yes (M)",
+    "Transaction ID / UTR reference (from facts: txn_ref) (M)",
+    "Date/Time of transaction dd/mm/yyyy (from facts: timestamp) (M)",
+    "Bank Name from which payment was made (M)",
+    "Account No. from which amount was paid (M)",
+    "Amount Paid (from facts: amount) (M)",
+    "Bank in which amount was paid (if known)",
+    "Account No. in which amount was paid / fraudster UPI (from facts: upi_id)",
+    "Merchant details on which payment was made (if any)",
+    "Gateway details (payment gateway, if any)"
+   ],
+   "evidence_prep": "Keep wallet/receipt screenshots and bank statement saved; do NOT delete originals (§5.2.3.1 Note1).",
+   "manual_ref": "Manual §5.2.5.2 + Step 4"
+  },
+  {
+   "id": "fake_job_scam",
+   "title": "Fake job / task scam paid via UPI",
+   "lost_money": true,
+   "buttons": [
+    "Register a Complaint",
+    "Report a Crime",
+    "Fraud related",
+    "Online Employment Fraud",
+    "the sub-category shown for advance-fee job offers"
+   ],
+   "keywords": [
+    "job",
+    "task-based",
+    "task",
+    "telegram part",
+    "registration fee",
+    "security deposit",
+    "work from home",
+    "typing",
+    "part-time",
+    "hr",
+    "earning app",
+    "deposits",
+    "withdraw",
+    "fees again"
+   ],
+   "official_category": "Online and Social Media Related Crime",
+   "official_sub_category": "Online Job Fraud",
+   "portal_fields": [
+    "Screenshot/s of fraud job SMS/WhatsApp with sender details (evidence)",
+    "Date & Time received / incident (M)",
+    "Emails saved as .pdf/.eml with attachments (evidence)",
+    "URL of the job page/profile (from facts: other links seen)",
+    "Payment trail: amount + UPI/txn (from facts: amount, txn_ref)",
+    "Additional information (M)"
+   ],
+   "evidence_prep": "Save job-offer SMS/emails as pdf/.eml, note the URL; keep attachments ready (§5.1.6).",
+   "manual_ref": "Manual §5.1.6"
+  },
+  {
+   "id": "sextortion",
+   "title": "Sextortion / photo leak threat",
+   "lost_money": false,
+   "buttons": [
+    "Register a Complaint",
+    "Report a Crime",
+    "Cyber Crime Related Complaint",
+    "Report Other Crime",
+    "Sexual abuse/online harassment section (women/child route available)"
+   ],
+   "note": "Offer the Women & Children related complaint route explicitly.",
+   "keywords": [
+    "blackmail",
+    "blackmails",
+    "threaten",
+    "threatened",
+    "threatens",
+    "threatening me with my private",
+    "demanding",
+    "asking money",
+    "video chat and threatens",
+    "gang calling",
+    "intimate"
+   ],
+   "official_category": "Online and Social Media Related Crime",
+   "official_sub_category": "Cyber Bullying/Stalking/Sexting",
+   "portal_fields": [
+    "Platform where it happened: WhatsApp/talk, email, social media, URL (M)",
+    "Date & Time of threats (M)",
+    "Screenshots of the demanding messages (evidence)",
+    "Suspect number/handle (from facts: phone/account IDs)",
+    "Additional information (M)"
+   ],
+   "evidence_prep": "Screenshot chats showing the sender number + content; export chat to email as .pdf/.eml if possible; preserve originals (§5.1.1).",
+   "manual_ref": "Manual §5.1.1"
+  },
+  {
+   "id": "hacked_account_email",
+   "title": "Email/social account hacked",
+   "lost_money": false,
+   "buttons": [
+    "Register a Complaint",
+    "Report a Crime",
+    "Hacking",
+    "Hacking/Identity theft sub-category"
+   ],
+   "keywords": [
+    "hacked",
+    "hijacked",
+    "takeover",
+    "taken over",
+    "recovery",
+    "changed password",
+    "reset the password",
+    "gmail",
+    "google account",
+    "facebook",
+    "instagram profile",
+    "username"
+   ],
+   "official_category": "Online and Social Media Related Crime",
+   "official_sub_category": "Email Hacking",
+   "portal_fields": [
+    "Which account was hacked + when access was lost (Date & Time) (M)",
+    "Email header details if phishing led to the takeover (evidence)",
+    "Saved emails in .pdf/.eml, screenshots of the takeover (evidence)",
+    "Additional information (M)"
+   ],
+   "evidence_prep": "Save compromise emails as .pdf/.eml, screenshot the takeover screens; change passwords AFTER evidence capture (Annexure B §9).",
+   "manual_ref": "Manual §5.1.3"
+  },
+  {
+   "id": "identity_misuse",
+   "title": "KYC/documents used by someone else",
+   "lost_money": false,
+   "buttons": [
+    "Register a Complaint",
+    "Report a Crime",
+    "Identity Theft",
+    "Identity Theft and Impersonation"
+   ],
+   "keywords": [
+    "aadhaar",
+    "pan",
+    "kyc",
+    "documents",
+    "id proof",
+    "in my name",
+    "cloned",
+    "sim",
+    "loan using",
+    "personal loan",
+    "eKYC",
+    "opened a loan",
+    "fake bank account"
+   ],
+   "official_category": "Online and Social Media Related Crime",
+   "official_sub_category": "Fake/Impersonating Profile",
+   "portal_fields": [
+    "Fake profile / impersonated handle: URL, platform, screenshots (evidence)",
+    "Date & Time first seen (M)",
+    "Suspect identity details if known (name, mobile, email, PAN etc.)",
+    "Additional information (M)"
+   ],
+   "evidence_prep": "Screenshot the fake profile, copy the URL; preserve the copies online before reporting (§5.1.4).",
+   "manual_ref": "Manual §5.1.4"
+  },
+  {
+   "id": "online_shopping_fraud",
+   "title": "Fake online shopping / delivery",
+   "lost_money": true,
+   "buttons": [
+    "Register a Complaint",
+    "Report a Crime",
+    "Fraud related",
+    "Online and Social Media Related Fraud | Fake/Defective goods"
+   ],
+   "keywords": [
+    "shopping",
+    "ordered",
+    "order",
+    "delivery",
+    "delivered",
+    "seller",
+    "customer care",
+    "olx",
+    "website",
+    "product",
+    "vanished",
+    "instagram page",
+    "stuff",
+    "refund came? none"
+   ],
+   "official_category": "Online Financial Fraud",
+   "official_sub_category": "Fake/Defective goods (live-portal term, crawl 2026-10-20) — v10 manual fallback: Any Other Cyber Crime §5.8",
+   "portal_fields": [
+    "Order/product evidence: site URL, order screenshots (evidence)",
+    "Date & Time of payment (from facts: timestamp) (M)",
+    "Amount paid (from facts: amount) (M)",
+    "Payment trail: UPI/txn (from facts: upi_id, txn_ref)",
+    "Additional information (M)"
+   ],
+   "evidence_prep": "Screenshot the product page, chat with seller and payment success screen; keep the order confirmation email.",
+   "manual_ref": "Manual gap — live portal term",
+   "manual_gap": true
+  },
+  {
+   "id": "loanapp_harassment",
+   "title": "Predatory loan app harassment",
+   "lost_money": true,
+   "buttons": [
+    "Register a Complaint",
+    "Report a Crime",
+    "Fraud related",
+    "App hijacking/loan app harassment sub-category"
+   ],
+   "keywords": [
+    "loan app",
+    "loanapp",
+    "disbursed",
+    "contacts",
+    "recovery",
+    "defamation",
+    "defamed",
+    "chinese",
+    "harass",
+    "threatening calls",
+    "call my contacts",
+    "abuse",
+    "abusing",
+    "small loan",
+    "repaid",
+    "others' loans",
+    "still getting",
+    "for others"
+   ],
+   "official_category": "Online and Social Media Related Crime",
+   "official_sub_category": "Cyber Bullying/Stalking/Sexting (harassment branch) — manual gap; live term: App hijacking/loan app harassment (crawl 2026-10-20)",
+   "portal_fields": [
+    "Threat/abuse call & SMS screenshots; sender numbers (from facts: phone) (evidence)",
+    "Date & Time of first demand (M)",
+    "Loan app name, money lost (from facts: amount, txn_ref) if any",
+    "Contact list abuse evidence if contacts were threatened",
+    "Additional information (M)"
+   ],
+   "evidence_prep": "Screenshot abusive messages + call log entries; keep the app installed as evidence, do NOT delete it yet (Annexure C).",
+   "manual_ref": "Manual gap — §5.1.1 closest",
+   "manual_gap": true
+  },
+  {
+   "id": "photo_leak_no_money",
+   "title": "Private photos leaked, no money lost",
+   "lost_money": false,
+   "buttons": [
+    "Register a Complaint",
+    "Report a Crime",
+    "Report Other Crime",
+    "Sexual abuse / privacy violation route"
+   ],
+   "extra_actions": [
+    "Exposure Warning scan of leaked accounts"
+   ],
+   "keywords": [
+    "leaked",
+    "circulating",
+    "telegram channel",
+    "deepfake",
+    "uploaded",
+    "shared my",
+    "edited photos",
+    "obscene",
+    "no money involved",
+    "ex boyfriend",
+    "public",
+    "fake nude",
+    "made a fake",
+    "using ai",
+    "shared it",
+    "edited my",
+    "image of me"
+   ],
+   "official_category": "Online and Social Media Related Crime",
+   "official_sub_category": "Cyber Bullying/Stalking/Sexting",
+   "portal_fields": [
+    "Platform + URL where the content is circulating (M)",
+    "Date & Time first seen (M)",
+    "Screenshots/URL evidence of the leaked or AI-edited content",
+    "Suspect handle/identity if known",
+    "Additional information (M)"
+   ],
+   "evidence_prep": "Copy URLs + screenshots of the circulating content; export chats as .pdf/.eml; preserve originals (§5.1.1 Note1).",
+   "manual_ref": "Manual §5.1.1"
+  }
+ ],
+ "ask_when_unsure_examples": [
+  {
+   "question": "Did you lose money?",
+   "disambiguates": [
+    "fraud related",
+    "hacking",
+    "report other crime"
+   ]
+  },
+  {
+   "question": "Was it a person you talked to online, or an app/website?",
+   "disambiguates": [
+    "online financial fraud",
+    "employment fraud",
+    "app hijacking"
+   ]
+  }
+ ],
+ "picker_note": "Deterministic on-device scoring uses 'keywords' with word-boundary matching and argmax+margin; Gemini pick overrides when API key present.",
+ "source": "scenario frames grounded on live portal (crawl 2026-10-20) + official MHA-CitizenManualReportOtherCyberCrime-v10.pdf (MHA/I4C, sha256 287b0070b850ff94..., archived at tools/portal-crawler/reference/)"
+}

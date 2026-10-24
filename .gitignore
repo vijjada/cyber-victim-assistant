@@ -1,0 +1,34 @@
+# --- secrets / machine-local (NEVER commit) ---
+.env
+**/.env
+**/.env.*
+!**/.env.example
+local.properties
+gradle.properties
+**/gradle.properties
+*.jks
+*.keystore
+*.pem
+*.p12
+service-account*.json
+configstore/
+.firebase/
+client_secret*.json
+
+# --- builds & dependencies ---
+.gradle/
+.kotlin/
+node_modules/
+build/
+**/build/
+*.apk
+*.aab
+
+# --- large artifacts ---
+*.pdf
+
+# --- editors / OS ---
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

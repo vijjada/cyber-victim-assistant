@@ -1,0 +1,14 @@
+{
+  "name": "cva-exposure-fn",
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.13",
+    "firebase-functions": "^5.0.0"
+  },
+  "private": true
+}

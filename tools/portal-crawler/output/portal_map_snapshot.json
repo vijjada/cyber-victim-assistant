@@ -1,0 +1,1203 @@
+{
+  "lastVerified": "2026-10-20",
+  "portal": "https://cybercrime.gov.in",
+  "screens": [
+    {
+      "url": "https://cybercrime.gov.in/home",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [],
+      "fields": [],
+      "captcha": false,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/#",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [],
+      "fields": [],
+      "captcha": false,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/check-status",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [
+        {
+          "text": "Submit",
+          "id": null
+        }
+      ],
+      "fields": [
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "acno",
+          "id": "acno",
+          "required": true
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "Otp",
+          "id": "Otp",
+          "required": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "Captcha",
+          "id": "Captcha",
+          "required": true
+        }
+      ],
+      "captcha": true,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/crimereportanonymously",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [],
+      "fields": [
+        {
+          "tag": "select",
+          "type": "select-one",
+          "name": "CrimeCategory",
+          "id": "CrimeCategory",
+          "required": true,
+          "options": [
+            {
+              "v": "0: null",
+              "t": "Select"
+            },
+            {
+              "v": "1: 21",
+              "t": "Harassment & Bullying"
+            },
+            {
+              "v": "2: 22",
+              "t": "Sexual Exploitation"
+            }
+          ]
+        },
+        {
+          "tag": "select",
+          "type": "select-one",
+          "name": "SubSubCrimeCategory",
+          "id": "SubSubCrimeCategory",
+          "required": true,
+          "options": [
+            {
+              "v": "0: null",
+              "t": "Select"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "datetime-local",
+          "name": "CrimeApproxDate",
+          "id": "CrimeApproxDate",
+          "required": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "ReasonForDelay",
+          "id": "ReasonForDelay",
+          "required": false
+        },
+        {
+          "tag": "select",
+          "type": "select-one",
+          "name": "CrimeState",
+          "id": "CrimeState",
+          "required": true,
+          "options": [
+            {
+              "v": "0: null",
+              "t": "Select"
+            },
+            {
+              "v": "1: 1",
+              "t": "ANDAMAN & NICOBAR"
+            },
+            {
+              "v": "2: 2",
+              "t": "ANDHRA PRADESH"
+            },
+            {
+              "v": "3: 3",
+              "t": "ARUNACHAL PRADESH"
+            },
+            {
+              "v": "4: 4",
+              "t": "ASSAM"
+            },
+            {
+              "v": "5: 5",
+              "t": "BIHAR"
+            },
+            {
+              "v": "6: 6",
+              "t": "CHANDIGARH"
+            },
+            {
+              "v": "7: 33",
+              "t": "CHHATTISGARH"
+            },
+            {
+              "v": "8: 7",
+              "t": "DADRA & NAGAR HAVELI AND DAMAN & DIU"
+            },
+            {
+              "v": "9: 8",
+              "t": "DELHI"
+            },
+            {
+              "v": "10: 10",
+              "t": "GOA"
+            },
+            {
+              "v": "11: 11",
+              "t": "GUJARAT"
+            },
+            {
+              "v": "12: 13",
+              "t": "HARYANA"
+            },
+            {
+              "v": "13: 12",
+              "t": "HIMACHAL PRADESH"
+            },
+            {
+              "v": "14: 14",
+              "t": "JAMMU & KASHMIR"
+            },
+            {
+              "v": "15: 34",
+              "t": "JHARKHAND"
+            },
+            {
+              "v": "16: 16",
+              "t": "KARNATAKA"
+            },
+            {
+              "v": "17: 15",
+              "t": "KERALA"
+            },
+            {
+              "v": "18: 38",
+              "t": "LADAKH"
+            },
+            {
+              "v": "19: 17",
+              "t": "LAKSHADWEEP"
+            },
+            {
+              "v": "20: 21",
+              "t": "MADHYA PRADESH"
+            },
+            {
+              "v": "21: 19",
+              "t": "MAHARASHTRA"
+            },
+            {
+              "v": "22: 20",
+              "t": "MANIPUR"
+            },
+            {
+              "v": "23: 18",
+              "t": "MEGHALAYA"
+            },
+            {
+              "v": "24: 22",
+              "t": "MIZORAM"
+            },
+            {
+              "v": "25: 23",
+              "t": "NAGALAND"
+            },
+            {
+              "v": "26: 24",
+              "t": "ODISHA"
+            },
+            {
+              "v": "27: 26",
+              "t": "PUDUCHERRY"
+            },
+            {
+              "v": "28: 25",
+              "t": "PUNJAB"
+            },
+            {
+              "v": "29: 27",
+              "t": "RAJASTHAN"
+            },
+            {
+              "v": "30: 28",
+              "t": "SIKKIM"
+            },
+            {
+              "v": "31: 29",
+              "t": "TAMIL NADU"
+            },
+            {
+              "v": "32: 37",
+              "t": "TELANGANA"
+            },
+            {
+              "v": "33: 30",
+              "t": "TRIPURA"
+            },
+            {
+              "v": "34: 35",
+              "t": "UTTARAKHAND"
+            },
+            {
+              "v": "35: 31",
+              "t": "UTTAR PRADESH"
+            },
+            {
+              "v": "36: 32",
+              "t": "WEST BENGAL"
+            }
+          ]
+        },
+        {
+          "tag": "select",
+          "type": "select-one",
+          "name": "crimeDistrict",
+          "id": "CrimeDistrict",
+          "required": true,
+          "options": [
+            {
+              "v": "0: null",
+              "t": "Select"
+            }
+          ]
+        },
+        {
+          "tag": "select",
+          "type": "select-one",
+          "name": "CrimePoliceStation",
+          "id": "CrimePoliceStation",
+          "required": false,
+          "options": [
+            {
+              "v": "0: null",
+              "t": "Select"
+            }
+          ]
+        },
+        {
+          "tag": "select",
+          "type": "select-one",
+          "name": "InFoId",
+          "id": "InFoId",
+          "required": true,
+          "options": [
+            {
+              "v": "0: null",
+              "t": "Select"
+            },
+            {
+              "v": "1: 2",
+              "t": "Email"
+            },
+            {
+              "v": "2: 3",
+              "t": "Facebook"
+            },
+            {
+              "v": "3: 5",
+              "t": "Instagram"
+            },
+            {
+              "v": "4: 13",
+              "t": "LinkedIn"
+            },
+            {
+              "v": "5: 16",
+              "t": "Mobile App"
+            },
+            {
+              "v": "6: 15",
+              "t": "Other"
+            },
+            {
+              "v": "7: 6",
+              "t": "Snapchat"
+            },
+            {
+              "v": "8: 14",
+              "t": "Telegram"
+            },
+            {
+              "v": "9: 8",
+              "t": "Twitter"
+            },
+            {
+              "v": "10: 10",
+              "t": "Website Url"
+            },
+            {
+              "v": "11: 9",
+              "t": "WhatsApp"
+            },
+            {
+              "v": "12: 12",
+              "t": "Youtube"
+            }
+          ]
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "CrimeAdditionalInfo",
+          "id": "CrimeAdditionalInfo",
+          "required": true
+        }
+      ],
+      "captcha": false,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/report-abuse-social-media",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [],
+      "fields": [],
+      "captcha": false,
+      "newLinks": []
+    },
+    {
+      "url": "https://cybercrime.gov.in/suspect-search",
+      "title": "Cybercrime Portal",
+      "heading": "Mobile",
+      "buttons": [
+        {
+          "text": "Search",
+          "id": null
+        }
+      ],
+      "fields": [
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "SearchText",
+          "id": "SearchText",
+          "required": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "Captcha",
+          "id": "Captcha",
+          "required": true
+        }
+      ],
+      "captcha": true,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/cyber_suspect",
+      "title": "Cybercrime Portal",
+      "heading": "Website URL",
+      "buttons": [
+        {
+          "text": "Add More",
+          "id": null
+        }
+      ],
+      "fields": [
+        {
+          "tag": "select",
+          "type": "select-one",
+          "name": "stateId",
+          "id": "StateId",
+          "required": true,
+          "options": [
+            {
+              "v": "null",
+              "t": "Select"
+            },
+            {
+              "v": "1",
+              "t": "ANDAMAN & NICOBAR"
+            },
+            {
+              "v": "2",
+              "t": "ANDHRA PRADESH"
+            },
+            {
+              "v": "3",
+              "t": "ARUNACHAL PRADESH"
+            },
+            {
+              "v": "4",
+              "t": "ASSAM"
+            },
+            {
+              "v": "5",
+              "t": "BIHAR"
+            },
+            {
+              "v": "6",
+              "t": "CHANDIGARH"
+            },
+            {
+              "v": "33",
+              "t": "CHHATTISGARH"
+            },
+            {
+              "v": "7",
+              "t": "DADRA & NAGAR HAVELI AND DAMAN & DIU"
+            },
+            {
+              "v": "8",
+              "t": "DELHI"
+            },
+            {
+              "v": "10",
+              "t": "GOA"
+            },
+            {
+              "v": "11",
+              "t": "GUJARAT"
+            },
+            {
+              "v": "13",
+              "t": "HARYANA"
+            },
+            {
+              "v": "12",
+              "t": "HIMACHAL PRADESH"
+            },
+            {
+              "v": "14",
+              "t": "JAMMU & KASHMIR"
+            },
+            {
+              "v": "34",
+              "t": "JHARKHAND"
+            },
+            {
+              "v": "16",
+              "t": "KARNATAKA"
+            },
+            {
+              "v": "15",
+              "t": "KERALA"
+            },
+            {
+              "v": "38",
+              "t": "LADAKH"
+            },
+            {
+              "v": "17",
+              "t": "LAKSHADWEEP"
+            },
+            {
+              "v": "21",
+              "t": "MADHYA PRADESH"
+            },
+            {
+              "v": "19",
+              "t": "MAHARASHTRA"
+            },
+            {
+              "v": "20",
+              "t": "MANIPUR"
+            },
+            {
+              "v": "18",
+              "t": "MEGHALAYA"
+            },
+            {
+              "v": "22",
+              "t": "MIZORAM"
+            },
+            {
+              "v": "23",
+              "t": "NAGALAND"
+            },
+            {
+              "v": "24",
+              "t": "ODISHA"
+            },
+            {
+              "v": "26",
+              "t": "PUDUCHERRY"
+            },
+            {
+              "v": "25",
+              "t": "PUNJAB"
+            },
+            {
+              "v": "27",
+              "t": "RAJASTHAN"
+            },
+            {
+              "v": "28",
+              "t": "SIKKIM"
+            },
+            {
+              "v": "29",
+              "t": "TAMIL NADU"
+            },
+            {
+              "v": "37",
+              "t": "TELANGANA"
+            },
+            {
+              "v": "30",
+              "t": "TRIPURA"
+            },
+            {
+              "v": "35",
+              "t": "UTTARAKHAND"
+            },
+            {
+              "v": "31",
+              "t": "UTTAR PRADESH"
+            },
+            {
+              "v": "32",
+              "t": "WEST BENGAL"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "searchType",
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "url",
+          "name": "SourceName",
+          "id": "SourceName",
+          "required": true
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "file",
+          "id": "file",
+          "required": true
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "Description",
+          "id": "Description",
+          "required": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "Captcha",
+          "id": "Captcha",
+          "required": true
+        }
+      ],
+      "captcha": true,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/advisory",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [],
+      "fields": [],
+      "captcha": false,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Monthly%20Underground%20Banking%20Report.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Misuse%20of%20Matrimonial.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/WhatsApp%20Web%20Account.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Advisory%20on.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Advisory%20on%20digital.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Advisory%20regarding%20fake.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Fraudsters%20using%20heat.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Fraudsters%20sending%20Fake.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Cybercriminals%20using%20malicious.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Cybercriminals%20using%20fake%20Social%20Media.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Cybercriminals%20using%20Caller.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Fraudsters%20using%20Army%20personnel.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Fake%20SMSs%20related%20to%20unpaid.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Cybercriminals%20Tampering%20with.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Cybercriminals%20perpetrating%20Eavesdropping.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Banking%20Trojans.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Cybercriminals%20using%20Fake%20Customer.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Malicious%20Executable%20Files.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Cybercriminals%20committing%20Business.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/advisory/pdf/Cybercriminals%20defrauding%20citizens.pdf",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/safety-tips",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [],
+      "fields": [],
+      "captcha": false,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/daily-digests",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [
+        {
+          "text": "Search",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        },
+        {
+          "text": "Read More",
+          "id": null
+        }
+      ],
+      "fields": [
+        {
+          "tag": "input",
+          "type": "date",
+          "name": null,
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": null,
+          "id": null,
+          "required": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": null,
+          "id": null,
+          "required": false
+        }
+      ],
+      "captcha": false,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/login-terms-conditions",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [
+        {
+          "text": "I Accept",
+          "id": null
+        }
+      ],
+      "fields": [
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "accept",
+          "id": "accept-input",
+          "required": true
+        }
+      ],
+      "captcha": false,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/cyber-volunteers-concept",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [],
+      "fields": [],
+      "captcha": false,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/cyber-volunteers-tnc",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [],
+      "fields": [],
+      "captcha": false,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    },
+    {
+      "url": "https://cybercrime.gov.in/cyber-volunteer-instruction",
+      "title": "Cybercrime Portal",
+      "heading": "",
+      "buttons": [
+        {
+          "text": "Click here to Register",
+          "id": null
+        }
+      ],
+      "fields": [],
+      "captcha": false,
+      "newLinks": [
+        "https://cybercrime.gov.in/#",
+        "https://cybercrime.gov.in/home",
+        "https://cybercrime.gov.in/check-status",
+        "https://cybercrime.gov.in/crimereportanonymously",
+        "https://cybercrime.gov.in/report-abuse-social-media",
+        "https://cybercrime.gov.in/suspect-search",
+        "https://cybercrime.gov.in/cyber_suspect",
+        "https://cybercrime.gov.in/advisory",
+        "https://cybercrime.gov.in/safety-tips",
+        "https://cybercrime.gov.in/daily-digests",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice.pdf",
+        "https://cybercrime.gov.in/assets/learning-corner/PublicNotice_CPGRAMS.pdf",
+        "https://cybercrime.gov.in/login-terms-conditions",
+        "https://cybercrime.gov.in/cyber-volunteers-concept",
+        "https://cybercrime.gov.in/cyber-volunteers-tnc",
+        "https://cybercrime.gov.in/cyber-volunteer-instruction",
+        "https://cybercrime.gov.in/contactus",
+        "https://cybercrime.gov.in/feedback",
+        "https://cybercrime.gov.in/faq",
+        "https://cybercrime.gov.in/website-policies",
+        "https://cybercrime.gov.in/privacy-policy",
+        "https://cybercrime.gov.in/disclaimer"
+      ]
+    }
+  ]
+}

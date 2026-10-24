@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cleartext allowed ONLY for the local exposure backend host; all other
+     traffic stays HTTPS-enforced. Remove this entry when the backend moves
+     to an HTTPS deployment. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">10.1.35.207</domain>
+    </domain-config>
+</network-security-config>
