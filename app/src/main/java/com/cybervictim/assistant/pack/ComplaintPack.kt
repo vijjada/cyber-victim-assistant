@@ -58,7 +58,7 @@ object ComplaintPack {
             }
         }
         line("Cybercrime Complaint Pack", title)
-        line("Case: $caseId  •  Generated on-device by Cyber Victim Assistant", body)
+        line("Case: $caseId  •  Generated on-device by Cybridge", body)
         yref[0] += 8
         line("INCIDENT FACTS (from the victim's own evidence)", head)
         if (facts.isEmpty()) line("No facts extracted yet.", body)
@@ -74,13 +74,29 @@ object ComplaintPack {
         val phoneF = facts.firstOrNull { it.type == "phone" }?.valueText ?: "[fraudster number]"
         val amtF = facts.firstOrNull { it.type == "amount" }?.valueText ?: "[amount]"
         val tsF = facts.firstOrNull { it.type == "timestamp" }?.valueText ?: "[time from evidence]"
-        val complaint = "On $tsF, I was defrauded of $amtF. The fraudster used UPI ID $upiF. " +
+        val emailFromF = facts.firstOrNull { it.type == "email_from" }?.valueText
+        val emailSubF = facts.firstOrNull { it.type == "email_subject" }?.valueText
+        val emailShaF = facts.firstOrNull { it.type == "email_sha256" }?.valueText
+
+        val complaint = if (emailFromF != null) {
+            "National Portal Category: Online and Social Media Related Crime -> E-Mail Phishing.\n" +
+            "On $tsF, I received a fraudulent phishing email purporting to be from $emailFromF with subject '${emailSubF ?: "Notice"}'. " +
+            "The message contained deceptive indicators and suspicious links intended to compromise credentials/security. " +
+            "The raw original message (.eml) has been preserved on-device with cryptographic integrity (SHA-256: ${emailShaF ?: "verified"}) and submitted as evidence. " +
+            "Requesting formal cybercrime investigation under relevant provisions of the Information Technology Act."
+        } else {
+            "On $tsF, I was defrauded of $amtF. The fraudster used UPI ID $upiF. " +
             "Transaction reference: $txnF. Phone number used by the fraudster: $phoneF. " +
             "Timeline and amounts are attached. Requesting investigation and fund-freeze action under the relevant sections."
+        }
         line(complaint, body)
         yref[0] += 10
         line("EVIDENCE INDEX (attached separately / referenced)", head)
         line("Facts above trace to the evidence items stored on the phone. Do not delete originals.", body)
+        if (emailShaF != null) {
+            line("- Email Phishing Message (.eml) | SHA-256: $emailShaF", body, 10)
+            line("  Portal Classification: Online and Social Media Related Crime -> E-Mail Phishing", body, 10)
+        }
         doc.finishPage(pg)
         val dir = File(ctx.filesDir, "packs").apply { mkdirs() }
         val out = File(dir, "complaint-pack-$caseId.pdf")
