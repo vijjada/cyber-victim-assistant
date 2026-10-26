@@ -20,6 +20,9 @@ android {
         buildConfigField("String", "GEMINI_API_KEY", "\"" + geminiKey + "\"")
         val exposureBase: String = (project.findProperty("EXPOSURE_BASE_URL") as? String) ?: ""
         buildConfigField("String", "EXPOSURE_BASE_URL", "\"$exposureBase\"")
+        val googleOAuthClientId: String = (project.findProperty("GOOGLE_OAUTH_CLIENT_ID") as? String) ?: ""
+        buildConfigField("String", "GOOGLE_OAUTH_CLIENT_ID", "\"$googleOAuthClientId\"")
+        manifestPlaceholders["googleOAuthClientId"] = googleOAuthClientId
     }
 
 

@@ -37,6 +37,77 @@ object PhishingAnalyzer {
         Regex("(?i)\\b(unauthorized\\s+transaction|fraud\\s+detected|security\\s+alert)\\b") to "False security alarm"
     )
 
+    fun quickScoreMetadata(metadata: EmailMetadata): Pair<Int, String> {
+        val reasons = mutableListOf<String>()
+        var score = 0
+
+        val fromEmail = extractEmailAddress(metadata.from)
+        val replyToEmail = metadata.replyTo?.let { extractEmailAddress(it) }
+        val returnPathEmail = metadata.returnPath?.let { extractEmailAddress(it) }
+
+        val fromDomain = extractDomain(fromEmail)
+        val replyToDomain = replyToEmail?.let { extractDomain(it) } ?: fromDomain
+        val returnPathDomain = returnPathEmail?.let { extractDomain(it) } ?: fromDomain
+
+        // 1. Auth results
+        val authHeader = metadata.authResults ?: ""
+        val spfStatus = extractAuthStatus(authHeader, "spf")
+        val dkimStatus = extractAuthStatus(authHeader, "dkim")
+        val dmarcStatus = extractAuthStatus(authHeader, "dmarc")
+
+        if (spfStatus.contains("fail", ignoreCase = true)) {
+            score += 35
+            reasons.add("SPF Failed")
+        }
+        if (dmarcStatus.contains("fail", ignoreCase = true)) {
+            score += 35
+            reasons.add("DMARC Failed")
+        }
+        if (dkimStatus.contains("fail", ignoreCase = true)) {
+            score += 25
+            reasons.add("DKIM Failed")
+        }
+
+        // 2. Mismatch
+        if (replyToDomain.isNotEmpty() && !isSameEffectiveDomain(fromDomain, replyToDomain)) {
+            score += 30
+            reasons.add("Reply-To mismatch ($replyToDomain)")
+        }
+        if (returnPathDomain.isNotEmpty() && !isSameEffectiveDomain(fromDomain, returnPathDomain) && !isKnownMailService(returnPathDomain)) {
+            score += 20
+            reasons.add("Return-Path mismatch")
+        }
+
+        // 3. Lookalike
+        val lookalikeInfo = checkLookalikeDomain(fromDomain)
+        if (lookalikeInfo != null) {
+            score += 35
+            reasons.add("Lookalike domain (mimics $lookalikeInfo)")
+        } else {
+            val tld = fromDomain.substringAfterLast('.', "").lowercase(Locale.ROOT)
+            if (tld in SUSPICIOUS_TLDS) {
+                score += 15
+                reasons.add("Suspicious .$tld domain")
+            }
+        }
+
+        // 4. Urgency in subject
+        for ((regex, desc) in URGENCY_REGEXES) {
+            if (regex.containsMatchIn(metadata.subject)) {
+                score += 25
+                reasons.add(desc)
+                break
+            }
+        }
+
+        val summary = when {
+            reasons.isNotEmpty() -> reasons.take(2).joinToString("; ")
+            score > 0 -> "Unverified sender origin"
+            else -> "Standard authenticated headers"
+        }
+        return Pair(score, summary)
+    }
+
     fun analyze(email: EmailContent): PhishingAnalysisResult {
         val reasons = mutableListOf<String>()
         val techDetails = mutableListOf<Pair<String, String>>()
