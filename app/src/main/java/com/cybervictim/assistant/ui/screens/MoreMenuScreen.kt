@@ -23,6 +23,9 @@ private data class MoreItem(
 @Composable
 fun MoreScreen(nav: androidx.navigation.NavHostController) {
     val items = listOf(
+        MoreItem("Portal Login (Citizen)", "Login to cybercrime.gov.in with OTP & Captcha", Routes.PORTAL_LOGIN),
+        MoreItem("Portal Clone (Exact Buttons)", "1:1 replica of official portal with AI auto-fill", Routes.PORTAL_CLONE),
+        MoreItem("Suspicious email check", "Inspect phishing signs with no-inbox-access or Gmail window", Routes.SUSPICIOUS_EMAIL),
         MoreItem(L10n.t("more_portal"), L10n.t("more_portal_sub"), Routes.PORTAL_GUIDE),
         MoreItem(L10n.t("more_tracker"), L10n.t("more_tracker_sub"), Routes.TRACKER),
         MoreItem(L10n.t("more_phonetrace"), L10n.t("more_phonetrace_sub"), Routes.PHONE_TRACE),

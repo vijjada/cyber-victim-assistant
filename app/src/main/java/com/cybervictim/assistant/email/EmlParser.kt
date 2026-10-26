@@ -40,6 +40,10 @@ object EmlParser {
         "yyyy-MM-dd HH:mm:ss"
     )
 
+    fun parse(rawText: String, id: String = UUID.randomUUID().toString()): EmailContent {
+        return parse(rawText.toByteArray(StandardCharsets.UTF_8), id)
+    }
+
     fun parse(rawBytes: ByteArray, id: String = UUID.randomUUID().toString()): EmailContent {
         val sha256 = computeSha256(rawBytes)
         val fullText = String(rawBytes, StandardCharsets.UTF_8)
