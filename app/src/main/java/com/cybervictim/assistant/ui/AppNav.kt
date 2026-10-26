@@ -21,7 +21,8 @@ fun AppScaffold(nav: NavHostController) {
             currentRoute != Routes.TELL_US &&
             !currentRoute.startsWith(Routes.GUIDED_FLOW) &&
             currentRoute != Routes.PORTAL_WEBVIEW &&
-            !currentRoute.startsWith(Routes.PORTAL_CLONE)
+            !currentRoute.startsWith(Routes.PORTAL_CLONE) &&
+            currentRoute != Routes.REGISTER_HUB
 
     Scaffold(bottomBar = { if (showBottomBar) BottomBar(nav) }) { padding ->
         NavHost(
@@ -54,6 +55,7 @@ fun AppScaffold(nav: NavHostController) {
             composable(Routes.EXPOSURE) { ExposureScreen(nav) }
             composable(Routes.SETTINGS) { SettingsScreen(nav) }
             composable(Routes.SUSPICIOUS_EMAIL) { SuspiciousEmailScreen(nav) }
+            composable(Routes.REGISTER_HUB) { RegisterHubScreen(nav) }
         }
     }
 }
@@ -77,4 +79,5 @@ object Routes {
     const val EXPOSURE = "exposure"
     const val SETTINGS = "settings"
     const val SUSPICIOUS_EMAIL = "suspicious_email"
+    const val REGISTER_HUB = "register_hub"
 }
