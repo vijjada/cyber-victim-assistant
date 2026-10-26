@@ -141,3 +141,74 @@ Variable: `EXPOSURE_BASE_URL` (consumed by `app/build.gradle.kts` into BuildConf
 How:
 - **Production**: after `firebase deploy --only functions` (see `tools/functions/DEPLOY.md`), set to the deployed function URL, e.g. `https://<region>-<project-id>.cloudfunctions.net/cvaExposure`.
 - **Laptop-dev only**: run the backend on `PORT=8081` and set `EXPOSURE_BASE_URL=http://<your-LAN-IP>:8081`; additionally add your IP to `app/src/main/res/xml/network_security_config.xml` (it currently whitelists only `10.1.35.207`, the source machine's LAN address). HTTPS URLs need no config entry.
+
+---
+
+## 12. Suspicious Email Check Feature (Added for Hackathon)
+
+### 12.1 Overview & Architecture
+The "Suspicious Email Check" feature allows a victim to inspect emails for phishing indicators with strict privacy:
+- **Two Import Paths**:
+  - **Path A (No-inbox-access, default & always available)**: Victim shares an email via Android share intent (`ACTION_SEND`), picks an `.eml` file, or pastes raw headers/body. Works with any mail provider.
+  - **Path B (Gmail window, Gmail only)**: OAuth 2.0 sign-in with PKCE using read-only scope `https://www.googleapis.com/auth/gmail.readonly`.
+- **Gmail Search Window Rules**:
+  - Device timezone displayed clearly with **IST** (`Asia/Kolkata`).
+  - Default window: incident time ± 24 hours.
+  - **7-day hard cap**: searches wider than 7 days are strictly refused.
+  - Query: Gmail search `after:<epoch_sec> before:<epoch_sec>` with `includeSpamTrash=true` (phishing often lands in Spam).
+  - **Step 1 (Metadata only)**: Fetches `format=metadata` for at most 50 messages: `From, Reply-To, Return-Path, To, Subject, Date, Message-ID, Authentication-Results, Received`. Zero bodies or attachments downloaded. Candidates scored locally with plain-English reason.
+  - **Step 2 (Import)**: Victim ticks specific emails. Only ticked emails have raw message fetched (`format=raw`). **All unticked candidate metadata is purged from memory immediately.**
+  - **Token Security**: Access token is held in-memory ONLY. Never saved to Room, SharedPreferences, or disk. Zero refresh tokens stored. "Disconnect Gmail" button calls Google's revocation endpoint and clears memory.
+- **Safety Invariants**:
+  - Links are rendered as **inert plain text only**; never clickable, never pre-fetched.
+  - Never render HTML emails in WebView.
+  - Attachments are never executed or previewed; metadata and SHA-256 hash only.
+  - Raw `.eml` saved in app-private storage with cryptographic SHA-256 hash.
+  - Never log email content, addresses, tokens, or subjects.
+- **Case Integration**:
+  - Adds `email_phishing` event to the case timeline next to other events.
+  - Pre-fills National Cyber Crime Reporting Portal category: **"Online and Social Media Related Crime" -> "E-Mail Phishing"** with original `.eml` file and SHA-256 hash referenced in the complaint pack PDF.
+  - Emergency checklist and "Draft Bank Fund Freeze Request" when money or credentials may be compromised.
+  - Optional Gemini "Explain this email simply" with explicit victim consent each time (redacted text only, no attachments or full headers).
+
+### 12.2 Google OAuth Setup & Testing Mode Limits
+To enable live Gmail window searches:
+1. Go to [Google Cloud Console](https://console.cloud.google.com/).
+2. Create or select a Google Cloud project.
+3. Configure the **OAuth Consent Screen**:
+   - User Type: **External**.
+   - App Name: `Cyber Victim Assistant` (or `Cybridge`).
+   - Scopes: Add `https://www.googleapis.com/auth/gmail.readonly` (Restricted Scope).
+   - Publishing Status: **Testing**.
+   - **CRITICAL TESTING LIMIT**: While in Testing mode, only users added under the **Test users** list in Google Cloud Console can sign in. Add your own Gmail test accounts here before testing.
+   - **Public Release Verification Notice**: Restricted scopes like `gmail.readonly` require a formal Google Cloud verification and a CASA (Cloud Application Security Assessment) Tier 2 audit before an app can be published publicly to general users.
+4. Create Credentials -> **OAuth Client ID**:
+   - Application Type: **Android** (or Web client for PKCE redirect).
+   - Package name: `com.cybervictim.assistant`
+   - SHA-1 certificate fingerprint: your debug or release keystore SHA-1.
+   - Redirect URI: `com.cybervictim.assistant:/oauth2redirect`
+5. Copy Client ID and add to `~/.gradle/gradle.properties`:
+   ```properties
+   GOOGLE_OAUTH_CLIENT_ID=<your-oauth-client-id>.apps.googleusercontent.com
+   ```
+
+### 12.3 What to Verify Manually on a Real Phone
+1. **Path A (No-Inbox-Access)**:
+   - Navigate: More -> **Suspicious email check**.
+   - Tap **"Load Test Vector"**: verifies instant on-device analysis of synthetic bank phish, shows word-based rating ("High Suspicion"), top 3 reasons, inert link display, and SHA-256 evidence item.
+   - Tap **"Pick .eml File"**: select any `.eml` file from device storage and verify analysis.
+   - Test Android Share Intent: in Gmail or another mail app, share an email to Cybridge and verify the app detects it and analyzes it.
+2. **Path B (Gmail Window Search)**:
+   - Tap the **"Gmail Window (OAuth)"** tab.
+   - Tap **"Connect Gmail"**: browser opens Google OAuth consent screen. Sign in with an account configured in Google Cloud Console's Test Users.
+   - Upon redirect back to the app, verify status shows "Gmail connected in testing mode".
+   - Test the 7-day hard cap: set window wider than 7 days and verify validation error.
+   - Set valid window (e.g. ±24 hours) and tap **"Step 1: Find Emails in Window"**: verify candidate list displays subject, sender, and plain-English suspicion reasons.
+   - Select one email and tap **"Step 2: Import Selected"**: verify only that email is imported, and unticked candidates vanish from memory.
+   - Tap **"Disconnect Gmail"**: verify session is revoked and disconnected.
+3. **Emergency Actions & Timeline**:
+   - On an imported evidence card, tick "I clicked a link or entered a password".
+   - Verify the urgent action checklist appears with the **"Draft Bank Fund Freeze Request"** button.
+   - Tap "Draft Bank Fund Freeze Request" -> verify the pre-filled letter includes the incident timestamp, sender, and SHA-256 hash.
+   - Go to More -> **Case Tracker** -> verify the timeline shows the `EMAIL_PHISHING` event alongside any phone trace events.
+
