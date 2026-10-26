@@ -5,10 +5,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import com.cybervictim.assistant.data.CaseSession
@@ -88,9 +93,35 @@ fun EvidenceScreen(nav: androidx.navigation.NavHostController) {
         }
     }
 
-    Column(Modifier.fillMaxSize().padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(com.cybervictim.assistant.ui.L10n.t("ev_title"), style = MaterialTheme.typography.titleLarge)
-        Text(com.cybervictim.assistant.ui.L10n.t("ev_sub"))
+    Column(
+        Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        // Top Bar with Back Arrow
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { nav.popBackStack() }) {
+                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+            }
+            Spacer(Modifier.width(6.dp))
+            Column {
+                Text(
+                    text = com.cybervictim.assistant.ui.L10n.t("ev_title"),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = com.cybervictim.assistant.ui.L10n.t("ev_sub"),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color.Gray
+                )
+            }
+        }
         Button(onClick = { picker.launch("image/*") }, Modifier.fillMaxWidth()) { Text(com.cybervictim.assistant.ui.L10n.t("ev_add")) }
 FilterChip(
             selected = aiRefine.value,
@@ -98,16 +129,22 @@ FilterChip(
                 aiRefine.value = !aiRefine.value
                 prefsAi.edit().putBoolean("ai_refine_ocr", aiRefine.value).apply()
             },
-            label = { Text(com.cybervictim.assistant.ui.L10n.t("ev_ai_refine") + if (aiRefine.value) " ✓" else " ✕") },
+            label = { Text(com.cybervictim.assistant.ui.L10n.t("ev_ai_refine") + if (aiRefine.value) " (On)" else " (Off)") },
         )
         var analyzing by remember { mutableStateOf(false) }
         Button(
             onClick = {
                 analyzing = true
-                val blobs = items.joinToString("\n") { it.displayName }
+                val evidenceSummary = buildString {
+                    appendLine("Uploaded evidence files: " + items.joinToString(", ") { it.displayName })
+                    if (facts.isNotEmpty()) {
+                        appendLine("Known facts so far:")
+                        facts.forEach { appendLine("- ${it.type}: ${it.valueText}") }
+                    }
+                }
                 com.cybervictim.assistant.ai.CaseExtractor.extract(
-                    "Uploaded evidence items: " + blobs.ifEmpty { "none yet" },
-                    { facts -> CaseDb.scope.launch { facts.forEach { f ->
+                    evidenceSummary,
+                    { extractedFacts -> CaseDb.scope.launch { extractedFacts.forEach { f ->
                         db.addFact(com.cybervictim.assistant.data.CaseFact(
                             caseId = caseId, type = f.type, valueText = f.value, sourceEvidenceId = items.firstOrNull()?.id ?: 0))
                         }

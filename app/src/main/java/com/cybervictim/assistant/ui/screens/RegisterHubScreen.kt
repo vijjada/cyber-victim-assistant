@@ -128,105 +128,204 @@ fun RegisterHubScreen(nav: NavHostController) {
                 }
 
                 Spacer(Modifier.height(8.dp))
-                Text("MENU", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = HubSubtitle,
-                    letterSpacing = 1.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp))
 
-                // Menu item: View Profile
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
-                    label = {
-                        Column {
-                            Text("View Profile", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
-                            Text(userProfile.fullName.ifBlank { "Citizen details" }, fontSize = 11.sp, color = HubSubtitle,
-                                maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        }
-                    },
-                    selected = false,
-                    onClick = { coroutineScope.launch { drawerState.close(); showUserDetailsDialog = true } },
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
-                    shape = RoundedCornerShape(12.dp)
-                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                        .padding(bottom = 16.dp)
+                ) {
+                    Text("MENU", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = HubSubtitle,
+                        letterSpacing = 1.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp))
 
-                // Menu item: Case Timeline
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.DateRange, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
-                    label = {
-                        Column {
-                            Text("Case Timeline", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
-                            Text("View events & complaint history", fontSize = 11.sp, color = HubSubtitle)
-                        }
-                    },
-                    selected = false,
-                    onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.TRACKER) },
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
-                    shape = RoundedCornerShape(12.dp)
-                )
+                    // Menu item: View Profile
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.Person, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
+                        label = {
+                            Column {
+                                Text("View Profile", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
+                                Text(userProfile.fullName.ifBlank { "Citizen details" }, fontSize = 11.sp, color = HubSubtitle,
+                                    maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            }
+                        },
+                        selected = false,
+                        onClick = { coroutineScope.launch { drawerState.close(); showUserDetailsDialog = true } },
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    )
 
-                // Menu item: Evidence Locker
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Info, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
-                    label = {
-                        Column {
-                            Text("Evidence Locker", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
-                            Text("Screenshots, SMS & documents", fontSize = 11.sp, color = HubSubtitle)
-                        }
-                    },
-                    selected = false,
-                    onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.EVIDENCE) },
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
-                    shape = RoundedCornerShape(12.dp)
-                )
+                    // Menu item: Register Cyber Complaint
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.PlayArrow, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
+                        label = {
+                            Column {
+                                Text("Register Cyber Complaint", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = HubDeepNavy)
+                                Text("File official report on cybercrime.gov.in", fontSize = 11.sp, color = HubSubtitle)
+                            }
+                        },
+                        selected = false,
+                        onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.PORTAL_WEBVIEW) },
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    )
 
-                // Menu item: Phone Trace
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Phone, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
-                    label = {
-                        Column {
-                            Text("PhoneTrace Audit", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
-                            Text("Analyze suspicious apps & entry points", fontSize = 11.sp, color = HubSubtitle)
-                        }
-                    },
-                    selected = false,
-                    onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.PHONE_TRACE) },
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
-                    shape = RoundedCornerShape(12.dp)
-                )
+                    Divider(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp))
 
-                // Menu item: Suspicious Email Check
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Email, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
-                    label = {
-                        Column {
-                            Text("Suspicious Email Check", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
-                            Text("Phishing analysis on-device", fontSize = 11.sp, color = HubSubtitle)
-                        }
-                    },
-                    selected = false,
-                    onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.SUSPICIOUS_EMAIL) },
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
-                    shape = RoundedCornerShape(12.dp)
-                )
+                    Text("EVIDENCE & LEGAL", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = HubSubtitle,
+                        letterSpacing = 1.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp))
 
-                Divider(modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp))
+                    // Menu item: Evidence Locker
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.Info, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
+                        label = {
+                            Column {
+                                Text("Evidence Locker", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
+                                Text("Screenshots, transaction slips & files", fontSize = 11.sp, color = HubSubtitle)
+                            }
+                        },
+                        selected = false,
+                        onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.EVIDENCE) },
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    )
 
-                // Menu item: Helpline 1930
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Call, contentDescription = null, tint = Color(0xFF16A34A), modifier = Modifier.size(22.dp)) },
-                    label = {
-                        Column {
-                            Text("Helpline 1930", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color(0xFF15803D))
-                            Text("National Cyber Crime Emergency Helpline", fontSize = 11.sp, color = HubSubtitle)
-                        }
-                    },
-                    selected = false,
-                    onClick = {
-                        coroutineScope.launch { drawerState.close() }
-                        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:1930"))
-                        context.startActivity(intent)
-                    },
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
-                    shape = RoundedCornerShape(12.dp)
-                )
+                    // Menu item: Freeze & Legal Requests
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.CheckCircle, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
+                        label = {
+                            Column {
+                                Text("Freeze & Legal Requests", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
+                                Text("Draft bank freeze, unfreeze & notices", fontSize = 11.sp, color = HubSubtitle)
+                            }
+                        },
+                        selected = false,
+                        onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.REQUESTS) },
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+
+                    // Menu item: Case Timeline
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.DateRange, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
+                        label = {
+                            Column {
+                                Text("Case Timeline", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
+                                Text("View events & complaint history", fontSize = 11.sp, color = HubSubtitle)
+                            }
+                        },
+                        selected = false,
+                        onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.TRACKER) },
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+
+                    Divider(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp))
+
+                    Text("INVESTIGATION TOOLS", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = HubSubtitle,
+                        letterSpacing = 1.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp))
+
+                    // Menu item: Phone Trace
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.Phone, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
+                        label = {
+                            Column {
+                                Text("PhoneTrace Audit", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
+                                Text("Analyze suspicious apps & entry points", fontSize = 11.sp, color = HubSubtitle)
+                            }
+                        },
+                        selected = false,
+                        onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.PHONE_TRACE) },
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+
+                    // Menu item: Suspicious Email Check
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.Email, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
+                        label = {
+                            Column {
+                                Text("Suspicious Email Check", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
+                                Text("Phishing analysis on-device", fontSize = 11.sp, color = HubSubtitle)
+                            }
+                        },
+                        selected = false,
+                        onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.SUSPICIOUS_EMAIL) },
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+
+                    // Menu item: Digital Exposure Check
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.Search, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
+                        label = {
+                            Column {
+                                Text("Digital Exposure Check", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
+                                Text("Breach checks & password leak status", fontSize = 11.sp, color = HubSubtitle)
+                            }
+                        },
+                        selected = false,
+                        onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.EXPOSURE) },
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+
+                    Divider(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp))
+
+                    Text("GUIDANCE & SETTINGS", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = HubSubtitle,
+                        letterSpacing = 1.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp))
+
+                    // Menu item: Portal Filing Guide
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.Info, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
+                        label = {
+                            Column {
+                                Text("Portal Filing Guide", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
+                                Text("Official portal instructions & steps", fontSize = 11.sp, color = HubSubtitle)
+                            }
+                        },
+                        selected = false,
+                        onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.PORTAL_GUIDE) },
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+
+                    // Menu item: Settings & Language
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.Settings, contentDescription = null, tint = HubDeepNavy, modifier = Modifier.size(22.dp)) },
+                        label = {
+                            Column {
+                                Text("Settings & Language", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = HubDarkText)
+                                Text("Change language & privacy preferences", fontSize = 11.sp, color = HubSubtitle)
+                            }
+                        },
+                        selected = false,
+                        onClick = { coroutineScope.launch { drawerState.close() }; nav.navigate(Routes.SETTINGS) },
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+
+                    Divider(modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp))
+
+                    // Menu item: Helpline 1930
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.Call, contentDescription = null, tint = Color(0xFF16A34A), modifier = Modifier.size(22.dp)) },
+                        label = {
+                            Column {
+                                Text("Helpline 1930", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color(0xFF15803D))
+                                Text("National Cyber Crime Emergency Helpline", fontSize = 11.sp, color = HubSubtitle)
+                            }
+                        },
+                        selected = false,
+                        onClick = {
+                            coroutineScope.launch { drawerState.close() }
+                            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:1930"))
+                            context.startActivity(intent)
+                        },
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                }
             }
         }
     ) {
@@ -366,7 +465,7 @@ fun RegisterHubScreen(nav: NavHostController) {
 
                     // ===== BIG REGISTER CYBER COMPLAINT BUTTON (In C Logo Color: Deep Navy) =====
                     Button(
-                        onClick = { nav.navigate(Routes.PORTAL_LOGIN) },
+                        onClick = { nav.navigate(Routes.PORTAL_WEBVIEW) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 28.dp)
@@ -388,52 +487,6 @@ fun RegisterHubScreen(nav: NavHostController) {
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Normal,
                                 color = Color.White.copy(alpha = 0.8f)
-                            )
-                        }
-                    }
-
-                    Spacer(Modifier.height(20.dp))
-
-                    // Secondary quick-access buttons: Phone Trace & Email Check (no symbols/emojis)
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 28.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        OutlinedButton(
-                            onClick = { nav.navigate(Routes.PHONE_TRACE) },
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            border = BorderStroke(1.2.dp, HubDeepNavy.copy(alpha = 0.35f)),
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = HubDeepNavy)
-                        ) {
-                            Text(
-                                text = "Phone Trace",
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = HubDeepNavy,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-
-                        OutlinedButton(
-                            onClick = { nav.navigate(Routes.SUSPICIOUS_EMAIL) },
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            border = BorderStroke(1.2.dp, HubDeepNavy.copy(alpha = 0.35f)),
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = HubDeepNavy)
-                        ) {
-                            Text(
-                                text = "Email Check",
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = HubDeepNavy,
-                                textAlign = TextAlign.Center
                             )
                         }
                     }

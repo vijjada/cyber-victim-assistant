@@ -14,6 +14,11 @@ object L10n {
         EN("en", "English"),
         HI("hi", "हिंदी"),
         TE("te", "తెలుగు"),
+        PA("pa", "ਪੰਜਾਬੀ"),
+        GU("gu", "ગુજરાતી"),
+        MR("mr", "मराठी"),
+        TA("ta", "தமிழ்"),
+        BN("bn", "বাংলা"),
     }
 
     private const val PREFS = "cva_settings"
@@ -32,7 +37,7 @@ object L10n {
 
     fun setLang(ctx: Context, to: Lang) {
         lang = to
-        ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY_LANG, to.code).apply()
+        ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY_LANG, to.code).commit()
         tick.value += 1
     }
 
@@ -42,16 +47,33 @@ object L10n {
         return m[lang] ?: m[Lang.EN] ?: key
     }
 
-    private fun tr(en: String, hi: String, te: String): Map<Lang, String> =
-        mapOf(Lang.EN to en, Lang.HI to hi, Lang.TE to te)
+    private fun tr(
+        en: String,
+        hi: String,
+        te: String,
+        pa: String? = null,
+        gu: String? = null,
+        mr: String? = null,
+        ta: String? = null,
+        bn: String? = null
+    ): Map<Lang, String> = buildMap {
+        put(Lang.EN, en)
+        put(Lang.HI, hi)
+        put(Lang.TE, te)
+        pa?.let { put(Lang.PA, it) }
+        gu?.let { put(Lang.GU, it) }
+        mr?.let { put(Lang.MR, it) }
+        ta?.let { put(Lang.TA, it) }
+        bn?.let { put(Lang.BN, it) }
+    }
 
     private val i18n = mapOf(
         // Bottom bar tabs
-        "tab_home" to tr("Home", "होम", "హోమ్"),
-        "tab_guide" to tr("Guide", "गाइड", "గైడ్"),
-        "tab_evidence" to tr("Evidence", "साक्ष्य", "సాక్ష్యం"),
-        "tab_requests" to tr("Requests", "निवेदन", "విజ్ఞప్తులు"),
-        "tab_more" to tr("More", "और", "ఇంకా"),
+        "tab_home" to tr("Home", "होम", "హోమ్", pa = "ਹੋਮ", gu = "હોમ", mr = "होम", ta = "முகப்பு", bn = "হোম"),
+        "tab_guide" to tr("Guide", "गाइड", "గైడ్", pa = "ਗਾਈਡ", gu = "માર્ગદર્શિકા", mr = "मार्गदर्शक", ta = "வழிகாட்டி", bn = "গাইড"),
+        "tab_evidence" to tr("Evidence", "साक्ष्य", "సాక్ష్యం", pa = "ਸਬੂਤ", gu = "પુરાવા", mr = "पुरावा", ta = "சான்று", bn = "প্রমাণ"),
+        "tab_requests" to tr("Requests", "निवेदन", "విజ్ఞప్తులు", pa = "ਬੇਨਤੀਆਂ", gu = "વિનંતીઓ", mr = "विनंत्या", ta = "கோரிக்கைகள்", bn = "অনুরোধ"),
+        "tab_more" to tr("More", "और", "ఇంకా", pa = "ਹੋਰ", gu = "વધુ", mr = "अधिक", ta = "மேலும்", bn = "আরও"),
 
         // More menu
         "more_title" to tr("More", "और", "ఇంకా"),
@@ -226,6 +248,6 @@ object L10n {
         "pg_empty" to tr("Tell the AI Case Guide what happened first — then come back here to run the plan.", "पहले AI केस गाइड को बताइए क्या हुआ — फिर योजना चलाने यहाँ वापस आएँ।", "ముందు ఏమి జరిగిందో AI కేసు గైడ్‌కి చెప్పండి — తర్వాత ప్లాన్ నడపడానికి ఇక్కడికి తిరిగి రండి."),
         "pg_owner_ai" to tr("AI", "AI", "AI"),
         "pg_owner_you" to tr("YOU (credentials/captcha/OTP)", "आप (क्रेडेंशियल/कैप्चा/OTP)", "మీరు (క్రెడెన్షియల్స్/క్యాప్చా/OTP)"),
-        "pg_owner_tap" to tr("YOUR TAP (locked)", "आपका टैप (लॉक)", "మీ ట్యాప్ (లాక్)"),
+        "pg_owner_tap" to tr("YOUR TAP", "आपका टैप", "మీ ట్యాప్"),
     )
 }

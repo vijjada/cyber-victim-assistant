@@ -1,13 +1,18 @@
 package com.cybervictim.assistant.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.foundation.clickable
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.cybervictim.assistant.data.CaseDb
 import com.cybervictim.assistant.data.CaseSession
@@ -95,8 +100,34 @@ fun TrackerScreen(nav: androidx.navigation.NavHostController) {
     val caseId = remember { CaseSession.id() }
     val events by (caseId?.let { db.eventsOf(it) } ?: kotlinx.coroutines.flow.flowOf(emptyList<com.cybervictim.assistant.data.CaseEvent>())).collectAsState(initial = emptyList())
 
-    Column(Modifier.fillMaxSize().padding(20.dp)) {
-        Text(com.cybervictim.assistant.ui.L10n.t("trk_title"), style = MaterialTheme.typography.titleLarge)
+    Column(
+        Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .padding(16.dp)
+    ) {
+        // Top Bar with Back Arrow
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { nav.popBackStack() }) {
+                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+            }
+            Spacer(Modifier.width(6.dp))
+            Column {
+                Text(
+                    text = com.cybervictim.assistant.ui.L10n.t("trk_title"),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = "History of events & complaint progress",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color.Gray
+                )
+            }
+        }
         Spacer(Modifier.height(10.dp))
         if (events.isEmpty()) Text(com.cybervictim.assistant.ui.L10n.t("trk_empty"))
         LazyColumn(verticalArrangement = Arrangement.spacedBy(6.dp)) {

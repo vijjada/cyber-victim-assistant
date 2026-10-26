@@ -69,21 +69,34 @@ object PortalDriver {
             runKbFallback(onPlan)
             return
         }
+        if (com.cybervictim.assistant.ai.KbLoader.assets == null && assetsReader != null) {
+            com.cybervictim.assistant.ai.KbLoader.assets = assetsReader
+        }
         // Grounded Gemini pick on a worker thread; any failure falls back deterministically.
         Thread {
             var handled = false
             try {
                 val prompt = com.cybervictim.assistant.ai.KbLoader.buildCasePickerPrompt(caseText)
-                val raw = com.cybervictim.assistant.ai.GeminiClient.generateWithFallback(prompt, maxTokens = 700)
+                val raw = com.cybervictim.assistant.ai.GeminiClient.generateWithFallback(prompt, maxTokens = 1200)
                 val out = PlanBuilder.planFromGemini(kbJson, raw)
                 if (out.isNotEmpty()) {
                     handled = true
-                    onPlan(out)
+                    try {
+                        android.os.Handler(android.os.Looper.getMainLooper()).post { onPlan(out) }
+                    } catch (_: Throwable) {
+                        onPlan(out)
+                    }
                 }
             } catch (_: Throwable) {
                 // fall through to deterministic
             }
-            if (!handled) runKbFallback(onPlan)
+            if (!handled) {
+                try {
+                    android.os.Handler(android.os.Looper.getMainLooper()).post { runKbFallback(onPlan) }
+                } catch (_: Throwable) {
+                    runKbFallback(onPlan)
+                }
+            }
         }.start()
     }
 

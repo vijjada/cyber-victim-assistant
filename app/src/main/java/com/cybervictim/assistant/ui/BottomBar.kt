@@ -26,13 +26,25 @@ fun BottomBar(nav: NavHostController) {
         Routes.MORE, Routes.PORTAL_GUIDE, Routes.TRACKER,
         Routes.PHONE_TRACE, Routes.EXPOSURE, Routes.SETTINGS,
     )
-    NavigationBar(modifier = Modifier.height(68.dp)) {
+    NavigationBar(
+        modifier = Modifier.height(68.dp),
+        containerColor = AppColors.White,
+        contentColor = AppColors.Charcoal
+    ) {
         tabs.forEach { t ->
+            val isSelected = if (t.route == Routes.MORE) current in moreGroup else current == t.route
             NavigationBarItem(
-                selected = if (t.route == Routes.MORE) current in moreGroup else current == t.route,
+                selected = isSelected,
                 onClick = { nav.navigate(t.route) { popUpTo(Routes.HOME) { saveState = true }; launchSingleTop = true; restoreState = true } },
                 icon = {},
-                label = { Text(t.label) },
+                label = { Text(t.label, fontWeight = if (isSelected) androidx.compose.ui.text.font.FontWeight.Bold else androidx.compose.ui.text.font.FontWeight.Normal) },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = AppColors.RoyalBlue,
+                    selectedTextColor = AppColors.RoyalBlue,
+                    indicatorColor = AppColors.SoftMint,
+                    unselectedIconColor = AppColors.SubtitleCharcoal,
+                    unselectedTextColor = AppColors.SubtitleCharcoal
+                )
             )
         }
     }

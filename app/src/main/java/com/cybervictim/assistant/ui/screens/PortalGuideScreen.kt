@@ -3,9 +3,14 @@ package com.cybervictim.assistant.ui.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.cybervictim.assistant.portal.PortalDriver
 import com.cybervictim.assistant.portal.StepOwner
@@ -18,12 +23,35 @@ fun PortalGuideScreen(nav: androidx.navigation.NavHostController) {
     var verifiedDate by remember { mutableStateOf(PortalDriver.verifiedDate()) }
     var hatchOn by remember { mutableStateOf(false) }
 
-    Column(Modifier.fillMaxSize().padding(16.dp)) {
-        Text(com.cybervictim.assistant.ui.L10n.t("pg_title"), style = MaterialTheme.typography.titleLarge)
-        Text(
-            java.lang.String.format(com.cybervictim.assistant.ui.L10n.t("pg_sub"), verifiedDate),
-            style = MaterialTheme.typography.labelMedium,
-        )
+    Column(
+        Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .padding(16.dp)
+    ) {
+        // Top Bar with Back Arrow
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { nav.popBackStack() }) {
+                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+            }
+            Spacer(Modifier.width(6.dp))
+            Column {
+                Text(
+                    text = com.cybervictim.assistant.ui.L10n.t("pg_title"),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = java.lang.String.format(com.cybervictim.assistant.ui.L10n.t("pg_sub"), verifiedDate),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color.Gray
+                )
+            }
+        }
+        Spacer(Modifier.height(8.dp))
         AssistChip(
             onClick = {},
             label = { Text(com.cybervictim.assistant.ui.L10n.t("pg_lock")) },
@@ -73,6 +101,14 @@ fun PortalGuideScreen(nav: androidx.navigation.NavHostController) {
                 enabled = !busy,
             ) { Text(com.cybervictim.assistant.ui.L10n.t("pg_start")) }
             TextButton(onClick = { hatchOn = !hatchOn }) { Text(com.cybervictim.assistant.ui.L10n.t("pg_hatch")) }
+        }
+        Spacer(Modifier.height(8.dp))
+        Button(
+            onClick = { nav.navigate(com.cybervictim.assistant.ui.Routes.PORTAL_WEBVIEW) },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary),
+        ) {
+            Text("Auto-Fill Portal (Auto-fills the form for you)")
         }
         if (hatchOn) {
             Card(

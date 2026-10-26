@@ -77,7 +77,7 @@ class ReminderReceiver : BroadcastReceiver() {
         }
         val not = androidx.core.app.NotificationCompat.Builder(ctx, ReminderScheduler.CHANNEL)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Cyber Victim Assistant")
+            .setContentTitle("Cybridge")
             .setContentText(msg)
             .setAutoCancel(true)
             .build()

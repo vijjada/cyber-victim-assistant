@@ -1,16 +1,18 @@
 package com.cybervictim.assistant.ai
 
+import android.os.Handler
+import android.os.Looper
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.atomic.AtomicReference
 
 /**
- * Gemini-backed AI Case Guide. Uses gemini-2.0-flash via the public REST API.
+ * Gemini-backed AI Case Guide. Uses public REST API with robust fallback.
  * Key comes from BuildConfig manifest placeholder; never stored in code.
  */
 object GeminiClient {
-    private const val MODEL = "gemini-3.8-flash"
-    private val MODEL_FALLBACKS = listOf("gemini-3.8-flash", "gemini-flash-latest", "gemini-3.1-flash-lite")
+    private const val MODEL = "gemini-flash-latest"
+    private val MODEL_FALLBACKS = listOf("gemini-flash-latest", "gemini-2.5-flash", "gemini-flash-lite-latest")
     private val apiState = AtomicReference(
         try { com.cybervictim.assistant.BuildConfig.GEMINI_API_KEY } catch (_: Throwable) { "" }
     )
@@ -18,7 +20,7 @@ object GeminiClient {
     fun setApiKey(k: String) { apiState.set(k) }
 
     private val SYSTEM_PROMPT = """
-        You are the Cyber Victim Assistant: a calm, plain-English helper for cybercrime victims
+        You are Cybridge: a calm, plain-English helper for cybercrime victims
         in India. Scope is ONLY cyber crime help: guiding the victim, building their case from
         their own evidence, and driving the official cybercrime.gov.in complaint form.
         Rules:
@@ -33,52 +35,107 @@ object GeminiClient {
         - Never give hacking, tracing or investigation advice; banks and police take action.
     """.trimIndent()
 
-    /** Reply in the user's chosen app language (Hindi/Telugu); English otherwise. */
+    /** Reply in the user's chosen app language (Hindi/Telugu/Punjabi/Gujarati/etc); English otherwise. */
     private fun languageDirective(): String = when (try {
         com.cybervictim.assistant.ui.L10n.lang.code
     } catch (_: Throwable) { "en" }) {
         "hi" -> "Reply to the user in Hindi (Devanagari, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
         "te" -> "Reply to the user in Telugu (simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
+        "pa" -> "Reply to the user in Punjabi (Gurmukhi script, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
+        "gu" -> "Reply to the user in Gujarati (Gujarati script, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
+        "mr" -> "Reply to the user in Marathi (Devanagari, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
+        "ta" -> "Reply to the user in Tamil (Tamil script, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
+        "bn" -> "Reply to the user in Bengali (Bengali script, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
         else -> ""
     }.let { d -> if (d.isBlank()) "Keep replies in simple English." else d }
+
+    private fun postToMain(action: () -> Unit) {
+        try {
+            Handler(Looper.getMainLooper()).post(action)
+        } catch (_: Throwable) {
+            action()
+        }
+    }
 
     /** history = (fromUser, text) pairs */
     fun chat(history: List<Pair<Boolean, String>>, userMessage: String, onReply: (String) -> Unit, onError: (String) -> Unit) {
         val key = apiState.get().trim()
         if (key.isEmpty()) {
-            onError("API key missing — add GEMINI_API_KEY in gradle.properties.")
+            postToMain { onError("API key missing — add GEMINI_API_KEY in gradle.properties.") }
             return
         }
         Thread {
-            try {
-                val contents = org.json.JSONArray()
-                // system grounding as a leading user/model pair
-        contents.put(turn(true, SYSTEM_PROMPT))
-        contents.put(turn(true, languageDirective()))
-        contents.put(turn(false, "Understood. I will follow these rules."))
-                for ((isUser, text) in history.dropLast(1)) { contents.put(turn(isUser, text)) }
-                contents.put(turn(true, userMessage))
-                val gen = org.json.JSONObject()
-                    .put("temperature", 0.2)
-                    .put("maxOutputTokens", 1200)
-                    .put("thinkingConfig", org.json.JSONObject().put("thinkingBudget", 0))
-                val body = org.json.JSONObject().put("contents", contents).put("generationConfig", gen).toString()
-                val url = URL("https://generativelanguage.googleapis.com/v1beta/models/$MODEL:generateContent?key=$key")
-                val conn = url.openConnection() as HttpURLConnection
-                conn.requestMethod = "POST"
-                conn.doOutput = true
-                conn.setRequestProperty("Content-Type", "application/json")
-                conn.connectTimeout = 20000
-                conn.readTimeout = 45000
-                conn.outputStream.use { it.write(body.toByteArray()) }
-                val resp = conn.inputStream.bufferedReader().readText()
-                conn.disconnect()
-                val reply = extractReply(resp)
-                onReply(reply.ifEmpty { "I did not get a clear answer. Please describe the incident once more." })
-            } catch (e: Exception) {
-                onError(e.message ?: "network error")
+            val chain = (listOf(MODEL) + MODEL_FALLBACKS).distinct()
+            var lastErr: String? = null
+
+            for (m in chain) {
+                try {
+                    val contents = org.json.JSONArray()
+                    // Filter history to ensure alternating user-model sequence starting with user
+                    var expectUser = true
+                    for ((isUser, text) in history.dropLast(1)) {
+                        if (isUser == expectUser && text.isNotBlank()) {
+                            contents.put(turn(isUser, text))
+                            expectUser = !expectUser
+                        }
+                    }
+                    contents.put(turn(true, userMessage))
+
+                    val sysInstruction = org.json.JSONObject().put(
+                        "parts", org.json.JSONArray().put(
+                            org.json.JSONObject().put("text", "$SYSTEM_PROMPT\n\n${languageDirective()}")
+                        )
+                    )
+
+                    val gen = org.json.JSONObject()
+                        .put("temperature", 0.2)
+                        .put("maxOutputTokens", 1500)
+
+                    val body = org.json.JSONObject()
+                        .put("system_instruction", sysInstruction)
+                        .put("contents", contents)
+                        .put("generationConfig", gen)
+                        .toString()
+
+                    val url = URL("https://generativelanguage.googleapis.com/v1beta/models/$m:generateContent?key=$key")
+                    val conn = url.openConnection() as HttpURLConnection
+                    conn.requestMethod = "POST"
+                    conn.doOutput = true
+                    conn.setRequestProperty("Content-Type", "application/json")
+                    conn.connectTimeout = 4000
+                    conn.readTimeout = 6000
+                    conn.outputStream.use { it.write(body.toByteArray()) }
+
+                    val status = conn.responseCode
+                    if (status in 200..299) {
+                        val resp = conn.inputStream.bufferedReader().readText()
+                        conn.disconnect()
+                        val reply = extractReply(resp)
+                        if (reply.isNotBlank()) {
+                            postToMain { onReply(reply) }
+                            return@Thread
+                        }
+                    } else {
+                        val errStream = conn.errorStream?.bufferedReader()?.readText() ?: ""
+                        conn.disconnect()
+                        val msg = parseErrorMessage(errStream) ?: "HTTP $status from model $m"
+                        lastErr = msg
+                    }
+                } catch (e: Exception) {
+                    lastErr = e.message ?: "network error"
+                }
             }
+
+            val finalMsg = lastErr ?: "Unable to get response from AI. Please check your internet connection."
+            postToMain { onError(finalMsg) }
         }.start()
+    }
+
+    private fun parseErrorMessage(errJson: String): String? {
+        return try {
+            val root = org.json.JSONObject(errJson)
+            root.optJSONObject("error")?.optString("message")?.ifEmpty { null }
+        } catch (_: Exception) { null }
     }
 
     fun currentKey(): String = apiState.get().trim()
@@ -91,33 +148,13 @@ object GeminiClient {
      * Returns the text or null on any error; caller falls back deterministically.
      */
     fun generate(prompt: String, maxTokens: Int = 1200): String? {
-        val key = apiState.get().trim()
-        if (key.isEmpty()) return null
-        return try {
-            val body = org.json.JSONObject()
-                .put("contents", org.json.JSONArray().put(
-                    org.json.JSONObject().put("role", "user")
-                        .put("parts", org.json.JSONArray().put(org.json.JSONObject().put("text", prompt)))))
-                .put("generationConfig", org.json.JSONObject()
-                    .put("temperature", 0.1)
-                    .put("maxOutputTokens", maxTokens)
-                    .put("thinkingConfig", org.json.JSONObject().put("thinkingBudget", 0)))
-            val conn = URL("https://generativelanguage.googleapis.com/v1beta/models/$MODEL:generateContent?key=$key")
-                .openConnection() as HttpURLConnection
-            conn.requestMethod = "POST"; conn.doOutput = true
-            conn.setRequestProperty("Content-Type", "application/json")
-            conn.connectTimeout = 20000; conn.readTimeout = 60000
-            conn.outputStream.use { it.write(body.toString().toByteArray()) }
-            val resp = try { conn.inputStream.bufferedReader().readText() } catch (_: Exception) { "" }
-            conn.disconnect()
-            if (resp.isEmpty()) null else extractReply(resp).ifEmpty { null }
-        } catch (_: Exception) { null }
+        return generateWithFallback(prompt, maxTokens)
     }
 
     /** Tries each available model in order (Free Tier bursts trigger 503s). */
-    fun generateWithFallback(prompt: String, maxTokens: Int = 700): String? {
-        val chain = listOf(MODEL) + MODEL_FALLBACKS
-        for (m in chain.distinct()) {
+    fun generateWithFallback(prompt: String, maxTokens: Int = 1200): String? {
+        val chain = (listOf(MODEL) + MODEL_FALLBACKS).distinct()
+        for (m in chain) {
             val out = tryGenerate(m, prompt, maxTokens)
             if (out != null) return out
         }
@@ -134,15 +171,19 @@ object GeminiClient {
                         .put("parts", org.json.JSONArray().put(org.json.JSONObject().put("text", prompt)))))
                 .put("generationConfig", org.json.JSONObject()
                     .put("temperature", 0.1)
-                    .put("maxOutputTokens", maxTokens)
-                    .put("thinkingConfig", org.json.JSONObject().put("thinkingBudget", 0)))
+                    .put("maxOutputTokens", maxTokens))
             val conn = URL("https://generativelanguage.googleapis.com/v1beta/models/$model:generateContent?key=$key")
                 .openConnection() as HttpURLConnection
             conn.requestMethod = "POST"; conn.doOutput = true
             conn.setRequestProperty("Content-Type", "application/json")
-            conn.connectTimeout = 15000; conn.readTimeout = 45000
+            conn.connectTimeout = 4000; conn.readTimeout = 6000
             conn.outputStream.use { it.write(body.toString().toByteArray()) }
-            val resp = try { conn.inputStream.bufferedReader().readText() } catch (_: Exception) { "" }
+            val status = conn.responseCode
+            val resp = if (status in 200..299) {
+                conn.inputStream.bufferedReader().readText()
+            } else {
+                ""
+            }
             conn.disconnect()
             if (resp.isEmpty()) null else extractReply(resp).ifEmpty { null }
         } catch (_: Exception) { null }
@@ -154,14 +195,20 @@ object GeminiClient {
             .put("parts", org.json.JSONArray().put(org.json.JSONObject().put("text", text)))
 
     private fun extractReply(json: String): String {
-        // minimal parse of candidates[0].content.parts[].text (org.json is bundled on Android)
         return try {
             val root = org.json.JSONObject(json)
             val cands = root.getJSONArray("candidates")
-            val parts = cands.getJSONObject(0).getJSONObject("content").getJSONArray("parts")
-            buildString { for (i in 0 until parts.length()) parts.getJSONObject(i).optString("text")?.let { append(it) } }
+            val cand = cands.getJSONObject(0)
+            val content = cand.optJSONObject("content") ?: return ""
+            val parts = content.optJSONArray("parts") ?: return ""
+            buildString {
+                for (i in 0 until parts.length()) {
+                    val p = parts.getJSONObject(i)
+                    // Skip thought parts if present
+                    if (p.optBoolean("thought", false)) continue
+                    p.optString("text")?.let { append(it) }
+                }
+            }.trim()
         } catch (_: Exception) { "" }
     }
-
-    private fun j(s: String): String = org.json.JSONObject.quote(s)
 }

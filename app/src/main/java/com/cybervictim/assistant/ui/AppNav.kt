@@ -8,41 +8,27 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.cybervictim.assistant.ui.screens.*
 
 @Composable
 fun AppScaffold(nav: NavHostController) {
-    val currentRoute = nav.currentBackStackEntryAsState().value?.destination?.route
-    val showBottomBar = currentRoute != null &&
-            currentRoute != Routes.SPLASH &&
-            currentRoute != Routes.LANGUAGE_SELECT &&
-            currentRoute != Routes.PORTAL_LOGIN &&
-            currentRoute != Routes.TELL_US &&
-            !currentRoute.startsWith(Routes.GUIDED_FLOW) &&
-            currentRoute != Routes.PORTAL_WEBVIEW &&
-            !currentRoute.startsWith(Routes.PORTAL_CLONE) &&
-            currentRoute != Routes.REGISTER_HUB
-
-    Scaffold(bottomBar = { if (showBottomBar) BottomBar(nav) }) { padding ->
+    Scaffold { padding ->
         NavHost(
             navController = nav,
             startDestination = Routes.SPLASH,
-            modifier = androidx.compose.ui.Modifier.padding(if (showBottomBar) padding else PaddingValues(0.dp))
+            modifier = androidx.compose.ui.Modifier.padding(padding)
         ) {
             composable(Routes.SPLASH) { SplashScreen(nav) }
             composable(Routes.LANGUAGE_SELECT) { LanguageSelectScreen(nav) }
+            composable(Routes.REGISTER_HUB) { RegisterHubScreen(nav) }
             composable(Routes.PORTAL_LOGIN) { PortalLoginScreen(nav) }
             composable(Routes.TELL_US) { TellUsScreen(nav) }
             composable("${Routes.GUIDED_FLOW}/{category}") { backStackEntry ->
                 val cat = backStackEntry.arguments?.getString("category") ?: "money"
                 GuidedQuestionScreen(nav, cat)
             }
-            composable(Routes.HOME) { HomeScreen(nav) }
-            composable(Routes.GUIDE) { GuideScreen(nav) }
             composable(Routes.EVIDENCE) { EvidenceScreen(nav) }
             composable(Routes.REQUESTS) { RequestsScreen(nav) }
-            composable(Routes.MORE) { MoreScreen(nav) }
             composable(Routes.PORTAL_GUIDE) { PortalGuideScreen(nav) }
             composable(Routes.PORTAL_WEBVIEW) { PortalWebViewScreen(nav) }
             composable(Routes.PORTAL_CLONE) { PortalCloneScreen(nav) }
@@ -55,7 +41,11 @@ fun AppScaffold(nav: NavHostController) {
             composable(Routes.EXPOSURE) { ExposureScreen(nav) }
             composable(Routes.SETTINGS) { SettingsScreen(nav) }
             composable(Routes.SUSPICIOUS_EMAIL) { SuspiciousEmailScreen(nav) }
-            composable(Routes.REGISTER_HUB) { RegisterHubScreen(nav) }
+
+            // Legacy fallbacks redirected to RegisterHubScreen
+            composable(Routes.HOME) { RegisterHubScreen(nav) }
+            composable(Routes.GUIDE) { RegisterHubScreen(nav) }
+            composable(Routes.MORE) { RegisterHubScreen(nav) }
         }
     }
 }

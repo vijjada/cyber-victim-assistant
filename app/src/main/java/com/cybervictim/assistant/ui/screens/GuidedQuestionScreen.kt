@@ -604,8 +604,6 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                         modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("⚡", fontSize = 16.sp)
-                        Spacer(Modifier.width(8.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 "DETECTED IN BANK SMS",
@@ -656,8 +654,6 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("📩", fontSize = 16.sp)
-                                Spacer(Modifier.width(6.dp))
                                 Text(
                                     "SMS INBOX SCAM EXTRACTOR",
                                     fontSize = 12.sp,
@@ -725,9 +721,9 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
 
                                     Spacer(Modifier.height(4.dp))
 
-                                    Text("📅 Date: ${scam.dateTimeFormatted}", fontSize = 12.sp, color = DarkText)
-                                    Text("🔢 UTR / Txn Ref: ${scam.utrRef}", fontSize = 12.sp, color = DarkText)
-                                    Text("👤 Beneficiary: ${scam.fraudsterId}", fontSize = 12.sp, color = DarkText)
+                                    Text("Date: ${scam.dateTimeFormatted}", fontSize = 12.sp, color = DarkText)
+                                    Text("UTR / Txn Ref: ${scam.utrRef}", fontSize = 12.sp, color = DarkText)
+                                    Text("Beneficiary: ${scam.fraudsterId}", fontSize = 12.sp, color = DarkText)
 
                                     Spacer(Modifier.height(6.dp))
 
@@ -753,7 +749,7 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                                     .fillMaxWidth()
                                     .height(42.dp)
                             ) {
-                                Text("✨ Auto-Fill Extracted Scam Data", fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                                Text("Auto-Fill Extracted Scam Data", fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
                             }
                         }
                     }
@@ -766,9 +762,9 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
             // 3. STEP 6 & STEP 7: AI SMART OPTION CHIPS & EVIDENCE UPLOAD
             // =========================================================================
             if (stepIndex == 5) {
-                // Step 6: Contact Method AI Options
+                // Step 6: Contact Method Options
                 Text(
-                    text = "🤖 AI SUGGESTED CONTACT METHODS",
+                    text = "SUGGESTED CONTACT METHODS",
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
                     color = TealPrimary,
@@ -806,7 +802,7 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
 
                 Spacer(Modifier.height(14.dp))
 
-                // AI Evidence Upload Card for Step 6
+                // Evidence Upload Card for Step 6
                 Surface(
                     shape = RoundedCornerShape(14.dp),
                     color = Color(0xFFF8FAFC),
@@ -814,16 +810,12 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(Modifier.padding(14.dp)) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("📎", fontSize = 16.sp)
-                            Spacer(Modifier.width(6.dp))
-                            Text(
-                                "AI RECOMMENDED EVIDENCE UPLOAD",
-                                fontSize = 11.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFF1E293B)
-                            )
-                        }
+                        Text(
+                            "RECOMMENDED EVIDENCE UPLOAD",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF1E293B)
+                        )
                         Spacer(Modifier.height(4.dp))
                         Text(
                             "Upload screenshot of WhatsApp chat, Telegram group, or call log where the fraudster contacted you.",
@@ -836,7 +828,7 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White)
                         ) {
-                            Text("📎 Upload Chat / Contact Screenshot")
+                            Text("Upload Chat / Contact Screenshot")
                         }
                         if (uploadedEvidenceLabel != null) {
                             Spacer(Modifier.height(6.dp))
@@ -863,8 +855,6 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                             Modifier.padding(14.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("✉️", fontSize = 22.sp)
-                            Spacer(Modifier.width(10.dp))
                             Column(Modifier.weight(1f)) {
                                 Text(
                                     "Suggested step: Check Suspicious Email",
@@ -887,9 +877,9 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
             }
 
             if (stepIndex == 6) {
-                // Step 7: Method of Compromise AI Options
+                // Step 7: Method of Compromise Options
                 Text(
-                    text = "🤖 AI SUGGESTED COMPROMISE TECHNIQUES",
+                    text = "SUGGESTED COMPROMISE TECHNIQUES",
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
                     color = TealPrimary,
@@ -927,7 +917,7 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
 
                 Spacer(Modifier.height(14.dp))
 
-                // AI Evidence Upload Card for Step 7
+                // Evidence Upload Card for Step 7
                 Surface(
                     shape = RoundedCornerShape(14.dp),
                     color = Color(0xFFF8FAFC),
@@ -935,16 +925,12 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(Modifier.padding(14.dp)) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("📎", fontSize = 16.sp)
-                            Spacer(Modifier.width(6.dp))
-                            Text(
-                                "AI RECOMMENDED TECHNICAL EVIDENCE",
-                                fontSize = 11.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFF1E293B)
-                            )
-                        }
+                        Text(
+                            "RECOMMENDED TECHNICAL EVIDENCE",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF1E293B)
+                        )
                         Spacer(Modifier.height(4.dp))
                         Text(
                             "Upload screenshot of the phishing link, payment receipt, or downloaded app for cyber forensics.",
@@ -957,7 +943,7 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White)
                         ) {
-                            Text("📎 Upload Technical Evidence / Receipt")
+                            Text("Upload Technical Evidence / Receipt")
                         }
                         if (uploadedEvidenceLabel != null) {
                             Spacer(Modifier.height(6.dp))
@@ -984,8 +970,6 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                             Modifier.padding(14.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("✉️", fontSize = 22.sp)
-                            Spacer(Modifier.width(10.dp))
                             Column(Modifier.weight(1f)) {
                                 Text(
                                     "Suggested step: Check Suspicious Email",
@@ -1008,7 +992,7 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
             }
 
             // =========================================================================
-            // 4. STEP 8: AI SYNTHESIZED OFFICIAL COMPLAINT SCRIPT (1-CLICK UPLOAD READY)
+            // 4. STEP 8: SYNTHESIZED OFFICIAL COMPLAINT SCRIPT (1-CLICK UPLOAD READY)
             // =========================================================================
             if (stepIndex == 7) {
                 Surface(
@@ -1024,8 +1008,6 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("🤖", fontSize = 18.sp)
-                                Spacer(Modifier.width(8.dp))
                                 Text(
                                     "OFFICIAL COMPLAINT SCRIPT",
                                     fontSize = 12.sp,
@@ -1204,7 +1186,7 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                 )
             ) {
                 Text(
-                    text = if (stepIndex == steps.size - 1) "🚀 1-Click Auto-Fill Portal" else "Looks right, continue",
+                    text = if (stepIndex == steps.size - 1) "1-Click Auto-Fill Portal" else "Looks right, continue",
                     color = Color.White,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold
@@ -1220,8 +1202,8 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                         stepIndex += 1
                         uploadedEvidenceLabel = null
                     } else {
-                        nav.navigate(Routes.HOME) {
-                            popUpTo(Routes.LANGUAGE_SELECT) { inclusive = true }
+                        nav.navigate(Routes.REGISTER_HUB) {
+                            popUpTo(Routes.REGISTER_HUB) { inclusive = false }
                         }
                     }
                 },

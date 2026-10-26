@@ -447,7 +447,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
         coroutineScope.launch(Dispatchers.Main) {
             web.evaluateJavascript(jsCommand) { result ->
                 autofillSyncCount++
-                portalStatusText = "AI synced: $actionDescription ✓"
+                portalStatusText = "Synced: $actionDescription"
             }
         }
     }
@@ -725,7 +725,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = TealPrimary)
                 ) {
-                    Text("🖼️ Gallery / Photos")
+                    Text("Gallery / Photos")
                 }
             },
             dismissButton = {
@@ -740,7 +740,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                     },
                     border = BorderStroke(1.dp, TealPrimary)
                 ) {
-                    Text("📁 Files / Storage", color = TealPrimary)
+                    Text("Files / Storage", color = TealPrimary)
                 }
             }
         )
@@ -855,7 +855,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
             icon = { Icon(Icons.Default.CheckCircle, contentDescription = null, tint = Color(0xFF138808), modifier = Modifier.size(36.dp)) },
             title = {
                 Text(
-                    "🎉 Complaint Registered!",
+                    "Complaint Registered",
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF138808)
                 )
@@ -909,26 +909,20 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                         border = BorderStroke(1.dp, Color(0xFFFDE68A)),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Row(
-                            modifier = Modifier.padding(10.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text("🚨", fontSize = 18.sp)
-                            Spacer(Modifier.width(8.dp))
-                            Column {
-                                Text(
-                                    "Golden Hour Emergency (Helpline 1930)",
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 11.sp,
-                                    color = Color(0xFF92400E)
-                                )
-                                Text(
-                                    "Call 1930 with this Token No. to initiate an immediate freeze on the fraudster's bank account.",
-                                    fontSize = 10.sp,
-                                    color = Color(0xFFB45309),
-                                    lineHeight = 13.sp
-                                )
-                            }
+                        Column(modifier = Modifier.padding(10.dp)) {
+                            Text(
+                                "Golden Hour Emergency (Helpline 1930)",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 11.sp,
+                                color = Color(0xFF92400E)
+                            )
+                            Spacer(Modifier.height(2.dp))
+                            Text(
+                                "Call 1930 with this Token No. to initiate an immediate freeze on the fraudster's bank account.",
+                                fontSize = 10.sp,
+                                color = Color(0xFFB45309),
+                                lineHeight = 13.sp
+                            )
                         }
                     }
                 }
@@ -989,7 +983,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                             isPortalLoading = false
                             portalUrl = url ?: ""
                             isPortalLoggedIn = !url.orEmpty().contains("login")
-                            portalStatusText = if (isPortalLoggedIn) "🟢 Portal Connected (AI Sync Active)" else "🟡 Login Required on Portal"
+                            portalStatusText = if (isPortalLoggedIn) "Portal Connected (Auto-Sync Active)" else "Login Required on Portal"
                             // Enforce submit lock on portal DOM
                             view?.evaluateJavascript(PortalAutoFillEngine.LOCK_SUBMIT_JS, null)
                         }
@@ -1623,7 +1617,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                                     shape = RoundedCornerShape(8.dp),
                                     border = BorderStroke(1.dp, TealPrimary)
                                 ) {
-                                    Text("📎 Attach Screenshot / Document", color = TealPrimary, fontWeight = FontWeight.SemiBold)
+                                    Text("Attach Screenshot / Document", color = TealPrimary, fontWeight = FontWeight.SemiBold)
                                 }
 
                                 Spacer(Modifier.height(8.dp))
@@ -1647,7 +1641,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                                         shape = RoundedCornerShape(8.dp),
                                         contentPadding = PaddingValues(vertical = 8.dp)
                                     ) {
-                                        Text("🖼️ From Gallery", fontSize = 12.sp, color = Color.White, fontWeight = FontWeight.Medium)
+                                        Text("From Gallery", fontSize = 12.sp, color = Color.White, fontWeight = FontWeight.Medium)
                                     }
 
                                     OutlinedButton(
@@ -1663,7 +1657,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                                         border = BorderStroke(1.dp, BorderColor),
                                         contentPadding = PaddingValues(vertical = 8.dp)
                                     ) {
-                                        Text("📁 From Files", fontSize = 12.sp, color = DarkText, fontWeight = FontWeight.Medium)
+                                        Text("From Files", fontSize = 12.sp, color = DarkText, fontWeight = FontWeight.Medium)
                                     }
                                 }
 
@@ -1692,11 +1686,6 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                                                         .padding(horizontal = 12.dp, vertical = 10.dp),
                                                     verticalAlignment = Alignment.CenterVertically
                                                 ) {
-                                                    Text(
-                                                        if (ev.isImage) "🖼️" else "📄",
-                                                        fontSize = 20.sp
-                                                    )
-                                                    Spacer(Modifier.width(10.dp))
                                                     Column(modifier = Modifier.weight(1f)) {
                                                         Text(
                                                             text = ev.fileName,
@@ -1715,7 +1704,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                                                             if (ev.factCount > 0) {
                                                                 Spacer(Modifier.width(8.dp))
                                                                 Text(
-                                                                    text = "• ✓ OCR: ${ev.factCount} facts",
+                                                                    text = "• OCR: ${ev.factCount} facts",
                                                                     fontSize = 11.sp,
                                                                     color = Color(0xFF16A34A),
                                                                     fontWeight = FontWeight.SemiBold
@@ -1890,7 +1879,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            "💡 Tip: If prompted, enter your mobile OTP or Captcha to log in. Once logged in, return to our app and the AI will auto-drive all buttons!",
+                            "Tip: If prompted, enter your mobile OTP or Captcha to log in. Once logged in, return to our app and the auto-fill will drive all buttons.",
                             fontSize = 12.sp,
                             color = Color(0xFF1E40AF),
                             modifier = Modifier.padding(10.dp)

@@ -1,5 +1,7 @@
 package com.cybervictim.assistant.ai
 
+import android.os.Handler
+import android.os.Looper
 import org.json.JSONObject
 
 /**
@@ -27,28 +29,37 @@ object CaseExtractor {
         if (key.isEmpty()) { onError("API key missing (gradle.properties GEMINI_API_KEY)"); return }
         Thread {
             try {
-                val body = JSONObject()
-                    .put("contents", org.json.JSONArray().put(
-                        JSONObject().put("role", "user").put("parts",
-                            org.json.JSONArray().put(JSONObject().put("text", PROMPT + "\n\nEVIDENCE:\n" + textOrOcr))
-                        )
-                    ))
-                    .put("generationConfig", JSONObject().put("temperature", 0.1).put("maxOutputTokens", 900))
-                val url = java.net.URL("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$key")
-                val conn = url.openConnection() as java.net.HttpURLConnection
-                conn.requestMethod = "POST"; conn.doOutput = true
-                conn.setRequestProperty("Content-Type", "application/json")
-                conn.connectTimeout = 20000; conn.readTimeout = 60000
-                conn.outputStream.use { it.write(body.toString().toByteArray()) }
-                val resp = conn.inputStream.bufferedReader().readText(); conn.disconnect()
-                val facts = parse(GeminiClient.extractReplyText(resp))
-                onDone(facts)
-            } catch (e: Exception) { onError(e.message ?: "network error") }
+                val raw = GeminiClient.generateWithFallback(PROMPT + "\n\nEVIDENCE:\n" + textOrOcr, maxTokens = 1200)
+                if (raw != null) {
+                    val facts = parse(raw)
+                    try {
+                        Handler(Looper.getMainLooper()).post { onDone(facts) }
+                    } catch (_: Throwable) {
+                        onDone(facts)
+                    }
+                } else {
+                    try {
+                        Handler(Looper.getMainLooper()).post { onError("Could not extract facts from evidence") }
+                    } catch (_: Throwable) {
+                        onError("Could not extract facts from evidence")
+                    }
+                }
+            } catch (e: Exception) {
+                val err = e.message ?: "network error"
+                try {
+                    Handler(Looper.getMainLooper()).post { onError(err) }
+                } catch (_: Throwable) {
+                    onError(err)
+                }
+            }
         }.start()
     }
 
     fun parse(json: String): List<Fact> = try {
-        val arr = JSONObject(json).optJSONArray("facts")
+        val first = json.indexOf('{')
+        val last = json.lastIndexOf('}')
+        val clean = if (first >= 0 && last > first) json.substring(first, last + 1) else json
+        val arr = JSONObject(clean).optJSONArray("facts")
         (0 until (arr?.length() ?: 0)).mapNotNull {
             val o = arr!!.getJSONObject(it)
             val t = o.optString("type").trim()

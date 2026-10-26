@@ -121,7 +121,7 @@ fun LanguageSelectScreen(nav: NavHostController) {
                         color = SubtitleGray
                     )
 
-                    // 🤖 AI-Generated Unique Victim ID Badge
+                    // Unique Victim ID Badge
                     Surface(
                         shape = RoundedCornerShape(10.dp),
                         color = Color(0xFFEFF6FF),
@@ -435,7 +435,7 @@ fun LanguageSelectScreen(nav: NavHostController) {
                     ) {
                         Column(Modifier.padding(10.dp)) {
                             Text(
-                                "🛡️ Forensic Safety Rule",
+                                "Forensic Safety Rule",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 12.sp,
                                 color = TealPrimary
@@ -472,7 +472,7 @@ fun LanguageSelectScreen(nav: NavHostController) {
                                 color = Color(0xFFF3F4F6)
                             ) {
                                 Text(
-                                    "✅ No high-risk remote control or overlay apps detected on this device.",
+                                    "No high-risk remote control or overlay apps detected on this device.",
                                     modifier = Modifier.padding(10.dp),
                                     fontSize = 12.sp,
                                     color = DarkText
@@ -584,8 +584,6 @@ fun LanguageSelectScreen(nav: NavHostController) {
                         color = Color.White
                     ) {
                         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Text("🛡️", fontSize = 18.sp)
-                            Spacer(Modifier.width(10.dp))
                             Column {
                                 Text("PhoneTrace — Entry Point Audit", fontWeight = FontWeight.Medium, fontSize = 14.sp)
                                 Text("Analyze suspicious apps & entry points", fontSize = 12.sp, color = SubtitleGray)
@@ -609,7 +607,7 @@ fun LanguageSelectScreen(nav: NavHostController) {
                             Spacer(Modifier.width(10.dp))
                             Column {
                                 Text("Portal Login (Citizen)", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = TealPrimary)
-                                Text("Slide 2 — Citizen Login with OTP & Captcha", fontSize = 12.sp, color = SubtitleGray)
+                                Text("Citizen Login with OTP & Captcha", fontSize = 12.sp, color = SubtitleGray)
                             }
                         }
                     }
@@ -626,11 +624,9 @@ fun LanguageSelectScreen(nav: NavHostController) {
                         color = Color.White
                     ) {
                         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Text("🏛️", fontSize = 18.sp)
-                            Spacer(Modifier.width(10.dp))
                             Column {
                                 Text("Portal Clone (Exact Buttons)", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = TealPrimary)
-                                Text("1:1 replica of cybercrime.gov.in with AI auto-fill", fontSize = 12.sp, color = SubtitleGray)
+                                Text("1:1 replica of cybercrime.gov.in with auto-fill", fontSize = 12.sp, color = SubtitleGray)
                             }
                         }
                     }
@@ -647,8 +643,6 @@ fun LanguageSelectScreen(nav: NavHostController) {
                         color = Color.White
                     ) {
                         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Text("🤖", fontSize = 18.sp)
-                            Spacer(Modifier.width(10.dp))
                             Column {
                                 Text("Portal Auto-Fill Guide", fontWeight = FontWeight.Medium, fontSize = 14.sp)
                                 Text("Automated cybercrime.gov.in filing", fontSize = 12.sp, color = SubtitleGray)
@@ -668,8 +662,6 @@ fun LanguageSelectScreen(nav: NavHostController) {
                         color = Color.White
                     ) {
                         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Text("📁", fontSize = 18.sp)
-                            Spacer(Modifier.width(10.dp))
                             Column {
                                 Text("Evidence Locker", fontWeight = FontWeight.Medium, fontSize = 14.sp)
                                 Text("SMS, receipts, chats, screenshots", fontSize = 12.sp, color = SubtitleGray)
@@ -689,8 +681,6 @@ fun LanguageSelectScreen(nav: NavHostController) {
                         color = Color.White
                     ) {
                         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Text("📋", fontSize = 18.sp)
-                            Spacer(Modifier.width(10.dp))
                             Column {
                                 Text("Case Timeline & Events", fontWeight = FontWeight.Medium, fontSize = 14.sp)
                                 Text("Real-time on-device log", fontSize = 12.sp, color = SubtitleGray)
@@ -710,8 +700,6 @@ fun LanguageSelectScreen(nav: NavHostController) {
                         color = Color.White
                     ) {
                         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Text("⚙️", fontSize = 18.sp)
-                            Spacer(Modifier.width(10.dp))
                             Column {
                                 Text("App Settings & Privacy", fontWeight = FontWeight.Medium, fontSize = 14.sp)
                                 Text("On-device data controls", fontSize = 12.sp, color = SubtitleGray)
