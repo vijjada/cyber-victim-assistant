@@ -30,9 +30,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -202,6 +205,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
     var showSubmissionSuccessDialog by remember { mutableStateOf(false) }
     var registeredAckNumber by remember { mutableStateOf("") }
     var autofillSyncCount by remember { mutableIntStateOf(0) }
+    val portalAuditReceipts = remember { mutableStateListOf<String>() }
 
     // ── Supporting Evidence State & Launchers ──
     val attachedEvidenceList = remember { mutableStateListOf<AttachedEvidenceItem>() }
@@ -447,7 +451,10 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
         coroutineScope.launch(Dispatchers.Main) {
             web.evaluateJavascript(jsCommand) { result ->
                 autofillSyncCount++
+                val time = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.US).format(java.util.Date())
+                val cleanRes = result?.replace("\"", "")?.trim() ?: "OK"
                 portalStatusText = "Synced: $actionDescription"
+                portalAuditReceipts.add(0, "[$time] $actionDescription -> Stored ($cleanRes)")
             }
         }
     }
@@ -465,6 +472,12 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                 for (var i = 0; i < els.length; i++) {
                     var t = (els[i].innerText || els[i].textContent || '').trim().toLowerCase();
                     if (t.indexOf('${cat.shortTag.lowercase()}') >= 0 || t.indexOf('financial fraud') >= 0) {
+                        try {
+                            els[i].style.outline = '4px solid #16a34a';
+                            els[i].style.backgroundColor = '#dcfce7';
+                            els[i].style.boxShadow = '0 0 16px #22c55e';
+                            els[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } catch(e) {}
                         els[i].click();
                         return 'CLICKED_CATEGORY';
                     }
@@ -487,6 +500,11 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                     for (var o = 0; o < sel.options.length; o++) {
                         if (sel.options[o].text.toLowerCase().indexOf('$escapedSub'.toLowerCase()) >= 0) {
                             sel.selectedIndex = o;
+                            try {
+                                sel.style.outline = '4px solid #16a34a';
+                                sel.style.backgroundColor = '#dcfce7';
+                                sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            } catch(e) {}
                             sel.dispatchEvent(new Event('change', {bubbles: true}));
                             return 'SELECTED_OPTION';
                         }
@@ -496,6 +514,11 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                 for (var r = 0; r < radios.length; r++) {
                     var t = (radios[r].innerText || radios[r].textContent || '').trim().toLowerCase();
                     if (t.indexOf('$escapedSub'.toLowerCase()) >= 0) {
+                        try {
+                            radios[r].style.outline = '4px solid #16a34a';
+                            radios[r].style.backgroundColor = '#dcfce7';
+                            radios[r].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } catch(e) {}
                         radios[r].click();
                         return 'CLICKED_RADIO';
                     }
@@ -518,6 +541,11 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                     var t = (el.innerText || el.textContent || el.value || '').trim().toLowerCase();
                     var name = (el.name || el.id || '').toLowerCase();
                     if ((t === '$target' || t.indexOf('$target') >= 0) && (name.indexOf('loss') >= 0 || name.indexOf('money') >= 0 || t.indexOf('money') >= 0)) {
+                        try {
+                            el.style.outline = '4px solid #16a34a';
+                            el.style.backgroundColor = '#dcfce7';
+                            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } catch(e) {}
                         el.click();
                         return 'CLICKED_LOST_MONEY';
                     }
@@ -540,6 +568,11 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                     var t = (el.innerText || el.textContent || el.value || '').trim().toLowerCase();
                     var name = (el.name || el.id || '').toLowerCase();
                     if ((t === '$target' || t.indexOf('$target') >= 0) && (name.indexOf('delay') >= 0 || t.indexOf('delay') >= 0)) {
+                        try {
+                            el.style.outline = '4px solid #16a34a';
+                            el.style.backgroundColor = '#dcfce7';
+                            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } catch(e) {}
                         el.click();
                         return 'CLICKED_DELAY';
                     }
@@ -562,6 +595,11 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                     for (var o = 0; o < sel.options.length; o++) {
                         if (sel.options[o].text.toLowerCase().indexOf('$escapedPlatform'.toLowerCase()) >= 0) {
                             sel.selectedIndex = o;
+                            try {
+                                sel.style.outline = '4px solid #16a34a';
+                                sel.style.backgroundColor = '#dcfce7';
+                                sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            } catch(e) {}
                             sel.dispatchEvent(new Event('change', {bubbles: true}));
                             return 'SELECTED_PLATFORM';
                         }
@@ -582,6 +620,11 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                 var el = document.querySelector('input[name*="bank" i], input[id*="bank" i]');
                 if (el) {
                     el.value = '$escapedBank';
+                    try {
+                        el.style.outline = '4px solid #16a34a';
+                        el.style.backgroundColor = '#dcfce7';
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } catch(e) {}
                     el.dispatchEvent(new Event('input', {bubbles: true}));
                     el.dispatchEvent(new Event('change', {bubbles: true}));
                     return 'SET_BANK';
@@ -955,142 +998,105 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
         )
     }
 
-    // ── BACKGROUND OFFICIAL WEBVIEW CONTAINER (Invisible or Companion Sheet) ──
-    Box(modifier = Modifier.fillMaxSize()) {
-
-        // Hidden background WebView that runs the official portal DOM
-        AndroidView(
-            modifier = Modifier.size(1.dp),
-            factory = { ctx ->
-                WebView(ctx).apply {
-                    layoutParams = ViewGroup.LayoutParams(1, 1)
-                    settings.apply {
-                        javaScriptEnabled = true
-                        domStorageEnabled = true
-                        databaseEnabled = true
-                        useWideViewPort = true
-                        loadWithOverviewMode = true
-                        userAgentString = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.82 Mobile Safari/537.36"
-                    }
-                    webViewClient = object : WebViewClient() {
-                        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                            isPortalLoading = true
-                            portalUrl = url ?: ""
-                            portalStatusText = "Connecting to cybercrime.gov.in..."
-                        }
-
-                        override fun onPageFinished(view: WebView?, url: String?) {
-                            isPortalLoading = false
-                            portalUrl = url ?: ""
-                            isPortalLoggedIn = !url.orEmpty().contains("login")
-                            portalStatusText = if (isPortalLoggedIn) "Portal Connected (Auto-Sync Active)" else "Login Required on Portal"
-                            // Enforce submit lock on portal DOM
-                            view?.evaluateJavascript(PortalAutoFillEngine.LOCK_SUBMIT_JS, null)
-                        }
-                    }
-                    loadUrl("https://cybercrime.gov.in/dashboard/crimereport")
-                    portalWebView = this
-                }
-            }
-        )
-
-        // ── MAIN UI CONTENT (100% Exact One-to-One Clone Buttons) ──
-        Scaffold(
-            topBar = {
-                Surface(
-                    color = PortalHeaderBg,
-                    shadowElevation = 4.dp
+    // ── MAIN UI CONTENT (100% Exact One-to-One Clone Buttons) ──
+    Scaffold(
+        topBar = {
+            Surface(
+                color = PortalHeaderBg,
+                shadowElevation = 4.dp
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .statusBarsPadding()
+                        .padding(horizontal = 16.dp, vertical = 10.dp)
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .statusBarsPadding()
-                            .padding(horizontal = 16.dp, vertical = 10.dp)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(
+                            onClick = {
+                                if (currentStepIndex > 0) currentStepIndex -= 1 else nav.popBackStack()
+                            },
+                            modifier = Modifier.size(36.dp)
+                        ) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back",
+                                tint = Color.White
+                            )
+                        }
+                        Spacer(Modifier.width(8.dp))
+                        Column {
+                            Text(
+                                "National Cyber Crime Reporting Portal",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 14.sp
+                            )
+                            Text(
+                                "cybercrime.gov.in • Official Portal",
+                                color = Color(0xFFA7F3D0),
+                                fontSize = 11.sp
+                            )
+                        }
+                    }
+
+                    Spacer(Modifier.height(8.dp))
+
+                    // Status banner showing background AI silent button selection
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = Color(0x33FFFFFF),
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            IconButton(
-                                onClick = {
-                                    if (currentStepIndex > 0) currentStepIndex -= 1 else nav.popBackStack()
-                                },
-                                modifier = Modifier.size(36.dp)
-                            ) {
-                                Icon(
-                                    Icons.AutoMirrored.Filled.ArrowBack,
-                                    contentDescription = "Back",
-                                    tint = Color.White
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = "Background AI Active (Zero Prompts)",
+                                    color = Color(0xFF6EE7B7),
+                                    style = MaterialTheme.typography.labelSmall.copy(
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                )
+                                Text(
+                                    text = portalStatusText,
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.bodySmall.copy(
+                                        fontSize = 11.sp
+                                    ),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
                                 )
                             }
                             Spacer(Modifier.width(8.dp))
-                            Column {
-                                Text(
-                                    "National Cyber Crime Reporting Portal",
-                                    color = Color.White,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 14.sp
-                                )
-                                Text(
-                                    "cybercrime.gov.in • Official Portal",
-                                    color = Color(0xFFA7F3D0),
-                                    fontSize = 11.sp
-                                )
-                            }
-                        }
-
-                        Spacer(Modifier.height(8.dp))
-
-                        // Status banner showing background AI silent button selection
-                        Surface(
-                            shape = RoundedCornerShape(8.dp),
-                            color = Color(0x33FFFFFF),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Row(
-                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
+                            OutlinedButton(
+                                onClick = { showPortalLiveSheet = !showPortalLiveSheet },
+                                shape = RoundedCornerShape(6.dp),
+                                colors = ButtonDefaults.outlinedButtonColors(
+                                    containerColor = if (showPortalLiveSheet) Color(0xFF065F46) else Color(0x22FFFFFF),
+                                    contentColor = Color.White
+                                ),
+                                border = BorderStroke(1.dp, if (showPortalLiveSheet) Color(0xFF34D399) else Color(0x66FFFFFF)),
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                                modifier = Modifier.height(30.dp)
                             ) {
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text(
-                                        text = "Background AI Active (Zero Prompts)",
-                                        color = Color(0xFF6EE7B7),
-                                        style = MaterialTheme.typography.labelSmall.copy(
-                                            fontWeight = FontWeight.Bold
-                                        )
-                                    )
-                                    Text(
-                                        text = portalStatusText,
-                                        color = Color.White,
-                                        style = MaterialTheme.typography.bodySmall.copy(
-                                            fontSize = 11.sp
-                                        ),
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
-                                }
-                                if (autofillSyncCount > 0) {
-                                    Surface(
-                                        shape = RoundedCornerShape(6.dp),
-                                        color = Color(0xFF065F46)
-                                    ) {
-                                        Text(
-                                            text = "$autofillSyncCount portal buttons synced",
-                                            color = Color(0xFFA7F3D0),
-                                            style = MaterialTheme.typography.labelSmall.copy(
-                                                fontWeight = FontWeight.Bold,
-                                                fontSize = 10.sp
-                                            ),
-                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                                        )
-                                    }
-                                }
+                                Text(
+                                    text = if (showPortalLiveSheet) "Hide Live Eye" else "Watch Live on Portal",
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
                             }
                         }
                     }
                 }
-            },
+            }
+        },
             bottomBar = {
                 // Bottom Navigation Buttons (Exact 1:1 Match to Cyber Portal: [← Back] [Save & Next →] [Preview])
                 Surface(
@@ -1128,6 +1134,11 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                                             for (var i = 0; i < btns.length; i++) {
                                                 var t = (btns[i].textContent || btns[i].value || '').trim().toLowerCase();
                                                 if (t.indexOf('save and next') >= 0 || t === 'next' || t.indexOf('save & next') >= 0) {
+                                                    try {
+                                                        btns[i].style.outline = '4px solid #16a34a';
+                                                        btns[i].style.backgroundColor = '#dcfce7';
+                                                        btns[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                    } catch(e) {}
                                                     btns[i].click();
                                                     return 'CLICKED_NEXT';
                                                 }
@@ -1167,6 +1178,160 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                     .verticalScroll(rememberScrollState())
                     .padding(16.dp)
             ) {
+                // ── LIVE PORTAL EYE & AUDIT ENGINE (Visual Verification & Audit) ──
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .animateContentSize(),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    border = BorderStroke(1.dp, if (showPortalLiveSheet) Color(0xFF10B981) else Color(0xFFE2E8F0)),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(10.dp)
+                                        .clip(CircleShape)
+                                        .background(if (isPortalLoggedIn) Color(0xFF16A34A) else Color(0xFFF59E0B))
+                                )
+                                Spacer(Modifier.width(8.dp))
+                                Column {
+                                    Text(
+                                        "Official Portal Live Eye",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 13.sp,
+                                        color = DarkText
+                                    )
+                                    Text(
+                                        if (isPortalLoggedIn) "cybercrime.gov.in • Connected & Storing" else "cybercrime.gov.in • Initializing",
+                                        fontSize = 11.sp,
+                                        color = if (isPortalLoggedIn) Color(0xFF047857) else SubtitleGray
+                                    )
+                                }
+                            }
+                            TextButton(
+                                onClick = { showPortalLiveSheet = !showPortalLiveSheet },
+                                colors = ButtonDefaults.textButtonColors(
+                                    contentColor = if (showPortalLiveSheet) Color(0xFFDC2626) else TealPrimary
+                                )
+                            ) {
+                                Text(
+                                    text = if (showPortalLiveSheet) "Hide Live Eye" else "Watch Live on Portal",
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+
+                        // WebView Container: Kept permanently in composition tree so session/cookies/DOM persist
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .then(
+                                    if (showPortalLiveSheet) {
+                                        Modifier
+                                            .padding(top = 10.dp)
+                                            .height(300.dp)
+                                            .clip(RoundedCornerShape(8.dp))
+                                            .border(1.dp, Color(0xFFCBD5E1), RoundedCornerShape(8.dp))
+                                    } else {
+                                        Modifier.height(1.dp).alpha(0f)
+                                    }
+                                )
+                        ) {
+                            AndroidView(
+                                modifier = Modifier.fillMaxSize(),
+                                factory = { ctx ->
+                                    WebView(ctx).apply {
+                                        settings.apply {
+                                            javaScriptEnabled = true
+                                            domStorageEnabled = true
+                                            databaseEnabled = true
+                                            useWideViewPort = true
+                                            loadWithOverviewMode = true
+                                            userAgentString = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.82 Mobile Safari/537.36"
+                                        }
+                                        webViewClient = object : WebViewClient() {
+                                            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                                                isPortalLoading = true
+                                                portalUrl = url ?: ""
+                                                portalStatusText = "Connecting to cybercrime.gov.in..."
+                                            }
+
+                                            override fun onPageFinished(view: WebView?, url: String?) {
+                                                isPortalLoading = false
+                                                portalUrl = url ?: ""
+                                                isPortalLoggedIn = !url.orEmpty().contains("login")
+                                                portalStatusText = if (isPortalLoggedIn) "Portal Connected (Auto-Sync Active)" else "Login Required on Portal"
+                                                view?.evaluateJavascript(PortalAutoFillEngine.LOCK_SUBMIT_JS, null)
+                                            }
+                                        }
+                                        loadUrl("https://cybercrime.gov.in/dashboard/crimereport")
+                                        portalWebView = this
+                                    }
+                                }
+                            )
+                        }
+
+                        // Real-time trust audit log below webview when expanded
+                        if (showPortalLiveSheet) {
+                            Spacer(Modifier.height(10.dp))
+                            Surface(
+                                shape = RoundedCornerShape(8.dp),
+                                color = Color(0xFF0F172A),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Column(modifier = Modifier.padding(10.dp)) {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            "Live Portal Audit Log (Trust Receipts)",
+                                            color = Color(0xFF94A3B8),
+                                            fontSize = 11.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                        Text(
+                                            "${portalAuditReceipts.size} actions recorded",
+                                            color = Color(0xFF64748B),
+                                            fontSize = 10.sp
+                                        )
+                                    }
+                                    Spacer(Modifier.height(4.dp))
+                                    if (portalAuditReceipts.isEmpty()) {
+                                        Text(
+                                            "Waiting for actions... Select any category or field below to watch the AI click in real-time.",
+                                            color = Color(0xFF64748B),
+                                            fontSize = 11.sp,
+                                            fontStyle = FontStyle.Italic
+                                        )
+                                    } else {
+                                        portalAuditReceipts.take(6).forEach { receipt ->
+                                            Text(
+                                                "• $receipt",
+                                                color = Color(0xFF38BDF8),
+                                                fontSize = 11.sp,
+                                                fontFamily = FontFamily.Monospace,
+                                                modifier = Modifier.padding(vertical = 1.dp)
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Spacer(Modifier.height(14.dp))
+
                 // Stepper Indicator matching portal tabs
                 PortalStepProgressBar(currentStep = currentStepIndex)
 
@@ -1835,90 +2000,7 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                 Spacer(Modifier.height(30.dp))
             }
         }
-
-        // ── COMPANION OFFICIAL PORTAL LIVE VIEW BOTTOM SHEET ──
-        if (showPortalLiveSheet) {
-            ModalBottomSheet(
-                onDismissRequest = { showPortalLiveSheet = false },
-                sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-                containerColor = Color.White
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.9f)
-                        .padding(horizontal = 16.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column {
-                            Text(
-                                "Official Cyber Portal Live Companion",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp
-                            )
-                            Text(
-                                "cybercrime.gov.in/dashboard/crimereport",
-                                fontSize = 12.sp,
-                                color = SubtitleGray
-                            )
-                        }
-                        IconButton(onClick = { showPortalLiveSheet = false }) {
-                            Icon(Icons.Default.Close, contentDescription = "Close")
-                        }
-                    }
-
-                    Spacer(Modifier.height(8.dp))
-
-                    Surface(
-                        shape = RoundedCornerShape(8.dp),
-                        color = Color(0xFFEFF6FF),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            "Tip: If prompted, enter your mobile OTP or Captcha to log in. Once logged in, return to our app and the auto-fill will drive all buttons.",
-                            fontSize = 12.sp,
-                            color = Color(0xFF1E40AF),
-                            modifier = Modifier.padding(10.dp)
-                        )
-                    }
-
-                    Spacer(Modifier.height(10.dp))
-
-                    // Live WebView rendering the real portal
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .clip(RoundedCornerShape(12.dp))
-                            .border(1.dp, BorderColor, RoundedCornerShape(12.dp))
-                    ) {
-                        AndroidView(
-                            modifier = Modifier.fillMaxSize(),
-                            factory = { ctx ->
-                                WebView(ctx).apply {
-                                    settings.apply {
-                                        javaScriptEnabled = true
-                                        domStorageEnabled = true
-                                        databaseEnabled = true
-                                        useWideViewPort = true
-                                        loadWithOverviewMode = true
-                                    }
-                                    loadUrl("https://cybercrime.gov.in/dashboard/crimereport")
-                                }
-                            }
-                        )
-                    }
-
-                    Spacer(Modifier.height(16.dp))
-                }
-            }
-        }
     }
-}
 
 // ── DATA MODEL: Official Cyber Portal Category ──
 data class OfficialCategory(

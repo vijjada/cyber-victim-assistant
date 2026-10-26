@@ -135,6 +135,12 @@ object PortalAutoFillEngine {
                 (function() {
                     var el = $selector;
                     if (!el) return 'NOT_FOUND';
+                    try {
+                        el.style.outline = '4px solid #16a34a';
+                        el.style.backgroundColor = '#dcfce7';
+                        el.style.boxShadow = '0 0 16px #22c55e';
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } catch(e) {}
                     var val_ = '$escapedValue';
                     // Try exact value match first
                     for (var i = 0; i < el.options.length; i++) {
@@ -163,6 +169,11 @@ object PortalAutoFillEngine {
                 (function() {
                     var el = $selector;
                     if (!el) return 'NOT_FOUND';
+                    try {
+                        el.style.outline = '4px solid #16a34a';
+                        el.style.backgroundColor = '#dcfce7';
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } catch(e) {}
                     if (!el.checked) {
                         el.click();
                     }
@@ -174,6 +185,12 @@ object PortalAutoFillEngine {
                 (function() {
                     var el = $selector;
                     if (!el) return 'NOT_FOUND';
+                    try {
+                        el.style.outline = '4px solid #16a34a';
+                        el.style.backgroundColor = '#dcfce7';
+                        el.style.boxShadow = '0 0 16px #22c55e';
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } catch(e) {}
                     // Use native input setter to bypass framework read-only
                     var nativeInputValueSetter = Object.getOwnPropertyDescriptor(
                         window.HTMLInputElement.prototype, 'value'
@@ -215,6 +232,12 @@ object PortalAutoFillEngine {
                 for (var i = 0; i < btns.length; i++) {
                     var t = (btns[i].textContent || btns[i].value || '').trim();
                     if (t.toLowerCase().indexOf('$escaped'.toLowerCase()) >= 0) {
+                        try {
+                            btns[i].style.outline = '4px solid #16a34a';
+                            btns[i].style.backgroundColor = '#dcfce7';
+                            btns[i].style.boxShadow = '0 0 16px #22c55e';
+                            btns[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } catch(e) {}
                         btns[i].click();
                         return 'CLICKED:' + t;
                     }
@@ -224,6 +247,12 @@ object PortalAutoFillEngine {
                 for (var j = 0; j < links.length; j++) {
                     var lt = (links[j].textContent || '').trim();
                     if (lt.toLowerCase().indexOf('$escaped'.toLowerCase()) >= 0) {
+                        try {
+                            links[j].style.outline = '4px solid #16a34a';
+                            links[j].style.backgroundColor = '#dcfce7';
+                            links[j].style.boxShadow = '0 0 16px #22c55e';
+                            links[j].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } catch(e) {}
                         links[j].click();
                         return 'CLICKED_LINK:' + lt;
                     }

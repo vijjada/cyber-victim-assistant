@@ -37,6 +37,7 @@ object SuspiciousEmailBridge {
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(null)
+        android.webkit.WebView.setWebContentsDebuggingEnabled(true)
         SuspiciousEmailBridge.handleIntent(intent)
         com.cybervictim.assistant.ui.L10n.init(this)
         com.cybervictim.assistant.exposure.ExposureApi.init(this)
