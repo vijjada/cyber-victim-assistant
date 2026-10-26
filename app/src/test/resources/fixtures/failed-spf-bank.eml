@@ -1,0 +1,16 @@
+From: "Apex Bank Alerts [TEST]" <alerts@apex-bank-online.test>
+To: <victim@example.test>
+Subject: [TEST] URGENT: Account Blocked - Immediate KYC Verification Required
+Date: Mon, 26 Oct 2026 09:30:00 +0530
+Message-ID: <test-failed-spf-001@apex-bank-online.test>
+Authentication-Results: mx.example.test; spf=fail smtp.mailfrom=apex-bank-online.test; dkim=fail header.i=@apex-bank-online.test; dmarc=fail action=none
+Content-Type: text/plain; charset=UTF-8
+
+Dear Customer,
+
+Your bank account has been suspended immediately due to pending KYC update.
+Please click the link below to verify your PAN card within 24 hours to avoid permanent deactivation:
+https://apex-bank-online.test/update-kyc
+
+Regards,
+Apex National Bank Security Team [TEST SYNTHETIC]

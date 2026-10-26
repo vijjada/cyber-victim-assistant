@@ -1,0 +1,26 @@
+From: "FastShip Logistics [TEST]" <dispatch@fastship-express.test>
+To: <victim@example.test>
+Subject: [TEST] Delivery Notice: Overdue Parcel #98213
+Date: Mon, 26 Oct 2026 14:00:00 +0530
+Message-ID: <test-malicious-att-003@fastship-express.test>
+Authentication-Results: mx.example.test; spf=neutral smtp.mailfrom=fastship-express.test; dkim=none
+Content-Type: multipart/mixed; boundary="====BOUNDARY_TEST_12345===="
+
+--====BOUNDARY_TEST_12345====
+Content-Type: text/plain; charset=UTF-8
+
+Your package could not be delivered due to incorrect address information.
+Please view the attached shipping receipt and invoice to reschedule delivery.
+
+FastShip Courier Support [TEST SYNTHETIC]
+
+--====BOUNDARY_TEST_12345====
+Content-Type: application/octet-stream; name="Shipping_Invoice_Details.exe"
+Content-Disposition: attachment; filename="Shipping_Invoice_Details.exe"
+Content-Transfer-Encoding: base64
+
+TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAA4AAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
+ZGUuDQ0KJAAAAAAAAAA=
+
+--====BOUNDARY_TEST_12345====--

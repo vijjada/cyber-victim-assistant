@@ -1,0 +1,23 @@
+From: "Tech Digest Weekly [TEST]" <newsletter@tech-digest-weekly.test>
+Reply-To: <newsletter@tech-digest-weekly.test>
+Return-Path: <bounces@tech-digest-weekly.test>
+To: <subscriber@example.test>
+Subject: [TEST] Tech Digest Weekly Issue #42: Kotlin Multiplatform & Android Architecture
+Date: Mon, 26 Oct 2026 08:00:00 +0530
+Message-ID: <test-legit-news-004@tech-digest-weekly.test>
+Authentication-Results: mx.example.test; spf=pass smtp.mailfrom=tech-digest-weekly.test; dkim=pass header.i=@tech-digest-weekly.test; dmarc=pass
+Content-Type: text/plain; charset=UTF-8
+
+Hello Reader,
+
+Welcome to this week's edition of Tech Digest.
+Here are the top engineering stories from our community:
+- Exploring Compose Multiplatform 1.7
+- Room 2.6 performance tuning tips
+- Modern background scheduling in Android
+
+Read full articles online: https://tech-digest-weekly.test/issue-42
+To unsubscribe, manage your preferences at: https://tech-digest-weekly.test/preferences
+
+Happy coding!
+Tech Digest Editorial Team [TEST SYNTHETIC]
