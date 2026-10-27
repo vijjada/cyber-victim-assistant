@@ -283,11 +283,15 @@ object EmlParser {
     private fun extractFilename(disposition: String, contentType: String): String? {
         val dispPattern = Pattern.compile("filename=[\"']?([^\"';\\r\\n]+)[\"']?", Pattern.CASE_INSENSITIVE)
         val dispMatcher = dispPattern.matcher(disposition)
-        if (dispMatcher.find()) return decodeRfc2047(dispMatcher.group(1)!!.trim())
+        if (dispMatcher.find()) {
+            dispMatcher.group(1)?.trim()?.let { return decodeRfc2047(it) }
+        }
 
         val typePattern = Pattern.compile("name=[\"']?([^\"';\\r\\n]+)[\"']?", Pattern.CASE_INSENSITIVE)
         val typeMatcher = typePattern.matcher(contentType)
-        if (typeMatcher.find()) return decodeRfc2047(typeMatcher.group(1)!!.trim())
+        if (typeMatcher.find()) {
+            typeMatcher.group(1)?.trim()?.let { return decodeRfc2047(it) }
+        }
 
         return null
     }
@@ -326,7 +330,7 @@ object EmlParser {
         var line: String?
 
         while (reader.readLine().also { line = it } != null) {
-            val l = line!!
+            val l = line ?: break
             var i = 0
             val len = l.length
             while (i < len) {

@@ -305,7 +305,7 @@ object PhishingAnalyzer {
 
     private fun extractEmailAddress(raw: String): String {
         val matcher = Pattern.compile("<([^>]+)>").matcher(raw)
-        return if (matcher.find()) matcher.group(1)!!.trim()
+        return if (matcher.find()) matcher.group(1)?.trim() ?: raw.trim()
         else {
             val tokens = raw.split(" ")
             tokens.firstOrNull { it.contains("@") }?.trim() ?: raw.trim()
@@ -389,7 +389,7 @@ object PhishingAnalyzer {
         val regex = Pattern.compile("(?i)\\b$protocol=([a-zA-Z0-9_-]+)")
         val matcher = regex.matcher(authHeader)
         return if (matcher.find()) {
-            matcher.group(1)!!.uppercase(Locale.ROOT)
+            matcher.group(1)?.uppercase(Locale.ROOT) ?: "Not Present"
         } else {
             "Not Present"
         }

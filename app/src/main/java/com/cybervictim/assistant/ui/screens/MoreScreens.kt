@@ -20,6 +20,16 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun RequestsScreen(nav: androidx.navigation.NavHostController) {
+    com.cybervictim.assistant.voice.TrackScreenDescriptor(
+        com.cybervictim.assistant.voice.ScreenDescriptor(
+            screenId = "requests",
+            title = "Emergency Bank Requests",
+            buttons = listOf("Bank Freeze Request", "Bank Unfreeze Request", "Police Follow-up", "Documents Request"),
+            fields = emptyList(),
+            owner = com.cybervictim.assistant.portal.StepOwner.AI_AUTO,
+            hintKey = "voice_hint_requests"
+        )
+    )
     Column(
         Modifier
             .fillMaxSize()
@@ -74,6 +84,16 @@ fun RequestsScreen(nav: androidx.navigation.NavHostController) {
 
 @Composable
 fun PhoneTraceScreen(nav: androidx.navigation.NavHostController) {
+    com.cybervictim.assistant.voice.TrackScreenDescriptor(
+        com.cybervictim.assistant.voice.ScreenDescriptor(
+            screenId = "phone_trace",
+            title = "PhoneTrace Device Security",
+            buttons = listOf("Scan Installed Apps", "Usage Access", "Save Baseline", "Compare Baseline"),
+            fields = emptyList(),
+            owner = com.cybervictim.assistant.portal.StepOwner.AI_AUTO,
+            hintKey = "voice_hint_phonetrace"
+        )
+    )
     val ctx = androidx.compose.ui.platform.LocalContext.current
     var resultsStateLocal by remember { mutableStateOf<List<com.cybervictim.assistant.trc.AppRisk>>(emptyList()) }
     var baselineLocal by remember { mutableStateOf<String?>(null) }
@@ -342,6 +362,16 @@ fun PhoneTraceScreen(nav: androidx.navigation.NavHostController) {
 
 @Composable
 fun ExposureScreen(nav: androidx.navigation.NavHostController) {
+    com.cybervictim.assistant.voice.TrackScreenDescriptor(
+        com.cybervictim.assistant.voice.ScreenDescriptor(
+            screenId = "exposure",
+            title = "Exposure & Breach Scanner",
+            buttons = listOf("Send Code", "Verify", "Scan Breaches", "Check Password"),
+            fields = listOf("Email", "Verification Code", "Password"),
+            owner = com.cybervictim.assistant.portal.StepOwner.AI_AUTO,
+            hintKey = "voice_hint_exposure"
+        )
+    )
     val ctx = androidx.compose.ui.platform.LocalContext.current
     Column(
         Modifier
@@ -400,8 +430,12 @@ fun ExposureScreen(nav: androidx.navigation.NavHostController) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Button(onClick = {
                     api.checkCode(email, code) { r ->
-                        status = r
-                        if (r == com.cybervictim.assistant.ui.L10n.t("exp_verified")) verified = true
+                        if (r.contains("verified", ignoreCase = true) || r == com.cybervictim.assistant.ui.L10n.t("exp_verified")) {
+                            status = com.cybervictim.assistant.ui.L10n.t("exp_verified")
+                            verified = true
+                        } else {
+                            status = r
+                        }
                     }
                 }, enabled = code.isNotBlank()) { Text(com.cybervictim.assistant.ui.L10n.t("exp_verify")) }
                 Button(onClick = {
@@ -456,6 +490,16 @@ fun ExposureScreen(nav: androidx.navigation.NavHostController) {
 
 @Composable
 fun SettingsScreen(nav: androidx.navigation.NavHostController) {
+    com.cybervictim.assistant.voice.TrackScreenDescriptor(
+        com.cybervictim.assistant.voice.ScreenDescriptor(
+            screenId = "settings",
+            title = "Settings & Privacy",
+            buttons = listOf("Change Language", "Status Tracker", "Phone Trace", "Exposure Warning"),
+            fields = emptyList(),
+            owner = com.cybervictim.assistant.portal.StepOwner.AI_AUTO,
+            hintKey = "voice_hint_settings"
+        )
+    )
     val ctx = androidx.compose.ui.platform.LocalContext.current
     Column(
         Modifier

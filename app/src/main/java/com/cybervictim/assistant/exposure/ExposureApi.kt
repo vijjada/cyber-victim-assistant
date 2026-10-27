@@ -2,6 +2,8 @@ package com.cybervictim.assistant.exposure
 
 import java.net.HttpURLConnection
 import java.net.URL
+import android.os.Handler
+import android.os.Looper
 import org.json.JSONObject
 import org.json.JSONArray
 
@@ -11,6 +13,7 @@ import org.json.JSONArray
  * UI gracefully stays on the password-exposure check. Worker threads only.
  */
 object ExposureApi {
+    private val mainHandler = Handler(Looper.getMainLooper())
 
     data class ApiRes(val ok: Boolean, val message: String, val breaches: List<JSONObject> = emptyList())
 
@@ -67,68 +70,73 @@ object ExposureApi {
     }
 
     fun startVerify(email: String, onDone: (String) -> Unit) {
+        val safeDone = { msg: String -> mainHandler.post { onDone(msg) } }
         Thread {
             val base = baseUrl()
             if (base.isEmpty()) {
-                onDone("Backend not linked yet. (Set EXPOSURE_BASE_URL after deploying tools/backend.)")
+                safeDone("Backend not linked yet. (Set EXPOSURE_BASE_URL after deploying tools/backend.)")
                 return@Thread
             }
             val e = email.trim().lowercase()
             if (!e.contains("@")) {
-                onDone("Enter a valid email.")
+                safeDone("Enter a valid email.")
                 return@Thread
             }
             val resp = try {
                 exchange("POST", "/verify-email/start", JSONObject().put("email", e).toString())
             } catch (ex: Exception) {
-                onDone("Network problem: " + (ex.message ?: "offline"))
+                safeDone("Network problem: " + (ex.message ?: "offline"))
                 return@Thread
             }
             val body = parseBody(resp)
             val rc = codeOf(resp)
             when {
-                rc == 200 -> onDone("Check the inbox for a 6-digit code")
-                rc == 503 -> onDone("Email sender not configured on server. " + body.optString("hint"))
-                else -> onDone(body.optString("error", "server " + rc))
+                rc == 200 -> safeDone("Check the inbox for a 6-digit code")
+                rc == 503 -> safeDone("Email sender not configured on server. " + body.optString("hint"))
+                else -> safeDone(body.optString("error", "server " + rc))
             }
         }.start()
     }
 
     fun checkCode(email: String, code: String, onDone: (String) -> Unit) {
+        val safeDone = { msg: String -> mainHandler.post { onDone(msg) } }
         Thread {
             val resp = try {
                 exchange("POST", "/verify-email/check",
                     JSONObject().put("email", email.trim().lowercase()).put("code", code.trim()).toString())
-            } catch (ex: Exception) { onDone("Network problem: " + (ex.message ?: "offline")); return@Thread }
+            } catch (ex: Exception) { safeDone("Network problem: " + (ex.message ?: "offline")); return@Thread }
             val rc = codeOf(resp)
             val body = parseBody(resp)
             if (rc == 200 && body.optBoolean("ok")) {
                 rememberToken(body.optString("token"))
-                onDone("Email verified")
-            } else onDone(body.optString("error", "server " + rc))
+                safeDone("Email verified")
+            } else safeDone(body.optString("error", "server " + rc))
         }.start()
     }
 
     fun scanBreaches(email: String, onDone: (ApiRes) -> Unit) {
+        val safeDone = { res: ApiRes -> mainHandler.post { onDone(res) } }
         Thread {
             val t = token
-            if (t == null) { onDone(ApiRes(false, "Verify your email first.")); return@Thread }
+            if (t == null) { safeDone(ApiRes(false, "Verify your email first.")); return@Thread }
             val resp = try {
                 exchange("GET", "/breaches/" + email.trim().lowercase(), null)
-            } catch (ex: Exception) { onDone(ApiRes(false, "Network problem: " + (ex.message ?: "offline"))); return@Thread }
+            } catch (ex: Exception) { safeDone(ApiRes(false, "Network problem: " + (ex.message ?: "offline"))); return@Thread }
             val rc = codeOf(resp)
             val body = parseBody(resp)
-            if (rc == 401) { forgetToken(); onDone(ApiRes(false, "Session expired — verify again.")); return@Thread }
-            if (rc == 404) { onDone(ApiRes(true, "not-found")); return@Thread }
-            if (rc !in 200..299) { onDone(ApiRes(false, body.optString("error", "server " + rc))); return@Thread }
+            if (rc == 401) { forgetToken(); safeDone(ApiRes(false, "Session expired — verify again.")); return@Thread }
+            if (rc == 404) { safeDone(ApiRes(true, "not-found")); return@Thread }
+            if (rc !in 200..299) { safeDone(ApiRes(false, body.optString("error", "server " + rc))); return@Thread }
             if (!body.optBoolean("configured", true)) {
-                onDone(ApiRes(false, "Server has no breach-source key yet. " + body.optString("note")))
+                safeDone(ApiRes(false, "Server has no breach-source key yet. " + body.optString("note")))
                 return@Thread
             }
             val arr = body.optJSONArray("breaches") ?: JSONArray()
             val list = ArrayList<JSONObject>()
-            for (i in 0 until arr.length()) list.add(arr.getJSONObject(i))
-            onDone(ApiRes(true, "", list))
+            for (i in 0 until arr.length()) {
+                arr.optJSONObject(i)?.let { list.add(it) }
+            }
+            safeDone(ApiRes(true, "", list))
         }.start()
     }
 }

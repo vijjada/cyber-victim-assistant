@@ -95,6 +95,16 @@ private fun EmergencyDialerCards() {
 /** Screen 6 — real timeline of the case. */
 @Composable
 fun TrackerScreen(nav: androidx.navigation.NavHostController) {
+    com.cybervictim.assistant.voice.TrackScreenDescriptor(
+        com.cybervictim.assistant.voice.ScreenDescriptor(
+            screenId = "tracker",
+            title = "Case Timeline & Event Tracker",
+            buttons = listOf("Back"),
+            fields = emptyList(),
+            owner = com.cybervictim.assistant.portal.StepOwner.AI_AUTO,
+            hintKey = "voice_hint_tracker"
+        )
+    )
     val ctx = LocalContext.current
     val db = remember { CaseDb.get(ctx).dao() }
     val caseId = remember { CaseSession.id() }

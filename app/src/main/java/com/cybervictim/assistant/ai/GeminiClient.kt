@@ -35,7 +35,7 @@ object GeminiClient {
         - Never give hacking, tracing or investigation advice; banks and police take action.
     """.trimIndent()
 
-    /** Reply in the user's chosen app language (Hindi/Telugu/Punjabi/Gujarati/etc); English otherwise. */
+    /** Reply in the user's chosen app language (Hindi/Telugu/Punjabi/Gujarati/Kannada/Malayalam/Odia/Assamese/etc); English otherwise. */
     private fun languageDirective(): String = when (try {
         com.cybervictim.assistant.ui.L10n.lang.code
     } catch (_: Throwable) { "en" }) {
@@ -46,6 +46,10 @@ object GeminiClient {
         "mr" -> "Reply to the user in Marathi (Devanagari, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
         "ta" -> "Reply to the user in Tamil (Tamil script, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
         "bn" -> "Reply to the user in Bengali (Bengali script, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
+        "kn" -> "Reply to the user in Kannada (Kannada script, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
+        "ml" -> "Reply to the user in Malayalam (Malayalam script, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
+        "or" -> "Reply to the user in Odia (Odia script, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
+        "as" -> "Reply to the user in Assamese (Assamese script, simple everyday words). Keep UPI IDs, phone numbers, bank names and portal button names exactly as they are."
         else -> ""
     }.let { d -> if (d.isBlank()) "Keep replies in simple English." else d }
 
@@ -197,13 +201,13 @@ object GeminiClient {
     private fun extractReply(json: String): String {
         return try {
             val root = org.json.JSONObject(json)
-            val cands = root.getJSONArray("candidates")
-            val cand = cands.getJSONObject(0)
+            val cands = root.optJSONArray("candidates") ?: return ""
+            val cand = cands.optJSONObject(0) ?: return ""
             val content = cand.optJSONObject("content") ?: return ""
             val parts = content.optJSONArray("parts") ?: return ""
             buildString {
                 for (i in 0 until parts.length()) {
-                    val p = parts.getJSONObject(i)
+                    val p = parts.optJSONObject(i) ?: continue
                     // Skip thought parts if present
                     if (p.optBoolean("thought", false)) continue
                     p.optString("text")?.let { append(it) }

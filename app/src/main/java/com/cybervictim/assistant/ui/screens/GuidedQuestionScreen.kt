@@ -392,8 +392,8 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                     )
                 )
 
-                if (isDateTimeStep && lastExtractedScam != null) {
-                    SmsScamExtractor.applyToCase(context, lastExtractedScam!!)
+                if (isDateTimeStep) {
+                    lastExtractedScam?.let { SmsScamExtractor.applyToCase(context, it) }
                 }
             }
         }
@@ -826,12 +826,12 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                         ) {
                             Text("Upload Chat / Contact Screenshot")
                         }
-                        if (uploadedEvidenceLabel != null) {
+                        uploadedEvidenceLabel?.let { label ->
                             Spacer(Modifier.height(6.dp))
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(Icons.Default.Check, contentDescription = null, tint = Color(0xFF16A34A), modifier = Modifier.size(16.dp))
                                 Spacer(Modifier.width(4.dp))
-                                Text(uploadedEvidenceLabel!!, fontSize = 12.sp, color = Color(0xFF16A34A), fontWeight = FontWeight.Medium)
+                                Text(label, fontSize = 12.sp, color = Color(0xFF16A34A), fontWeight = FontWeight.Medium)
                             }
                         }
                     }
@@ -941,12 +941,12 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                         ) {
                             Text("Upload Technical Evidence / Receipt")
                         }
-                        if (uploadedEvidenceLabel != null) {
+                        uploadedEvidenceLabel?.let { label ->
                             Spacer(Modifier.height(6.dp))
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(Icons.Default.Check, contentDescription = null, tint = Color(0xFF16A34A), modifier = Modifier.size(16.dp))
                                 Spacer(Modifier.width(4.dp))
-                                Text(uploadedEvidenceLabel!!, fontSize = 12.sp, color = Color(0xFF16A34A), fontWeight = FontWeight.Medium)
+                                Text(label, fontSize = 12.sp, color = Color(0xFF16A34A), fontWeight = FontWeight.Medium)
                             }
                         }
                     }

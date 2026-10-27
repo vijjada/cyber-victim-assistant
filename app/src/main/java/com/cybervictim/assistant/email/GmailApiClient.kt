@@ -192,7 +192,7 @@ object GmailApiClient {
         val token = accessToken ?: return@withContext Result.failure(IllegalStateException("Gmail not connected"))
 
         val validation = validateWindow(startEpochSec, endEpochSec)
-        if (validation.isFailure) return@withContext Result.failure(validation.exceptionOrNull()!!)
+        if (validation.isFailure) return@withContext Result.failure(validation.exceptionOrNull() ?: IllegalArgumentException("Invalid window"))
 
         val query = "after:$startEpochSec before:$endEpochSec"
         val encodedQuery = URLEncoder.encode(query, "UTF-8")

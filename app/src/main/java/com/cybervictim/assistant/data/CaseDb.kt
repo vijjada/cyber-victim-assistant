@@ -74,7 +74,7 @@ abstract class CaseDb : RoomDatabase() {
 
         fun get(ctx: Context): CaseDb =
             instance ?: synchronized(this) {
-                instance ?: Room.databaseBuilder(ctx, CaseDb::class.java, "case_store.db")
+                instance ?: Room.databaseBuilder(ctx.applicationContext, CaseDb::class.java, "case_store.db")
                     .build().also { instance = it }
             }
     }

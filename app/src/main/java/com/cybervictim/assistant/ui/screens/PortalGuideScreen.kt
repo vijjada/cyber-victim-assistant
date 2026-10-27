@@ -17,6 +17,16 @@ import com.cybervictim.assistant.portal.StepOwner
 
 @Composable
 fun PortalGuideScreen(nav: androidx.navigation.NavHostController) {
+    com.cybervictim.assistant.voice.TrackScreenDescriptor(
+        com.cybervictim.assistant.voice.ScreenDescriptor(
+            screenId = "portal_guide",
+            title = "Portal Auto-Guide & Review",
+            buttons = listOf("Speak out", "Stop voice"),
+            fields = emptyList(),
+            owner = StepOwner.AI_AUTO,
+            hintKey = "voice_hint_portal_guide"
+        )
+    )
     val ctx = androidx.compose.ui.platform.LocalContext.current
     val steps = remember { mutableStateListOf<PortalDriver.PortalStep>() }
     var busy by remember { mutableStateOf(false) }

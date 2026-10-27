@@ -59,9 +59,9 @@ object CaseExtractor {
         val first = json.indexOf('{')
         val last = json.lastIndexOf('}')
         val clean = if (first >= 0 && last > first) json.substring(first, last + 1) else json
-        val arr = JSONObject(clean).optJSONArray("facts")
-        (0 until (arr?.length() ?: 0)).mapNotNull {
-            val o = arr!!.getJSONObject(it)
+        val arr = JSONObject(clean).optJSONArray("facts") ?: return emptyList()
+        (0 until arr.length()).mapNotNull {
+            val o = arr.optJSONObject(it) ?: return@mapNotNull null
             val t = o.optString("type").trim()
             val v = o.optString("value").trim()
             if (v.isEmpty()) null else Fact(t.ifEmpty { "other" }, v)

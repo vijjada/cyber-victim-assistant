@@ -250,7 +250,7 @@ object SmsScamExtractor {
         val caseId = CaseSession.ensure()
         val db = CaseDb.get(context)
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CaseDb.scope.launch {
             // 1. Add Facts
             if (data.amount.isNotBlank()) {
                 db.dao().addFact(CaseFact(caseId = caseId, type = "amount", valueText = data.amount, sourceEvidenceId = 0, confidence = 1f))

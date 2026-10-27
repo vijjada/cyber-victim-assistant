@@ -74,7 +74,7 @@ object OcrPipeline {
         // transaction refs
         Regex("(?i)\\b(?:utr|txn|ref(?:\\.?\\s*(?:no\\.?|number))?|upi:\\s*)(?:ref\\b[:=\\s]*)?([a-z0-9]{9,24})\\b")
             .findAll(txt).forEach { r ->
-                out["txn:" + r.value] = RuleFact("txn_ref", r.groups[1]!!.value)
+                r.groups[1]?.value?.let { out["txn:" + r.value] = RuleFact("txn_ref", it) }
             }
         // timestamps (plain — interpretation later)
         Regex("\\b\\d{2}[:/.]\\d{2}(?::\\d{2})?\\b(?:\\s?(?:am|pm|AM|PM))?(?=\\b)|\\b\\d{1,2}[/-]\\d{1,2}[/-]\\d{2,4}\\b", )

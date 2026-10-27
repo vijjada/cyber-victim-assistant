@@ -56,6 +56,16 @@ private val CardWhite = Color(0xFFFFFFFF)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuspiciousEmailScreen(nav: androidx.navigation.NavHostController) {
+    com.cybervictim.assistant.voice.TrackScreenDescriptor(
+        com.cybervictim.assistant.voice.ScreenDescriptor(
+            screenId = "suspicious_email",
+            title = "Phishing Email Scanner",
+            buttons = listOf("Choose .eml file", "Connect Gmail (Read-Only)", "Run Phishing Analysis"),
+            fields = emptyList(),
+            owner = com.cybervictim.assistant.portal.StepOwner.AI_AUTO,
+            hintKey = "voice_hint_email"
+        )
+    )
     val ctx = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val clipboard = LocalClipboardManager.current
@@ -113,9 +123,13 @@ fun SuspiciousEmailScreen(nav: androidx.navigation.NavHostController) {
                         )
                     }
                     if (res.isSuccess) {
-                        GmailApiClient.setToken(res.getOrNull()!!)
-                        isGmailConnected = true
-                        statusMessage = "Gmail connected in testing mode (read-only)."
+                        res.getOrNull()?.let { token ->
+                            GmailApiClient.setToken(token)
+                            isGmailConnected = true
+                            statusMessage = "Gmail connected in testing mode (read-only)."
+                        } ?: run {
+                            statusMessage = "OAuth token exchange returned empty"
+                        }
                     } else {
                         statusMessage = "OAuth failed: ${res.exceptionOrNull()?.message}"
                     }
@@ -601,7 +615,7 @@ fun SuspiciousEmailScreen(nav: androidx.navigation.NavHostController) {
                                                 if (!candidate.metadata.quickSuspicionReason.isNullOrBlank()) {
                                                     Spacer(Modifier.height(2.dp))
                                                     Text(
-                                                        candidate.metadata.quickSuspicionReason!!,
+                                                        candidate.metadata.quickSuspicionReason ?: "",
                                                         fontSize = 10.sp,
                                                         fontWeight = FontWeight.Medium,
                                                         color = if (candidate.metadata.quickScore >= 50) Color(0xFFB91C1C) else PrimaryTeal
@@ -673,8 +687,7 @@ fun SuspiciousEmailScreen(nav: androidx.navigation.NavHostController) {
     }
 
     // Consent dialog for Gemini "Explain simply"
-    if (explainConsentEmail != null) {
-        val email = explainConsentEmail!!
+    explainConsentEmail?.let { toExplain ->
         AlertDialog(
             onDismissRequest = { explainConsentEmail = null },
             title = { Text("AI Plain-English Explanation", fontWeight = FontWeight.Bold) },
@@ -688,7 +701,6 @@ fun SuspiciousEmailScreen(nav: androidx.navigation.NavHostController) {
             confirmButton = {
                 Button(
                     onClick = {
-                        val toExplain = explainConsentEmail!!
                         explainConsentEmail = null
                         coroutineScope.launch {
                             isProcessing = true

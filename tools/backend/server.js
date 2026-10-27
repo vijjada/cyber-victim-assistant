@@ -221,7 +221,10 @@ Instructions:
         const data = await resp.json();
         const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
         if (candidate) {
-          const clean = candidate.replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, "").trim();
+          const clean = candidate
+            .replace(/[\uD83C-\uDBFF][\uDC00-\uDFFF]/g, "")
+            .replace(/[\u2000-\u2BFF\uFE00-\uFE0F\u25A0-\u27BF]/g, "")
+            .trim();
           return res.json({ ok: true, nextStep: clean, source: "gemini" });
         }
       }

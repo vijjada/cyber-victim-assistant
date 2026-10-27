@@ -1,5 +1,7 @@
 package com.cybervictim.assistant.exposure
 
+import android.os.Handler
+import android.os.Looper
 import java.net.HttpURLConnection
 import java.net.URL
 import java.security.MessageDigest
@@ -11,8 +13,11 @@ import java.security.MessageDigest
  * lands later with the Firebase verification-code backend.
  */
 object ExposureChecker {
+    private val mainHandler = Handler(Looper.getMainLooper())
 
     fun passwordExposed(password: String, cb: (exposed: Boolean, count: Int) -> Unit, fail: (String) -> Unit) {
+        val safeCb = { exposed: Boolean, count: Int -> mainHandler.post { cb(exposed, count) } }
+        val safeFail = { msg: String -> mainHandler.post { fail(msg) } }
         Thread {
             try {
                 val sha1 = MessageDigest.getInstance("SHA-1").digest(password.toByteArray())
@@ -33,8 +38,8 @@ object ExposureChecker {
                         exposed = true; count = parts[1].trim().toIntOrNull() ?: 0
                     }
                 }
-                cb(exposed, count)
-            } catch (e: Exception) { fail(e.message ?: "network error") }
+                safeCb(exposed, count)
+            } catch (e: Exception) { safeFail(e.message ?: "network error") }
         }.start()
     }
 

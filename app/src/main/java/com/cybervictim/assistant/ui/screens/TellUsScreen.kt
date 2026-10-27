@@ -49,6 +49,16 @@ private val RecommendedBg = Color(0xFFECFDF5)
 
 @Composable
 fun TellUsScreen(nav: NavHostController) {
+    com.cybervictim.assistant.voice.TrackScreenDescriptor(
+        com.cybervictim.assistant.voice.ScreenDescriptor(
+            screenId = "tell_us",
+            title = "Incident Category Selection",
+            buttons = listOf("Financial Fraud", "Social Media / Cyber Bullying", "Job Scam", "Hacked Account"),
+            fields = emptyList(),
+            owner = com.cybervictim.assistant.portal.StepOwner.AI_AUTO,
+            hintKey = "voice_hint_tell_us"
+        )
+    )
     val context = LocalContext.current
     var showTypeDialog by remember { mutableStateOf(false) }
     var typedText by remember { mutableStateOf("") }

@@ -52,9 +52,28 @@ private val TealHalo = SoftMint              // Highlight / Success container
 
 @Composable
 fun LanguageSelectScreen(nav: NavHostController) {
+    com.cybervictim.assistant.voice.TrackScreenDescriptor(
+        com.cybervictim.assistant.voice.ScreenDescriptor(
+            screenId = "language_select",
+            title = "Language and Voice Settings",
+            buttons = listOf("Continue", "Hear a sample", "Update the Profile", "Speaking speed"),
+            fields = emptyList(),
+            owner = com.cybervictim.assistant.portal.StepOwner.HUMAN,
+            hintKey = "voice_hint_language"
+        )
+    )
     val context = LocalContext.current
     var selectedLang by remember { mutableStateOf(L10n.lang) }
-    var speedProgress by remember { mutableFloatStateOf(0.35f) }
+    val initialRate = remember { TtsManager.getSpeechRate() }
+    var speedProgress by remember {
+        mutableFloatStateOf(
+            when {
+                initialRate <= 0.85f -> 0.25f
+                initialRate <= 1.1f -> 0.50f
+                else -> 0.85f
+            }
+        )
+    }
 
     // State for the menu dialogs
     var showUserDetailsDialog by remember { mutableStateOf(false) }

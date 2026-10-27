@@ -33,12 +33,14 @@ object ReminderScheduler {
             10L * 86400_000L to "10-day exposure check: run the Exposure Warning scan.",
         )
         for ((delay, msg) in offsets) {
-            val pi = PendingIntent.getBroadcast(
-                ctx, (delay / 1000).toInt(),
-                Intent(ctx, ReminderReceiver::class.java).putExtra("msg", msg),
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-            )
-            am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + delay, pi)
+            try {
+                val pi = PendingIntent.getBroadcast(
+                    ctx, (delay / 1000).toInt(),
+                    Intent(ctx, ReminderReceiver::class.java).putExtra("msg", msg),
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
+                am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + delay, pi)
+            } catch (_: Throwable) {}
         }
     }
     const val ACTION_EXPOSURE_RECHECK = "com.cybervictim.assistant.EXPOSURE_RECHECK"
@@ -81,6 +83,8 @@ class ReminderReceiver : BroadcastReceiver() {
             .setContentText(msg)
             .setAutoCancel(true)
             .build()
-        (ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(msg.hashCode(), not)
+        try {
+            (ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(msg.hashCode(), not)
+        } catch (_: Throwable) {}
     }
 }

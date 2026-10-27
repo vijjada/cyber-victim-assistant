@@ -116,7 +116,13 @@ object PhoneTrace {
         val raw = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, null) ?: return null
         val old = org.json.JSONArray(raw)
         val prev = HashMap<String, Long>()
-        for (i in 0 until old.length()) prev[old.getJSONObject(i).getString("pkg")] = old.getJSONObject(i).getLong("install")
+        for (i in 0 until old.length()) {
+            val obj = old.optJSONObject(i) ?: continue
+            val pkg = obj.optString("pkg")
+            if (pkg.isNotEmpty()) {
+                prev[pkg] = obj.optLong("install")
+            }
+        }
         val pm = ctx.packageManager
         val now = HashMap<String, Long>()
         for (pi in pm.getInstalledPackages(0)) {

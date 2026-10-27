@@ -87,7 +87,7 @@ fun EvidenceScreen(nav: androidx.navigation.NavHostController) {
                         val allowed = setOf("upi_id", "txn_ref", "amount", "phone", "timestamp", "account_id", "url")
                         var extra = 0
                         for (i in 0 until arr.length()) {
-                            val o = arr.getJSONObject(i)
+                            val o = arr.optJSONObject(i) ?: continue
                             val ty = o.optString("type")
                             val v = o.optString("value")
                             if (ty in allowed && v.isNotBlank()) {

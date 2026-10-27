@@ -104,12 +104,12 @@ object UserProfileStore {
             .putString(KEY_ACK, profile.ackNumber)
             .putString(KEY_STATUS, profile.complaintStatus)
             .putString(KEY_VICTIM_ID, finalVictimId)
-            .commit()
+            .apply()
 
         // Sync to active case in CaseDb and CaseSessionStore
         val caseId = CaseSession.ensure()
         val db = CaseDb.get(context)
-        CoroutineScope(Dispatchers.IO).launch {
+        CaseDb.scope.launch {
             if (finalVictimId.isNotBlank()) {
                 db.dao().addFact(CaseFact(caseId = caseId, type = "other", valueText = "Victim App ID: $finalVictimId", sourceEvidenceId = 0, confidence = 1f))
             }
