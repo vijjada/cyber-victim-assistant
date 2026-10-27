@@ -107,10 +107,15 @@ object ComplaintPack {
         // (future image embedding, pathological fact text), rebuild with a
         // smaller facts budget until it fits: 2000 -> 400 -> 50 lines.
         // A text-only 50-line page is a few KB, so the cap is always met.
+        // HARD SIZE GUARANTEE: shrink facts budget until PDF fits.
+        // Each iteration overwrites the same output file via generatePdf(),
+        // so we must return the result of the final recursive call when a
+        // size-reduction was needed (otherwise we'd return the oversized file).
         var budget = 2000
         while (out.length() > TARGET_BYTES && budget > 50) {
             budget = if (budget > 400) 400 else 50
-            generatePdf(ctx, caseId, budgetFacts(facts, budget).first)
+            // Return the re-generated (smaller) file instead of discarding it.
+            return generatePdf(ctx, caseId, budgetFacts(facts, budget).first)
         }
         require(out.length() <= MAX_BYTES) { "complaint pack exceeded hard cap: " + out.length() }
         return out

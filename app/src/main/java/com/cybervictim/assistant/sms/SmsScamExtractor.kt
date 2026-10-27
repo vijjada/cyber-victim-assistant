@@ -159,7 +159,8 @@ object SmsScamExtractor {
                     }
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                // Silent: SMS read permission denied or content provider unavailable.
+                // Do not print stack trace in production (may expose sensitive SMS context).
             }
         }
 

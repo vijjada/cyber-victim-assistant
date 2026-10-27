@@ -1269,6 +1269,7 @@ fun LanguageSelectScreen(nav: NavHostController) {
                         L10n.Lang.AS -> "নমস্কাৰ, মই আপোনাৰ চাইবাৰ অপৰাধ সাহায্যকাৰী।"
                         else -> "Hello, I am CyBridge, your cybercrime victim assistant."
                     }
+                    TtsManager.stop()   // stop any previous sample before replaying
                     TtsManager.speak(sample, selectedLang.toBcp47())
                 },
                 modifier = Modifier
