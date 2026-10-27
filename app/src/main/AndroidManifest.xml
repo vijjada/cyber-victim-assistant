@@ -18,7 +18,6 @@
         android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:networkSecurityConfig="@xml/network_security_config">
 
-        <meta-data android:name="com.cybervictim.GEMINI_API_KEY" android:value="${geminiKey}" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

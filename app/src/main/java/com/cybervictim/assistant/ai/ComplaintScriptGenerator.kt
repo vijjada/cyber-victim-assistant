@@ -86,11 +86,11 @@ object ComplaintScriptGenerator {
             }
         }.ifBlank { "India" }
 
-        val amt = amount.ifBlank { "Rs. 25,000" }
+        val amt = amount.ifBlank { "[Amount as per bank statement]" }
         val bnk = bank.ifBlank { "Bank / UPI Account" }
-        val dt = dateTime.ifBlank { "recently" }
+        val dt = dateTime.ifBlank { "the date of incident" }
         val frd = fraudster.ifBlank { "suspect account / UPI ID" }
-        val ref = utr.ifBlank { "Ref as per bank statement" }
+        val ref = utr.ifBlank { "[Ref/UTR as per bank statement]" }
         val contact = contactMethod.ifBlank { "online communication" }
         val method = compromiseMethod.ifBlank { "deceptive inducement" }
 

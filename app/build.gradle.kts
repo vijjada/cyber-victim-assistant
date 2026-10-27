@@ -16,7 +16,6 @@ android {
         versionCode = 1
         versionName = "0.1.0"
         val geminiKey: String = (project.findProperty("GEMINI_API_KEY") as? String) ?: ""
-        manifestPlaceholders["geminiKey"] = geminiKey
         buildConfigField("String", "GEMINI_API_KEY", "\"" + geminiKey + "\"")
         val exposureBase: String = (project.findProperty("EXPOSURE_BASE_URL") as? String) ?: ""
         buildConfigField("String", "EXPOSURE_BASE_URL", "\"$exposureBase\"")
@@ -30,10 +29,10 @@ android {
         create("release") {
             storeFile = file("../cva-release.jks")
             storePassword = (project.findProperty("CVA_RELEASE_STORE_PASSWORD") as? String)
-                ?: System.getenv("CVA_RELEASE_STORE_PASSWORD") ?: "cva2026"
+                ?: System.getenv("CVA_RELEASE_STORE_PASSWORD") ?: ""
             keyAlias = "cva"
             keyPassword = (project.findProperty("CVA_RELEASE_KEY_PASSWORD") as? String)
-                ?: System.getenv("CVA_RELEASE_KEY_PASSWORD") ?: "cva2026"
+                ?: System.getenv("CVA_RELEASE_KEY_PASSWORD") ?: ""
         }
     }
     buildTypes {

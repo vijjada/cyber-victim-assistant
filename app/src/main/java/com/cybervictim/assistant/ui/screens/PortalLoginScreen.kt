@@ -101,7 +101,7 @@ private val GENDERS = listOf("Male", "Female", "Transgender")
  * 2. Directly places the Cyber Portal Update User Profile interface with exact 100% matching buttons
  *    matching the user's official portal screenshot:
  *    - Top header: National Emblem, I4C Logo, "National Cybercrime Reporting Portal"
- *    - Session timer ("59:49") and User ID ("7416002834")
+ *    - Session timer and User ID (Citizen Mobile Number)
  *    - Blue banner: "Update User Profile"
  *    - Exact input fields with red asterisks:
  *      * Name*
@@ -145,10 +145,10 @@ fun PortalLoginScreen(nav: NavHostController) {
 
     // ── Form State (Exact fields from cybercrime.gov.in/dashboard/update-profile) ──
     var name by remember {
-        mutableStateOf(userProfile.fullName.ifBlank { "Vijjada Prem sai" })
+        mutableStateOf(userProfile.fullName)
     }
     var mobileNo by remember {
-        mutableStateOf(userProfile.mobile.ifBlank { "7416002834" })
+        mutableStateOf(userProfile.mobile)
     }
     var selectedGender by remember {
         mutableStateOf(userProfile.gender.ifBlank { "Male" })
@@ -156,27 +156,27 @@ fun PortalLoginScreen(nav: NavHostController) {
     var genderDropdownExpanded by remember { mutableStateOf(false) }
 
     var dob by remember {
-        mutableStateOf(userProfile.dob.ifBlank { "10/08/2005" })
+        mutableStateOf(userProfile.dob)
     }
     var emailId by remember {
-        mutableStateOf(userProfile.email.ifBlank { "vijjadapremsaiofficial@gmail.com" })
+        mutableStateOf(userProfile.email)
     }
     var selectedState by remember {
-        mutableStateOf(userProfile.state.ifBlank { "ANDHRA PRADESH" })
+        mutableStateOf(userProfile.state)
     }
     var stateDropdownExpanded by remember { mutableStateOf(false) }
 
     var district by remember {
-        mutableStateOf(userProfile.district.ifBlank { "NTR Commissionerate" })
+        mutableStateOf(userProfile.district)
     }
     var policeStation by remember {
-        mutableStateOf(userProfile.policeStation.ifBlank { "AJITH SINGH NAGAR" })
+        mutableStateOf(userProfile.policeStation)
     }
     var address by remember {
-        mutableStateOf(userProfile.address.ifBlank { "One town vijayawada" })
+        mutableStateOf(userProfile.address)
     }
     var pinCode by remember {
-        mutableStateOf(userProfile.pincode.ifBlank { "520001" })
+        mutableStateOf(userProfile.pincode)
     }
 
     var isUpdating by remember { mutableStateOf(false) }

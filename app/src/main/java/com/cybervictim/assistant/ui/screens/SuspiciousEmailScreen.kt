@@ -356,39 +356,9 @@ fun SuspiciousEmailScreen(nav: androidx.navigation.NavHostController) {
                                 },
                                 enabled = pastedHeadersAndText.isNotBlank() && !isProcessing,
                                 colors = ButtonDefaults.buttonColors(containerColor = PrimaryTeal),
-                                modifier = Modifier.weight(1f)
+                                modifier = Modifier.fillMaxWidth()
                             ) {
                                 Text("Analyze Pasted Text", fontSize = 12.sp)
-                            }
-
-                            // Quick sample test vectors
-                            OutlinedButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        val sample = """
-                                            From: "SBI Card Support" <security@onlinesbi-kyc-alert.top>
-                                            Reply-To: refund-desk@gmail.com
-                                            Return-Path: bounce@disposable-mailer.xyz
-                                            To: victim@example.com
-                                            Subject: URGENT: Your Account Has Been Blocked - Complete KYC
-                                            Date: ${SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US).format(Date())}
-                                            Authentication-Results: mx.google.com; spf=fail; dmarc=fail
-                                            
-                                            Dear Customer,
-                                            Your netbanking access is suspended immediately due to missing PAN/KYC.
-                                            Click here to verify: http://192.168.1.50/sbi-login.php
-                                            Failure to update within 2 hours will lead to account termination.
-                                        """.trimIndent()
-                                        val parsed = EmlParser.parse(sample)
-                                        val analysis = PhishingAnalyzer.analyze(parsed)
-                                        val card = EmailStorage.saveAndRecord(ctx, caseId, parsed, analysis)
-                                        evidenceCards.add(0, card)
-                                        statusMessage = "Loaded synthetic test phishing email."
-                                    }
-                                },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text("Load Test Vector", fontSize = 11.sp)
                             }
                         }
                     }
@@ -448,15 +418,15 @@ fun SuspiciousEmailScreen(nav: androidx.navigation.NavHostController) {
                                 ) {
                                     Column(Modifier.padding(10.dp)) {
                                         Text(
-                                            "OAuth Client ID not set in gradle.properties (GOOGLE_OAUTH_CLIENT_ID).",
+                                            "OAuth Client ID not configured (GOOGLE_OAUTH_CLIENT_ID).",
                                             fontSize = 11.sp,
                                             fontWeight = FontWeight.Bold,
                                             color = DarkText
                                         )
                                         Text(
-                                            "You can still simulate window searching using mock test candidates below.",
+                                            "To search emails within your incident window, add your Google OAuth Client ID in gradle.properties.",
                                             fontSize = 11.sp,
-                                            color = DarkText
+                                            color = SubtitleText
                                         )
                                     }
                                 }
@@ -479,16 +449,14 @@ fun SuspiciousEmailScreen(nav: androidx.navigation.NavHostController) {
                                         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(authUrl))
                                         ctx.startActivity(browserIntent)
                                     } else {
-                                        // Simulate in-memory session for demonstration/testing
-                                        GmailApiClient.setToken("simulated_test_token")
-                                        isGmailConnected = true
-                                        statusMessage = "Simulated Gmail connected session active."
+                                        Toast.makeText(ctx, "Configure GOOGLE_OAUTH_CLIENT_ID in gradle.properties", Toast.LENGTH_SHORT).show()
                                     }
                                 },
+                                enabled = clientId.isNotBlank(),
                                 colors = ButtonDefaults.buttonColors(containerColor = PrimaryTeal),
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                Text(if (clientId.isNotBlank()) "Connect Gmail (Read-Only Scope)" else "Start Demo Gmail Session", fontSize = 12.sp)
+                                Text("Connect Gmail (Read-Only Scope)", fontSize = 12.sp)
                             }
                         } else {
                             // Date-time window selection
@@ -573,40 +541,13 @@ fun SuspiciousEmailScreen(nav: androidx.navigation.NavHostController) {
                                         isQueryingCandidates = true
                                         statusMessage = "Fetching metadata for emails in window (including Spam/Trash)..."
                                         try {
-                                            if (GmailApiClient.accessToken == "simulated_test_token") {
-                                                // Simulated candidate list for demo/testing without API keys
+                                            val res = GmailApiClient.listMetadataOnly(startSec, endSec)
+                                            if (res.isSuccess) {
                                                 candidateEmails.clear()
-                                                val meta1 = EmailMetadata(
-                                                    id = "mock_1",
-                                                    from = "SBI Alerts <alert@onlinesbi-kyc.top>",
-                                                    replyTo = "scam@disposable.xyz",
-                                                    subject = "URGENT: Your Account Has Been Blocked",
-                                                    dateStr = tzFormat.format(Date()),
-                                                    authResults = "spf=fail; dmarc=fail",
-                                                    quickScore = 80,
-                                                    quickSuspicionReason = "SPF Failed; Lookalike domain (mimics sbi); Urgent blockage threat"
-                                                )
-                                                val meta2 = EmailMetadata(
-                                                    id = "mock_2",
-                                                    from = "Company HR <jobs@career-tech-hiring.live>",
-                                                    subject = "Selected for Work From Home - Daily Income ₹5000",
-                                                    dateStr = tzFormat.format(Date(System.currentTimeMillis() - 3600000L)),
-                                                    authResults = "spf=pass",
-                                                    quickScore = 40,
-                                                    quickSuspicionReason = "Suspicious .live domain; Task scam lure in subject"
-                                                )
-                                                candidateEmails.add(CandidateEmail("mock_1", meta1, isSelected = true))
-                                                candidateEmails.add(CandidateEmail("mock_2", meta2, isSelected = false))
-                                                statusMessage = "Found 2 candidate emails in window. Tick ones to import."
+                                                candidateEmails.addAll(res.getOrNull() ?: emptyList())
+                                                statusMessage = "Found ${candidateEmails.size} candidate emails in window."
                                             } else {
-                                                val res = GmailApiClient.listMetadataOnly(startSec, endSec)
-                                                if (res.isSuccess) {
-                                                    candidateEmails.clear()
-                                                    candidateEmails.addAll(res.getOrNull() ?: emptyList())
-                                                    statusMessage = "Found ${candidateEmails.size} candidate emails in window."
-                                                } else {
-                                                    statusMessage = "Query failed: ${res.exceptionOrNull()?.message}"
-                                                }
+                                                statusMessage = "Query failed: ${res.exceptionOrNull()?.message}"
                                             }
                                         } finally {
                                             isQueryingCandidates = false
@@ -683,21 +624,7 @@ fun SuspiciousEmailScreen(nav: androidx.navigation.NavHostController) {
                                                 GmailApiClient.discardUnticked(candidateEmails, tickedIds)
 
                                                 for (candidate in candidateEmails.filter { it.isSelected }) {
-                                                    val rawText = if (GmailApiClient.accessToken == "simulated_test_token") {
-                                                        """
-                                                            From: ${candidate.metadata.from}
-                                                            Reply-To: ${candidate.metadata.replyTo ?: ""}
-                                                            Subject: ${candidate.metadata.subject}
-                                                            Date: ${candidate.metadata.dateStr}
-                                                            Authentication-Results: ${candidate.metadata.authResults ?: ""}
-                                                            
-                                                            Simulated raw message content for analysis.
-                                                            Visit: http://192.168.1.50/login
-                                                        """.trimIndent()
-                                                    } else {
-                                                        GmailApiClient.fetchRawMessage(candidate.id).getOrThrow()
-                                                    }
-
+                                                    val rawText = GmailApiClient.fetchRawMessage(candidate.id).getOrThrow()
                                                     val parsed = EmlParser.parse(rawText)
                                                     val analysis = PhishingAnalyzer.analyze(parsed)
                                                     val card = EmailStorage.saveAndRecord(ctx, caseId, parsed, analysis)

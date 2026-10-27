@@ -65,8 +65,7 @@ data class GuidedStep(
     val question: String,
     val explanation: String,
     val portalField: String,
-    val factType: String,
-    val defaultSample: String,
+    val factType: String
 )
 
 @Composable
@@ -104,57 +103,49 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                     question = "Which platform or account was hacked?",
                     explanation = "Tell us the service (e.g. Gmail, Instagram, WhatsApp, Facebook, Telegram).",
                     portalField = "Platform / Application",
-                    factType = "app",
-                    defaultSample = "Instagram account"
+                    factType = "app"
                 ),
                 GuidedStep(
                     question = "What is your username or account ID?",
                     explanation = "The handle, registered phone number or email you used to log in.",
                     portalField = "Victim Account Identifier",
-                    factType = "account_id",
-                    defaultSample = "user@example.com"
+                    factType = "account_id"
                 ),
                 GuidedStep(
                     question = "When did you lose access to the account?",
                     explanation = "Say the date and time as best you remember. An approximate time is fine.",
                     portalField = "Date and time incident occurred",
-                    factType = "timestamp",
-                    defaultSample = "Yesterday around 4 PM"
+                    factType = "timestamp"
                 ),
                 GuidedStep(
                     question = "What phone number or email was linked to the account?",
                     explanation = "The recovery details previously associated with your account.",
                     portalField = "Recovery Phone / Email",
-                    factType = "phone",
-                    defaultSample = "+91 98765 43210"
+                    factType = "phone"
                 ),
                 GuidedStep(
                     question = "Did you receive any password reset OTP or verification link?",
                     explanation = "e.g. Received an SMS OTP, or clicked a phishing link sent by someone.",
                     portalField = "Method of Compromise",
-                    factType = "other",
-                    defaultSample = "Clicked a verification link in DM"
+                    factType = "other"
                 ),
                 GuidedStep(
                     question = "How did the fraudster contact or deceive you?",
                     explanation = "Describe the contact method or malicious technique used.",
                     portalField = "Method of Contact",
-                    factType = "other",
-                    defaultSample = "Instagram direct message from compromised friend account"
+                    factType = "other"
                 ),
                 GuidedStep(
                     question = "Did you install any remote-control app or malicious file?",
                     explanation = "Mention any APK, screen sharing app or link clicked.",
                     portalField = "Method of Compromise / App Installed",
-                    factType = "other",
-                    defaultSample = "No app installed, entered credentials on fake login page"
+                    factType = "other"
                 ),
                 GuidedStep(
                     question = "Briefly describe what happened in your own words",
                     explanation = "AI will understand the scenario and create the official complaint script.",
                     portalField = "Incident Additional Information",
-                    factType = "other",
-                    defaultSample = "Account was hijacked after receiving a suspicious security alert. Unable to recover via normal recovery methods."
+                    factType = "other"
                 )
             )
             "phishing" -> listOf(
@@ -162,57 +153,49 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                     question = "What was the suspect's phone number, email, or link?",
                     explanation = "The suspect's number, fake website link, or email sender address.",
                     portalField = "Suspect Phone / Website URL",
-                    factType = "phone",
-                    defaultSample = "+91 98765 43210"
+                    factType = "phone"
                 ),
                 GuidedStep(
                     question = "Which bank or account was targeted?",
                     explanation = "The bank or wallet details the fraudster attempted to exploit.",
                     portalField = "Bank Name from which payment was made",
-                    factType = "other",
-                    defaultSample = "State Bank of India"
+                    factType = "other"
                 ),
                 GuidedStep(
                     question = "When did you receive the call or message?",
                     explanation = "Date and approximate time when the contact occurred.",
                     portalField = "Date and time of incident",
-                    factType = "timestamp",
-                    defaultSample = "Today at 11 AM"
+                    factType = "timestamp"
                 ),
                 GuidedStep(
                     question = "What is the fraudster's UPI ID, phone or beneficiary info?",
                     explanation = "The destination UPI ID, link or number where details were sent.",
                     portalField = "Account No. / Fraudster UPI",
-                    factType = "upi_id",
-                    defaultSample = "fraudster@upi"
+                    factType = "upi_id"
                 ),
                 GuidedStep(
                     question = "Do you have the Transaction ID or UTR number?",
                     explanation = "Check your SMS or bank statement for a 12-digit UTR reference.",
                     portalField = "Transaction ID / UTR reference",
-                    factType = "txn_ref",
-                    defaultSample = "123456789012"
+                    factType = "txn_ref"
                 ),
                 GuidedStep(
                     question = "How did the fraudster contact you?",
                     explanation = "Select or type the communication channel used.",
                     portalField = "Method of Contact",
-                    factType = "other",
-                    defaultSample = "SMS warning about electricity bill disconnection"
+                    factType = "other"
                 ),
                 GuidedStep(
                     question = "Did you click any link or install a remote app?",
                     explanation = "e.g. AnyDesk, TeamViewer, RustDesk, or a fake APK file.",
                     portalField = "Method of Compromise / App Installed",
-                    factType = "other",
-                    defaultSample = "Clicked link in SMS and entered mobile number"
+                    factType = "other"
                 ),
                 GuidedStep(
                     question = "Briefly describe what happened in your own words",
                     explanation = "AI will understand the scenario and create the official complaint script.",
                     portalField = "Incident Additional Information",
-                    factType = "other",
-                    defaultSample = "Received SMS threatening power disconnection tonight unless immediate bill payment made via provided link."
+                    factType = "other"
                 )
             )
             else -> listOf(
@@ -221,58 +204,50 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                     question = "How much money was lost?",
                     explanation = "Enter the total amount in Rupees transferred to the fraudster.",
                     portalField = "Amount Paid",
-                    factType = "amount",
-                    defaultSample = "Rs. 25,000"
+                    factType = "amount"
                 ),
                 GuidedStep(
                     question = "Which bank or app did you pay from?",
                     explanation = "e.g. State Bank of India, HDFC, ICICI, Google Pay, PhonePe, Paytm, Bank of Baroda.",
                     portalField = "Bank Name from which payment was made",
-                    factType = "other",
-                    defaultSample = "State Bank of India via PhonePe"
+                    factType = "other"
                 ),
                 GuidedStep(
                     // Exactly matches reference screenshot: Step 3 of 8
                     question = "When did the money leave your account?",
                     explanation = "Say the date and time as best you remember. An approximate time is fine.",
                     portalField = "Date and time of incident",
-                    factType = "timestamp",
-                    defaultSample = "Yesterday around six in the evening"
+                    factType = "timestamp"
                 ),
                 GuidedStep(
                     question = "What is the fraudster's UPI ID, phone or account?",
                     explanation = "The recipient UPI handle, bank account number, or phone number where money was sent.",
                     portalField = "Account No. / Fraudster UPI",
-                    factType = "upi_id",
-                    defaultSample = "fraudster@upi"
+                    factType = "upi_id"
                 ),
                 GuidedStep(
                     question = "Do you have the Transaction ID or UTR number?",
                     explanation = "Check your SMS or bank statement for a 12-digit UTR reference.",
                     portalField = "Transaction ID / UTR reference",
-                    factType = "txn_ref",
-                    defaultSample = "123456789012"
+                    factType = "txn_ref"
                 ),
                 GuidedStep(
                     question = "How did the fraudster contact you?",
                     explanation = "Select from AI suggestions or type your own response.",
                     portalField = "Method of Contact",
-                    factType = "other",
-                    defaultSample = "Telegram work-from-home task group"
+                    factType = "other"
                 ),
                 GuidedStep(
                     question = "Did you click any link or install a remote app?",
                     explanation = "Select from AI suggestions or type your own response.",
                     portalField = "Method of Compromise / App Installed",
-                    factType = "other",
-                    defaultSample = "Clicked fake job portal link and transferred money"
+                    factType = "other"
                 ),
                 GuidedStep(
                     question = "Briefly describe how the fraud occurred",
                     explanation = "AI will understand the entire scenario and generate the official police complaint script ready to upload in one click.",
                     portalField = "Incident Additional Information",
-                    factType = "other",
-                    defaultSample = "Promised high returns for online tasks, released small bonus first, then demanded money to release funds and blocked me."
+                    factType = "other"
                 )
             )
         }
@@ -284,7 +259,7 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
     // Answers dictionary to hold all answers across steps 1-8
     val collectedAnswers = remember { mutableStateMapOf<Int, String>() }
     var answerText by remember(stepIndex) {
-        mutableStateOf(collectedAnswers[stepIndex] ?: currentStep.defaultSample)
+        mutableStateOf(collectedAnswers[stepIndex] ?: "")
     }
 
     // Extracted SMS data state (persisted across all steps)
@@ -336,13 +311,13 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
     LaunchedEffect(stepIndex) {
         if (stepIndex == 7 && aiGeneratedScript.isBlank()) {
             val profile = UserProfileStore.get(context)
-            val amt = collectedAnswers[0] ?: lastExtractedScam?.amount ?: "Rs. 25,000"
-            val bnk = collectedAnswers[1] ?: lastExtractedScam?.bankName ?: "Bank Account"
-            val dt = collectedAnswers[2] ?: lastExtractedScam?.dateTimeFormatted ?: "Yesterday"
-            val frd = collectedAnswers[3] ?: lastExtractedScam?.fraudsterId ?: "fraudster@upi"
-            val utr = collectedAnswers[4] ?: lastExtractedScam?.utrRef ?: "123456789012"
-            val contact = collectedAnswers[5] ?: "Telegram task group"
-            val compromise = collectedAnswers[6] ?: "Fake job inducement"
+            val amt = collectedAnswers[0]?.ifBlank { null } ?: lastExtractedScam?.amount ?: ""
+            val bnk = collectedAnswers[1]?.ifBlank { null } ?: lastExtractedScam?.bankName ?: ""
+            val dt = collectedAnswers[2]?.ifBlank { null } ?: lastExtractedScam?.dateTimeFormatted ?: ""
+            val frd = collectedAnswers[3]?.ifBlank { null } ?: lastExtractedScam?.fraudsterId ?: ""
+            val utr = collectedAnswers[4]?.ifBlank { null } ?: lastExtractedScam?.utrRef ?: ""
+            val contact = collectedAnswers[5]?.ifBlank { null } ?: ""
+            val compromise = collectedAnswers[6]?.ifBlank { null } ?: ""
 
             // Instant on-device legal narrative
             val instantNarrative = ComplaintScriptGenerator.buildLegalNarrative(
@@ -1022,13 +997,13 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                                         coroutineScope.launch {
                                             isGeneratingScript = true
                                             val profile = UserProfileStore.get(context)
-                                            val amt = collectedAnswers[0] ?: lastExtractedScam?.amount ?: "Rs. 25,000"
-                                            val bnk = collectedAnswers[1] ?: lastExtractedScam?.bankName ?: "Bank Account"
-                                            val dt = collectedAnswers[2] ?: lastExtractedScam?.dateTimeFormatted ?: "Yesterday"
-                                            val frd = collectedAnswers[3] ?: lastExtractedScam?.fraudsterId ?: "fraudster@upi"
-                                            val utr = collectedAnswers[4] ?: lastExtractedScam?.utrRef ?: "123456789012"
-                                            val contact = collectedAnswers[5] ?: "Telegram task group"
-                                            val compromise = collectedAnswers[6] ?: "Fake job inducement"
+                                            val amt = collectedAnswers[0]?.ifBlank { null } ?: lastExtractedScam?.amount ?: ""
+                                            val bnk = collectedAnswers[1]?.ifBlank { null } ?: lastExtractedScam?.bankName ?: ""
+                                            val dt = collectedAnswers[2]?.ifBlank { null } ?: lastExtractedScam?.dateTimeFormatted ?: ""
+                                            val frd = collectedAnswers[3]?.ifBlank { null } ?: lastExtractedScam?.fraudsterId ?: ""
+                                            val utr = collectedAnswers[4]?.ifBlank { null } ?: lastExtractedScam?.utrRef ?: ""
+                                            val contact = collectedAnswers[5]?.ifBlank { null } ?: ""
+                                            val compromise = collectedAnswers[6]?.ifBlank { null } ?: ""
 
                                             val script = ComplaintScriptGenerator.generateScript(
                                                 profile, amt, bnk, dt, frd, utr, contact, compromise
@@ -1103,7 +1078,9 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .focusRequester(focusRequester),
-                        placeholder = { Text("Type your answer here...") },
+                        placeholder = {
+                            Text(if (stepIndex == 7) "Complaint narrative will appear here..." else "Type your answer here...")
+                        },
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = Color.Transparent,
                             unfocusedBorderColor = Color.Transparent,

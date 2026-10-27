@@ -163,27 +163,6 @@ object SmsScamExtractor {
             }
         }
 
-        // If no inbox messages found or permission not granted, provide an extracted
-        // template transaction matching the victim's mentioned date and time
-        if (results.isEmpty()) {
-            val sdf = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.US)
-            val formattedDate = sdf.format(Date(targetTime))
-            results.add(
-                ExtractedScamData(
-                    amount = "Rs. 25,000",
-                    amountNum = 25000.0,
-                    bankName = "State Bank of India (UPI)",
-                    dateTimeFormatted = formattedDate,
-                    timestampMillis = targetTime,
-                    utrRef = "123456789012",
-                    fraudsterId = "fraudster@upi",
-                    smsSender = "AD-SBIINB",
-                    smsBody = "Dear Customer, Rs 25,000.00 debited from A/c XX4321 on $formattedDate via UPI Ref 123456789012 to fraudster@upi.",
-                    scamType = "UPI Financial Fraud"
-                )
-            )
-        }
-
         return results
     }
 

@@ -168,28 +168,28 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
     var selectedSubCategory by remember { mutableStateOf("") }
     var hasLostMoney by remember { mutableStateOf(true) }
 
-    var incidentDateTime by remember { mutableStateOf("Yesterday, 16:30") }
+    var incidentDateTime by remember { mutableStateOf("") }
     var hasDelayReporting by remember { mutableStateOf(false) }
     var delayReason by remember { mutableStateOf("") }
-    var incidentPlatform by remember { mutableStateOf("UPI / Banking App") }
+    var incidentPlatform by remember { mutableStateOf("") }
 
-    var defraudedAmount by remember { mutableStateOf("Rs. 25,000") }
-    var debitedBank by remember { mutableStateOf("State Bank of India") }
-    var utrNumber by remember { mutableStateOf("123456789012") }
+    var defraudedAmount by remember { mutableStateOf("") }
+    var debitedBank by remember { mutableStateOf("") }
+    var utrNumber by remember { mutableStateOf("") }
     var victimUpi by remember { mutableStateOf("") }
-    var suspectUpi by remember { mutableStateOf("fraudster@upi") }
+    var suspectUpi by remember { mutableStateOf("") }
 
     var suspectName by remember { mutableStateOf("") }
     var suspectPhone by remember { mutableStateOf("") }
     var suspectEmail by remember { mutableStateOf("") }
     var suspectWebsite by remember { mutableStateOf("") }
 
-    var complainantName by remember { mutableStateOf(userProfile.fullName.ifBlank { "Complainant" }) }
+    var complainantName by remember { mutableStateOf(userProfile.fullName) }
     var complainantMobile by remember { mutableStateOf(userProfile.mobile) }
     var complainantEmail by remember { mutableStateOf(userProfile.email) }
-    var complainantState by remember { mutableStateOf(userProfile.state.ifBlank { "Delhi" }) }
-    var complainantDistrict by remember { mutableStateOf(userProfile.district.ifBlank { "Central" }) }
-    var complainantPoliceStation by remember { mutableStateOf("") }
+    var complainantState by remember { mutableStateOf(userProfile.state) }
+    var complainantDistrict by remember { mutableStateOf(userProfile.district) }
+    var complainantPoliceStation by remember { mutableStateOf(userProfile.policeStation) }
 
     var complaintNarrative by remember { mutableStateOf("") }
     var declarationChecked by remember { mutableStateOf(false) }
@@ -267,6 +267,16 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
                             factCount = extractedCount
                         )
                     )
+                    // Auto-fill fields from user uploaded evidence
+                    if (isImg) {
+                        val facts = db.dao().factsOf(caseId).firstOrNull() ?: emptyList()
+                        facts.find { it.type == "amount" }?.valueText?.let { if (defraudedAmount.isBlank()) defraudedAmount = it }
+                        facts.find { it.type == "bank" }?.valueText?.let { if (debitedBank.isBlank()) debitedBank = it }
+                        facts.find { it.type == "timestamp" }?.valueText?.let { if (incidentDateTime.isBlank()) incidentDateTime = it }
+                        facts.find { it.type == "txn_ref" }?.valueText?.let { if (utrNumber.isBlank()) utrNumber = it }
+                        facts.find { it.type == "upi_id" }?.valueText?.let { if (suspectUpi.isBlank()) suspectUpi = it }
+                        facts.find { it.type == "phone" }?.valueText?.let { if (suspectPhone.isBlank()) suspectPhone = it }
+                    }
                 }
             }
             withContext(Dispatchers.Main) {
