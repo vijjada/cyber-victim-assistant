@@ -23,7 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
+import com.cybervictim.assistant.portal.StepOwner
 import com.cybervictim.assistant.ui.Routes
+import com.cybervictim.assistant.voice.ScreenDescriptor
+import com.cybervictim.assistant.voice.TrackScreenDescriptor
 import kotlinx.coroutines.delay
 
 /**
@@ -51,6 +54,16 @@ class PortalAuthBridge(private val onLoginSuccess: (String) -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PortalWebViewScreen(nav: NavHostController) {
+    TrackScreenDescriptor(
+        ScreenDescriptor(
+            screenId = "portal_webview",
+            title = "Official Portal Authentication",
+            buttons = listOf("Submit", "Refresh", "Back"),
+            fields = listOf("OTP", "Captcha"),
+            owner = StepOwner.HUMAN,
+            hintKey = "voice_hint_portal_webview"
+        )
+    )
     val ctx = LocalContext.current
 
     // ── State ──

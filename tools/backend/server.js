@@ -158,6 +158,110 @@ app.get("/breaches/:email", async (req, res) => {
   } catch (e) { res.status(502).json({ error: "network " + e.message }); }
 });
 
+app.post("/voice-guide", async (req, res) => {
+  const { transcript, languageTag, screen, history } = req.body || {};
+  if (!transcript || typeof transcript !== "string") {
+    return res.status(400).json({ error: "missing transcript" });
+  }
+
+  const s = screen || {};
+  const lang = (languageTag || "en-IN").toLowerCase();
+  const key = process.env.GEMINI_API_KEY;
+
+  if (key) {
+    try {
+      const sysPrompt = `You are CyBridge Voice Guide helping a cybercrime victim in India navigate the official complaint process.
+Current Screen: ${s.title || "Report"} (ID: ${s.screenId || "unknown"}, Step: ${s.stepIndex ?? -1} - ${s.stepTitle || ""}).
+Available buttons on this screen: ${(s.buttons || []).join(", ") || "None"}.
+Available fields on this screen: ${(s.fields || []).join(", ") || "None"}.
+Step Owner: ${s.owner || "AI_AUTO"} (HUMAN = user enters OTP/CAPTCHA/credentials manually; VICTIM_LOCK = final locked submit step; AI_AUTO = user taps recommended action).
+Target Language BCP-47: ${lang}.
+Instructions:
+- Provide exactly ONE clear next step instruction for the user in the target language (${lang}).
+- The user does all tapping. You only advise what to tap or do next.
+- Keep the response short (1 to 2 sentences).
+- Strictly no emojis.`;
+
+      const contents = [];
+      if (Array.isArray(history)) {
+        for (const item of history.slice(-3)) {
+          contents.push({
+            role: item.speaker === "user" ? "user" : "model",
+            parts: [{ text: String(item.text || "") }],
+          });
+        }
+      }
+      contents.push({
+        role: "user",
+        parts: [{ text: transcript }],
+      });
+
+      const body = {
+        system_instruction: {
+          parts: [{ text: sysPrompt }],
+        },
+        contents,
+        generationConfig: {
+          temperature: 0.2,
+          maxOutputTokens: 300,
+        },
+      };
+
+      const resp = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+          signal: AbortSignal.timeout(7000),
+        }
+      );
+
+      if (resp.ok) {
+        const data = await resp.json();
+        const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+        if (candidate) {
+          const clean = candidate.replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, "").trim();
+          return res.json({ ok: true, nextStep: clean, source: "gemini" });
+        }
+      }
+    } catch (_) {
+      // Fall through to contextual rule-based response
+    }
+  }
+
+  // Contextual fallback based on screen and owner
+  let fallback = "";
+  if (s.owner === "HUMAN") {
+    fallback = lang.startsWith("hi")
+      ? "कृपया स्क्रीन पर अपना OTP या कैप्चा दर्ज करें और आगे बढ़ने के लिए बटन दबाएँ।"
+      : lang.startsWith("te")
+      ? "దయచేసి స్క్రీన్‌పై మీ OTP లేదా క్యాప్చాను నమోదు చేసి కొనసాగించడానికి బటన్‌ను నొక్కండి."
+      : "Please enter your OTP or captcha on the screen and tap the button to proceed.";
+  } else if (s.owner === "VICTIM_LOCK") {
+    fallback = lang.startsWith("hi")
+      ? "यह अंतिम लॉक है। सभी विवरणों की जाँच करें और शिकायत दर्ज करने के लिए सबमिट दबाएँ।"
+      : lang.startsWith("te")
+      ? "ఇది తుది లాక్. అన్ని వివరాలను తనిఖీ చేసి ఫిర్యాదు దాఖలు చేయడానికి సమర్పించు నొక్కండి."
+      : "This is the final locked step. Review all details and tap Submit to file your complaint.";
+  } else if (s.buttons && s.buttons.length > 0) {
+    const btn = s.buttons[0];
+    fallback = lang.startsWith("hi")
+      ? `आगे बढ़ने के लिए स्क्रीन पर '${btn}' बटन दबाएँ।`
+      : lang.startsWith("te")
+      ? `కొనసాగడానికి స్క్రీన్‌పై '${btn}' బటన్‌ను నొక్కండి.`
+      : `Tap '${btn}' on the screen to proceed to the next step.`;
+  } else {
+    fallback = lang.startsWith("hi")
+      ? "अगले चरण के लिए स्क्रीन पर दिए गए निर्देशों का पालन करें।"
+      : lang.startsWith("te")
+      ? "తర్వాతి దశ కోసం స్క్రీన్‌పై ఉన్న సూచనలను అనుసరించండి."
+      : "Follow the on-screen options to continue.";
+  }
+
+  return res.json({ ok: true, nextStep: fallback, source: "contextual_rule" });
+});
+
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log("exposure backend on :" + port);

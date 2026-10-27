@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity() {
         android.webkit.WebView.setWebContentsDebuggingEnabled(true)
         SuspiciousEmailBridge.handleIntent(intent)
         com.cybervictim.assistant.ui.L10n.init(this)
+        com.cybervictim.assistant.voice.TtsManager.init(this)
         com.cybervictim.assistant.exposure.ExposureApi.init(this)
         com.cybervictim.assistant.data.CaseSession.dbRef =
             java.util.concurrent.atomic.AtomicReference(
@@ -63,5 +64,10 @@ class MainActivity : ComponentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
         SuspiciousEmailBridge.handleIntent(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        com.cybervictim.assistant.voice.TtsManager.shutdown()
     }
 }

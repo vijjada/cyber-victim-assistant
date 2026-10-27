@@ -29,7 +29,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.cybervictim.assistant.R
 import com.cybervictim.assistant.data.UserProfileStore
+import com.cybervictim.assistant.portal.StepOwner
 import com.cybervictim.assistant.ui.Routes
+import com.cybervictim.assistant.voice.ScreenDescriptor
+import com.cybervictim.assistant.voice.TrackScreenDescriptor
 import kotlinx.coroutines.launch
 
 // Official App Palette (same as LanguageSelectScreen)
@@ -45,6 +48,16 @@ private val HubSubtitle = Color(0xFF546E7A)
 
 @Composable
 fun RegisterHubScreen(nav: NavHostController) {
+    TrackScreenDescriptor(
+        ScreenDescriptor(
+            screenId = "register_hub",
+            title = "CyBridge Home",
+            buttons = listOf("File Complaint", "Check Status", "Report Suspect", "Case Builder"),
+            fields = emptyList(),
+            owner = StepOwner.AI_AUTO,
+            hintKey = "voice_hint_register_hub"
+        )
+    )
     val context = LocalContext.current
     val userProfile = remember { UserProfileStore.get(context) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)

@@ -45,9 +45,14 @@ import androidx.navigation.NavHostController
 import com.cybervictim.assistant.ai.CaseSessionStore
 import com.cybervictim.assistant.ai.ComplaintScriptGenerator
 import com.cybervictim.assistant.data.*
+import com.cybervictim.assistant.portal.StepOwner
 import com.cybervictim.assistant.sms.ExtractedScamData
 import com.cybervictim.assistant.sms.SmsScamExtractor
+import com.cybervictim.assistant.ui.L10n
 import com.cybervictim.assistant.ui.Routes
+import com.cybervictim.assistant.voice.ScreenDescriptor
+import com.cybervictim.assistant.voice.TrackScreenDescriptor
+import com.cybervictim.assistant.voice.TtsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -255,6 +260,19 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
 
     var stepIndex by remember { mutableIntStateOf(0) }
     val currentStep = steps[stepIndex]
+
+    TrackScreenDescriptor(
+        ScreenDescriptor(
+            screenId = "guided_question",
+            title = "Guided Question",
+            stepIndex = stepIndex,
+            stepTitle = currentStep.portalField,
+            buttons = listOf("Next", "Back", "Listen"),
+            fields = listOf(currentStep.portalField),
+            owner = StepOwner.AI_AUTO,
+            hintKey = "voice_hint_guided_q"
+        )
+    )
 
     // Answers dictionary to hold all answers across steps 1-8
     val collectedAnswers = remember { mutableStateMapOf<Int, String>() }
@@ -488,7 +506,10 @@ fun GuidedQuestionScreen(nav: NavHostController, category: String) {
                             border = BorderStroke(1.dp, BorderColor),
                             color = Color.White,
                             modifier = Modifier.clickable {
-                                Toast.makeText(context, "Voice feature coming in future update", Toast.LENGTH_SHORT).show()
+                                TtsManager.speak(
+                                    text = "${currentStep.question}. ${currentStep.explanation}",
+                                    languageTag = L10n.lang.toBcp47()
+                                )
                             }
                         ) {
                             Row(

@@ -19,9 +19,22 @@ import kotlinx.coroutines.launch
 import com.cybervictim.assistant.data.CaseSession
 import com.cybervictim.assistant.data.CaseDb
 import com.cybervictim.assistant.data.EvidenceItem
+import com.cybervictim.assistant.portal.StepOwner
+import com.cybervictim.assistant.voice.ScreenDescriptor
+import com.cybervictim.assistant.voice.TrackScreenDescriptor
 
 @Composable
 fun EvidenceScreen(nav: androidx.navigation.NavHostController) {
+    TrackScreenDescriptor(
+        ScreenDescriptor(
+            screenId = "evidence",
+            title = "Case Builder & Evidence Vault",
+            buttons = listOf("Add evidence file", "Analyze evidence with AI", "Generate complaint pack"),
+            fields = emptyList(),
+            owner = StepOwner.AI_AUTO,
+            hintKey = "voice_hint_evidence"
+        )
+    )
     val ctx = LocalContext.current
     val db = remember { CaseDb.get(ctx).dao() }
     val caseId = remember { CaseSession.ensure() }

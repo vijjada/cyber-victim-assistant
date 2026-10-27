@@ -34,6 +34,7 @@ import com.cybervictim.assistant.trc.AppRisk
 import com.cybervictim.assistant.trc.PhoneTrace
 import com.cybervictim.assistant.ui.L10n
 import com.cybervictim.assistant.ui.Routes
+import com.cybervictim.assistant.voice.TtsManager
 import kotlinx.coroutines.launch
 
 // Official App Palette
@@ -70,7 +71,7 @@ fun LanguageSelectScreen(nav: NavHostController) {
         userProfile = UserProfileStore.get(context)
     }
 
-    // Languages in order: English, Hindi, Telugu, Punjabi, Gujarati, Marathi, Tamil, Bangla
+    // Languages: English, Hindi, Telugu, Punjabi, Gujarati, Marathi, Tamil, Bangla, Kannada, Malayalam, Odia, Assamese
     val languages = remember {
         listOf(
             L10n.Lang.EN,
@@ -81,6 +82,10 @@ fun LanguageSelectScreen(nav: NavHostController) {
             L10n.Lang.MR,
             L10n.Lang.TA,
             L10n.Lang.BN,
+            L10n.Lang.KN,
+            L10n.Lang.ML,
+            L10n.Lang.OR,
+            L10n.Lang.AS,
         )
     }
 
@@ -1166,9 +1171,23 @@ fun LanguageSelectScreen(nav: NavHostController) {
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // Speaking speed indicator card
+            // Speaking speed indicator card (tap to toggle speed)
             Surface(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        val nextRate = when {
+                            speedProgress < 0.4f -> 1.0f
+                            speedProgress < 0.7f -> 1.25f
+                            else -> 0.75f
+                        }
+                        speedProgress = when (nextRate) {
+                            0.75f -> 0.25f
+                            1.0f -> 0.50f
+                            else -> 0.85f
+                        }
+                        TtsManager.setSpeechRate(nextRate, context)
+                    },
                 shape = RoundedCornerShape(16.dp),
                 color = White,
                 border = BorderStroke(1.dp, BorderUnselected)
@@ -1188,7 +1207,11 @@ fun LanguageSelectScreen(nav: NavHostController) {
                             color = DarkText
                         )
                         Text(
-                            text = "Slow",
+                            text = when {
+                                speedProgress < 0.4f -> "Slow (0.8x)"
+                                speedProgress < 0.7f -> "Normal (1.0x)"
+                                else -> "Fast (1.2x)"
+                            },
                             fontSize = 13.sp,
                             color = SubtitleGray
                         )
@@ -1213,11 +1236,21 @@ fun LanguageSelectScreen(nav: NavHostController) {
             // "Hear a sample" outlined button
             OutlinedButton(
                 onClick = {
-                    Toast.makeText(
-                        context,
-                        "Playing sample in ${selectedLang.label} (Voice feature coming soon)",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    val sample = when (selectedLang) {
+                        L10n.Lang.HI -> "नमस्ते, मैं आपका साइबर अपराध सहायता साथी हूँ।"
+                        L10n.Lang.TE -> "నమస్కారం, నేను మీ సైబర్ క్రైమ్ సహాయకుడిని."
+                        L10n.Lang.PA -> "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਮੈਂ ਤੁਹਾਡਾ ਸਾਈਬਰ ਕ੍ਰਾਈਮ ਸਹਾਇਕ ਹਾਂ।"
+                        L10n.Lang.GU -> "નમસ્તે, હું તમારો સાયબર ક્રાઇમ સહાયક છું."
+                        L10n.Lang.MR -> "नमस्कार, मी तुमचा सायबर गुन्हे सहाय्यक आहे."
+                        L10n.Lang.TA -> "வணக்கம், நான் உங்கள் சைபர் குற்ற உதவி வழிகாட்டி."
+                        L10n.Lang.BN -> "নমস্কার, আমি আপনার সাইবার ক্রাইম সহকারী।"
+                        L10n.Lang.KN -> "ನಮಸ್ಕಾರ, ನಾನು ನಿಮ್ಮ ಸೈಬರ್ ಅಪರಾಧ ಸಹಾಯ ಮಾರ್ಗದರ್ಶಿ."
+                        L10n.Lang.ML -> "നമസ്കാരം, ഞാൻ നിങ്ങളുടെ സൈബർ ക്രൈം സഹായിയാണ്."
+                        L10n.Lang.OR -> "ନମସ୍କାର, ମୁଁ ଆପଣଙ୍କ ସାଇବର ଅପରାଧ ସହାୟକ।"
+                        L10n.Lang.AS -> "নমস্কাৰ, মই আপোনাৰ চাইবাৰ অপৰাধ সাহায্যকাৰী।"
+                        else -> "Hello, I am CyBridge, your cybercrime victim assistant."
+                    }
+                    TtsManager.speak(sample, selectedLang.toBcp47())
                 },
                 modifier = Modifier
                     .fillMaxWidth()

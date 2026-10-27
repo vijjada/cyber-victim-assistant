@@ -40,7 +40,10 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import com.cybervictim.assistant.data.UserProfile
 import com.cybervictim.assistant.data.UserProfileStore
+import com.cybervictim.assistant.portal.StepOwner
 import com.cybervictim.assistant.ui.Routes
+import com.cybervictim.assistant.voice.ScreenDescriptor
+import com.cybervictim.assistant.voice.TrackScreenDescriptor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -125,6 +128,16 @@ private val GENDERS = listOf("Male", "Female", "Transgender")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PortalLoginScreen(nav: NavHostController) {
+    TrackScreenDescriptor(
+        ScreenDescriptor(
+            screenId = "portal_login",
+            title = "Citizen Login & Profile",
+            buttons = listOf("Send OTP", "Verify OTP", "Save Profile", "Back"),
+            fields = listOf("Mobile Number", "Captcha", "State", "District"),
+            owner = StepOwner.HUMAN,
+            hintKey = "voice_hint_portal_login"
+        )
+    )
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val userProfile = remember { UserProfileStore.get(context) }

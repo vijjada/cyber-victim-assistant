@@ -56,6 +56,8 @@ import com.cybervictim.assistant.portal.PortalAutoFillEngine
 import com.cybervictim.assistant.portal.StepOwner
 import com.cybervictim.assistant.sms.SmsScamExtractor
 import com.cybervictim.assistant.ui.Routes
+import com.cybervictim.assistant.voice.ScreenDescriptor
+import com.cybervictim.assistant.voice.TrackScreenDescriptor
 import java.io.File
 import java.util.Locale
 import kotlinx.coroutines.Dispatchers
@@ -162,6 +164,82 @@ fun PortalCloneScreen(nav: NavHostController, initialCategoryIndex: Int = 0) {
     // ── User Profile & Case Facts ──
     val userProfile = remember { UserProfileStore.get(context) }
     var currentStepIndex by remember { mutableIntStateOf(0) } // 0: Category, 1: Subcategory/Incident, 2: Financial, 3: Suspect, 4: Complainant, 5: Description, 6: Preview & Submit
+
+    val portalStepDescriptor = remember(currentStepIndex) {
+        when (currentStepIndex) {
+            0 -> ScreenDescriptor(
+                screenId = "portal_clone_step_0",
+                title = "Incident Category",
+                stepIndex = 0,
+                stepTitle = "Category Selection",
+                buttons = listOf("Save & Next"),
+                fields = listOf("Category", "Sub-category"),
+                owner = StepOwner.AI_AUTO,
+                hintKey = "voice_hint_portal_clone_0"
+            )
+            1 -> ScreenDescriptor(
+                screenId = "portal_clone_step_1",
+                title = "Incident Details",
+                stepIndex = 1,
+                stepTitle = "Date, Time and Incident",
+                buttons = listOf("Save & Next", "Back"),
+                fields = listOf("Date of Incident", "Platform", "Delay Reason"),
+                owner = StepOwner.AI_AUTO,
+                hintKey = "voice_hint_portal_clone_1"
+            )
+            2 -> ScreenDescriptor(
+                screenId = "portal_clone_step_2",
+                title = "Suspect Details",
+                stepIndex = 2,
+                stepTitle = "Suspect Information",
+                buttons = listOf("Save & Next", "Back"),
+                fields = listOf("Suspect Name", "Mobile Number", "Account/UPI", "Website"),
+                owner = StepOwner.AI_AUTO,
+                hintKey = "voice_hint_portal_clone_2"
+            )
+            3 -> ScreenDescriptor(
+                screenId = "portal_clone_step_3",
+                title = "Complainant Details",
+                stepIndex = 3,
+                stepTitle = "Complainant Profile",
+                buttons = listOf("Save & Next", "Back"),
+                fields = listOf("Full Name", "Gender", "Address", "State", "District"),
+                owner = StepOwner.AI_AUTO,
+                hintKey = "voice_hint_portal_clone_3"
+            )
+            4 -> ScreenDescriptor(
+                screenId = "portal_clone_step_4",
+                title = "Evidence Documents",
+                stepIndex = 4,
+                stepTitle = "Upload Evidence",
+                buttons = listOf("Save & Next", "Back", "Upload Evidence"),
+                fields = listOf("Supporting Documents"),
+                owner = StepOwner.AI_AUTO,
+                hintKey = "voice_hint_portal_clone_4"
+            )
+            5 -> ScreenDescriptor(
+                screenId = "portal_clone_step_5",
+                title = "Preview Complaint",
+                stepIndex = 5,
+                stepTitle = "Save & Preview",
+                buttons = listOf("Proceed to Preview", "Back"),
+                fields = emptyList(),
+                owner = StepOwner.AI_AUTO,
+                hintKey = "voice_hint_portal_clone_5"
+            )
+            else -> ScreenDescriptor(
+                screenId = "portal_clone_step_6",
+                title = "Final Confirmation & Submit",
+                stepIndex = 6,
+                stepTitle = "Declaration & Submit",
+                buttons = listOf("Submit Complaint", "Back"),
+                fields = listOf("Consent Checkbox"),
+                owner = StepOwner.VICTIM_LOCK, // Final Submit is locked for the victim
+                hintKey = "voice_hint_portal_clone_6"
+            )
+        }
+    }
+    TrackScreenDescriptor(portalStepDescriptor)
 
     // ── Form State (Auto-populated from Case Db & SMS Inbox) ──
     var selectedCategoryIndex by remember { mutableIntStateOf(initialCategoryIndex) }
