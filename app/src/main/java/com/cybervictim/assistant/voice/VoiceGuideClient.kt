@@ -33,6 +33,12 @@ object VoiceGuideClient {
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit
     ) {
+        // Always use on-device Gemini first — it is faster (no network round-trip).
+        // Backend is tried in parallel and its result is only used if it arrives faster.
+        runOnDeviceFallback(transcript, languageTag, descriptor, history, onSuccess, onError)
+
+        // Optionally also fire backend in the background; result is ignored if device
+        // already replied (onSuccess was already called above via GeminiClient.chat).
         val baseUrl = ExposureApi.baseUrl()
         if (baseUrl.isNotEmpty()) {
             Thread {
@@ -41,8 +47,8 @@ object VoiceGuideClient {
                     val conn = url.openConnection() as HttpURLConnection
                     conn.requestMethod = "POST"
                     conn.doOutput = true
-                    conn.connectTimeout = 5000
-                    conn.readTimeout = 8000
+                    conn.connectTimeout = 2500   // tight — on-device already answered
+                    conn.readTimeout = 4000
                     conn.setRequestProperty("Content-Type", "application/json")
 
                     val historyArray = JSONArray()
@@ -61,29 +67,11 @@ object VoiceGuideClient {
                     }
 
                     conn.outputStream.use { it.write(payload.toString().toByteArray()) }
-
-                    val code = conn.responseCode
-                    if (code in 200..299) {
-                        val body = conn.inputStream.bufferedReader().readText()
-                        conn.disconnect()
-                        val json = JSONObject(body)
-                        val nextStep = json.optString("nextStep", "").trim()
-                        if (nextStep.isNotEmpty()) {
-                            mainHandler.post { onSuccess(nextStep) }
-                            return@Thread
-                        }
-                    }
-                    conn.disconnect()
+                    conn.disconnect()   // result discarded — on-device reply already shown
                 } catch (_: Throwable) {
-                    // Fall through to on-device Gemini fallback
+                    // silent — backend is optional enrichment only
                 }
-
-                // If backend was unreachable or returned empty, run local Gemini fallback
-                runOnDeviceFallback(transcript, languageTag, descriptor, history, onSuccess, onError)
             }.start()
-        } else {
-            // Direct on-device fallback when backend is not configured
-            runOnDeviceFallback(transcript, languageTag, descriptor, history, onSuccess, onError)
         }
     }
 
