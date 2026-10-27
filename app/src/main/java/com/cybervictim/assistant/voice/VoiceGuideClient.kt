@@ -10,6 +10,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.Locale
 
 data class VoiceGuideMessage(
     val speaker: String, // "user" or "assistant"
@@ -87,6 +88,11 @@ object VoiceGuideClient {
             (it.speaker == "user") to it.text
         }
 
+        // FIX 7: resolve the human-readable language name so Gemini knows the exact target language
+        val languageName = java.util.Locale.forLanguageTag(languageTag)
+            .getDisplayLanguage(java.util.Locale.ENGLISH)
+            .ifBlank { languageTag }
+
         val prompt = buildString {
             appendLine("The victim is asking for voice assistance while filing a cybercrime report.")
             appendLine("Current Screen: ${descriptor.title} (ID: ${descriptor.screenId})")
@@ -106,14 +112,19 @@ object VoiceGuideClient {
             }
             appendLine("Target Language Tag: $languageTag")
             appendLine("Victim said: \"$transcript\"")
-            appendLine("Instruction: Speak back exactly ONE clear next step in the victim's language ($languageTag). The AI only guides; the user does all tapping. Keep it under 2 sentences. Strictly no emojis.")
+            // FIX 7: explicit language enforcement — Gemini sometimes replies in English for Indian langs
+            appendLine("Instruction: Respond ONLY in $languageName ($languageTag). DO NOT use English unless languageTag starts with 'en'. Speak back exactly ONE clear next step. The AI only guides; the user does all tapping. Keep it under 2 sentences. Strictly no emojis.")
         }
 
         GeminiClient.chat(
             history = geminiHistory,
             userMessage = prompt,
             onReply = { reply ->
-                val cleaned = reply.replace(Regex("[\uD83C-\uDBFF\uDC00-\uDFFF]+"), "").trim()
+                // FIX 8: broader emoji/symbol cleanup -- covers surrogate pairs AND BMP symbols
+                val cleaned = reply
+                    .replace(Regex("[\\uD83C-\\uDBFF][\\uDC00-\\uDFFF]"), "")
+                    .replace(Regex("[\\u2000-\\u2BFF\\uFE00-\\uFE0F\\u25A0-\\u27BF]"), "")
+                    .trim()
                 if (cleaned.isNotBlank()) {
                     onSuccess(cleaned)
                 } else {

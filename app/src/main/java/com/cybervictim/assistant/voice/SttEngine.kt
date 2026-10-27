@@ -149,13 +149,17 @@ class AndroidSttEngine(private val context: Context) : SttEngine {
                     putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, context.packageName)
                     putExtra(RecognizerIntent.EXTRA_LANGUAGE, languageTag)
                     putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, languageTag)
-                    putExtra("android.speech.extra.EXTRA_ADDITIONAL_LANGUAGES", arrayOf(languageTag, "en-IN", "hi-IN"))
+                    // FIX 5: deduplicate so en-IN is not sent twice when app language is English
+                    putExtra(
+                        "android.speech.extra.EXTRA_ADDITIONAL_LANGUAGES",
+                        linkedSetOf(languageTag, "en-IN", "hi-IN").toTypedArray()
+                    )
                     putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
                     putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
-                    // Shorter silence window = faster result delivery after user stops speaking
+                    // FIX 6: 1200ms complete-silence gives elderly/rural Indian speakers time to finish
                     putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 1000L)
-                    putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 800L)
-                    putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 800L)
+                    putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 1200L)
+                    putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 1000L)
                 }
 
                 rec.startListening(intent)

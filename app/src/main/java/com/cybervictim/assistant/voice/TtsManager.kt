@@ -17,6 +17,8 @@ object TtsManager {
     private val mainHandler = Handler(Looper.getMainLooper())
     private var pendingTask: (() -> Unit)? = null
     private var currentRate = 0.9f
+    // FIX 4: track active utterance so cancelled utterances don't leave isSpeaking stuck
+    private var activeUtteranceId: String? = null
 
     fun init(context: Context, onReady: (() -> Unit)? = null) {
         if (tts != null && isInitialized) {
@@ -65,30 +67,43 @@ object TtsManager {
         val engine = tts ?: return
         val locale = Locale.forLanguageTag(languageTag)
         val avail = engine.isLanguageAvailable(locale)
+        // FIX 3: detect unsupported language — never fall back to English phonetics for non-Latin scripts
+        if (avail == TextToSpeech.LANG_MISSING_DATA || avail == TextToSpeech.LANG_NOT_SUPPORTED) {
+            mainHandler.post { onError?.invoke("TTS_LANG_UNAVAILABLE") }
+            return
+        }
         if (avail >= TextToSpeech.LANG_AVAILABLE) {
             engine.language = locale
-        } else {
-            engine.language = Locale.ENGLISH
         }
         engine.setSpeechRate(currentRate)
 
         val utteranceId = "cybridge_voice_${System.currentTimeMillis()}"
+        // FIX 4: record the current utterance; callbacks for any prior (cancelled) id are discarded
+        activeUtteranceId = utteranceId
         engine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
             override fun onStart(id: String?) {
-                mainHandler.post { onStart?.invoke() }
+                if (id == activeUtteranceId) {
+                    mainHandler.post { onStart?.invoke() }
+                }
             }
 
             override fun onDone(id: String?) {
-                mainHandler.post { onDone?.invoke() }
+                if (id == activeUtteranceId) {
+                    mainHandler.post { onDone?.invoke() }
+                }
             }
 
             @Deprecated("Deprecated in Java")
             override fun onError(id: String?) {
-                mainHandler.post { onError?.invoke("Speech synthesis failed") }
+                if (id == activeUtteranceId) {
+                    mainHandler.post { onError?.invoke("Speech synthesis failed") }
+                }
             }
 
             override fun onError(id: String?, errorCode: Int) {
-                mainHandler.post { onError?.invoke("Speech synthesis failed ($errorCode)") }
+                if (id == activeUtteranceId) {
+                    mainHandler.post { onError?.invoke("Speech synthesis failed ($errorCode)") }
+                }
             }
         })
 
@@ -96,6 +111,7 @@ object TtsManager {
     }
 
     fun stop() {
+        activeUtteranceId = null   // discard any in-flight callbacks
         try {
             tts?.stop()
         } catch (_: Throwable) {}

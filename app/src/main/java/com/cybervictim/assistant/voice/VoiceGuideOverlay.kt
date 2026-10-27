@@ -106,8 +106,19 @@ fun VoiceGuideOverlay() {
                     text = reply,
                     languageTag = L10n.lang.toBcp47(),
                     onStart = { isSpeaking = true },
-                    onDone = { isSpeaking = false },
-                    onError = { isSpeaking = false }
+                    // FIX 1: reset to IDLE after TTS so mic is available again
+                    onDone = {
+                        isSpeaking = false
+                        voiceState = VoiceState.IDLE
+                    },
+                    onError = { errMsg ->
+                        isSpeaking = false
+                        voiceState = VoiceState.IDLE
+                        // FIX 3: silent degrade when TTS lang unavailable — text still shows
+                        if (errMsg != "TTS_LANG_UNAVAILABLE") {
+                            errorMessage = errMsg
+                        }
+                    }
                 )
             },
             onError = {
@@ -142,7 +153,11 @@ fun VoiceGuideOverlay() {
                 putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, context.packageName)
                 putExtra(RecognizerIntent.EXTRA_LANGUAGE, L10n.lang.toBcp47())
                 putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, L10n.lang.toBcp47())
-                putExtra("android.speech.extra.EXTRA_ADDITIONAL_LANGUAGES", arrayOf(L10n.lang.toBcp47(), "en-IN", "hi-IN"))
+                // FIX 5: deduplicate additional languages
+                putExtra(
+                    "android.speech.extra.EXTRA_ADDITIONAL_LANGUAGES",
+                    linkedSetOf(L10n.lang.toBcp47(), "en-IN", "hi-IN").toTypedArray()
+                )
                 putExtra(RecognizerIntent.EXTRA_PROMPT, L10n.t("voice_speak_now"))
                 putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5)
             }
@@ -185,9 +200,13 @@ fun VoiceGuideOverlay() {
         ) == PackageManager.PERMISSION_GRANTED
 
         if (hasPermission) {
-            if (voiceState == VoiceState.LISTENING) {
-                sttEngine.stopListening()
-                voiceState = VoiceState.IDLE
+            // FIX 2: block mic tap during THINKING (prevents duplicate concurrent requests)
+            if (voiceState == VoiceState.LISTENING || voiceState == VoiceState.THINKING) {
+                if (voiceState == VoiceState.LISTENING) {
+                    sttEngine.stopListening()
+                    voiceState = VoiceState.IDLE
+                }
+                return
             } else {
                 errorMessage = ""
                 startListeningInternal(
@@ -505,8 +524,18 @@ fun VoiceGuideOverlay() {
                                                 text = currentGuidance,
                                                 languageTag = L10n.lang.toBcp47(),
                                                 onStart = { isSpeaking = true },
-                                                onDone = { isSpeaking = false },
-                                                onError = { isSpeaking = false }
+                                                // FIX 1 (replay button): reset state after TTS done
+                                                onDone = {
+                                                    isSpeaking = false
+                                                    voiceState = VoiceState.IDLE
+                                                },
+                                                onError = { errMsg ->
+                                                    isSpeaking = false
+                                                    voiceState = VoiceState.IDLE
+                                                    if (errMsg != "TTS_LANG_UNAVAILABLE") {
+                                                        errorMessage = errMsg
+                                                    }
+                                                }
                                             )
                                         }
                                     }
