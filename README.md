@@ -40,6 +40,11 @@ However, non-technical victims face debilitating friction:
 
 ```mermaid
 flowchart TD
+    classDef startNode fill:#EFF6FF,stroke:#082B5B,stroke-width:2px,color:#082B5B,font-weight:bold;
+    classDef stepNode fill:#F0FDF4,stroke:#166534,stroke-width:2px,color:#166534,font-weight:bold;
+    classDef gateNode fill:#FFF7ED,stroke:#EA580C,stroke-width:2px,color:#9A3412,font-weight:bold;
+    classDef legalNode fill:#F8FAFC,stroke:#1E293B,stroke-width:2px,color:#0F172A,font-weight:bold;
+
     A["Victim Incident (Golden Hour: 2-4 Hours)"] --> B["Step 1: Intake (Text / Voice 'Speak out' in 12 Languages)"]
     B --> C["Step 2: On-Device Fact Mining (Google ML Kit OCR & Bank Debit SMS)"]
     C --> D["Step 3: Live Eye Pre-Fill (cybercrime.gov.in DOM Highlighting #00C853)"]
@@ -49,50 +54,62 @@ flowchart TD
     E -->|"Victim Lock"| H["Review Pre-filled Form & Personally Tap Submit"]
     H --> I["Step 4: Statutory Legal Pack (Sec 91 CrPC Bank Freeze & IT Act 66D PDF)"]
     I --> J["Step 5: Post-Filing Follow-Up Tracker (24h, 3-Day, 7-Day Nodal Compliance)"]
+
+    class A startNode;
+    class B,C,D stepNode;
+    class E,F,G,H gateNode;
+    class I,J legalNode;
 ```
 
 ---
 
-## 🏗️ 4-Tier System Architecture
+## 🏛️ System Architecture Pipeline
 
-Cybridge is built with a reactive, on-device architecture where sensitive data never leaves the citizen's physical hardware:
+Cybridge operates on a clean, modular, on-device architecture. Sensitive citizen data stays on the local smartphone, while cloud dependencies are strictly opt-in:
 
 ```mermaid
-graph TD
-    subgraph UI ["1. Presentation & Multilingual Voice Layer"]
-        A1["Jetpack Compose UI (Tricolor Gov Theme)"]
-        A2["12 Indian Languages Voice Engine (STT & TTS)"]
-        A3["ScreenDescriptorRegistry (Context-Aware Guide)"]
+flowchart TD
+    classDef client fill:#EFF6FF,stroke:#082B5B,stroke-width:2px,color:#082B5B,font-weight:bold;
+    classDef ai fill:#F0FDF4,stroke:#166534,stroke-width:2px,color:#166534,font-weight:bold;
+    classDef companion fill:#FFF7ED,stroke:#EA580C,stroke-width:2px,color:#9A3412,font-weight:bold;
+    classDef legal fill:#F8FAFC,stroke:#1E293B,stroke-width:2px,color:#0F172A,font-weight:bold;
+
+    subgraph Tier1 ["Stage 1: Citizen Interaction & Voice Ingestion"]
+        direction LR
+        A1["Android 15 Native UI (Jetpack Compose)"]
+        A2["12 Indian Languages Voice Engine (STT / TTS)"]
+        A3["Hands-Free 'Speak out' Oral Intake"]
     end
 
-    subgraph AI ["2. On-Device Intelligence & Fact Mining"]
-        B1["Google ML Kit Offline OCR (Subsampled Bitmaps)"]
-        B2["SmsScamExtractor (Bank Debit SMS Alert Mining)"]
-        B3["PhishingAnalyzer (Pure RFC 822/2047 EML Parser)"]
-        B4["Gemini 3.8 Flash (Structured Scenario Routing)"]
+    subgraph Tier2 ["Stage 2: On-Device Intelligence & Privacy Core"]
+        direction LR
+        B1["Google ML Kit Offline OCR (Receipts/VPAs)"]
+        B2["Bank Debit SMS Mining (-HDFCBK, -SBINB)"]
+        B3["Phishing Analyzer (RFC 822 / SPF / DKIM)"]
     end
 
-    subgraph Companion ["3. Browser Companion & Automation Engine"]
-        C1["PortalAutoFillEngine (DOM Script Generation)"]
-        C2["Live Eye Visual Highlighter (#00C853 Outlines)"]
-        C3["ActionPolicy Safety Machine (Immutable Boundary)"]
+    subgraph Tier3 ["Stage 3: Visual Trust & Companion Automation"]
+        direction LR
+        C1["Live Eye DOM Highlighting (#00C853 Outlines)"]
+        C2["ActionPolicy Safety Machine (AI Never Submits)"]
+        C3["Official cybercrime.gov.in Form Mirror"]
     end
 
-    subgraph Data ["4. Persistence & Security Tier"]
-        D1["Room SQLite Database (CaseDb: Facts & Evidence)"]
-        D2["Keystore EncryptedSharedPreferences (AES-256 GCM)"]
-        D3["ComplaintPack Engine (Deterministic PDF < 8MB)"]
+    subgraph Tier4 ["Stage 4: Statutory Legal Action & Fund Freezing"]
+        direction LR
+        D1["Section 91 CrPC Bank Nodal Freeze Notice"]
+        D2["Police Complaint (IT Act 66D & BNS 318)"]
+        D3["Deterministic Complaint Pack PDF (< 8MB)"]
     end
 
-    subgraph Cloud ["5. Edge & Cloud Microservices"]
-        E1["Cloudflare Edge (cybridge.vijjadapremsaiofficial.workers.dev)"]
-        E2["Node.js Express Backend (Email OTP & Breach APIs)"]
-    end
+    Tier1 -->|"Extracted User Intent"| Tier2
+    Tier2 -->|"Verified Case Facts"| Tier3
+    Tier3 -->|"Citizen Verified Submission"| Tier4
 
-    UI --> AI
-    AI --> Companion
-    Companion --> Data
-    Companion -.-> Cloud
+    class A1,A2,A3 client;
+    class B1,B2,B3 ai;
+    class C1,C2,C3 companion;
+    class D1,D2,D3 legal;
 ```
 
 ---
@@ -103,6 +120,10 @@ To guarantee absolute citizen safety and ethical AI operation, Cybridge enforces
 
 ```mermaid
 flowchart LR
+    classDef aiFill fill:#F0FDF4,stroke:#166534,stroke-width:2px,color:#166534,font-weight:bold;
+    classDef humanEnter fill:#FFF7ED,stroke:#EA580C,stroke-width:2px,color:#9A3412,font-weight:bold;
+    classDef victimLock fill:#EFF6FF,stroke:#082B5B,stroke-width:2px,color:#082B5B,font-weight:bold;
+
     subgraph S1 ["1. AI AUTO-FILLS (Safe Fields)"]
         direction TB
         F1["Official Category Dropdowns"]
@@ -127,7 +148,11 @@ flowchart LR
         V4["Official Token Generation"]
     end
 
-    S1 --> S2 --> S3
+    S1 ==> S2 ==> S3
+
+    class F1,F2,F3,F4 aiFill;
+    class H1,H2,H3,H4 humanEnter;
+    class V1,V2,V3,V4 victimLock;
 ```
 
 > **Core Safety Invariant**: Cybridge will **never** submit a government report on your behalf, will **never** attempt to bypass CAPTCHA, and will **never** inspect or store bank passwords or SMS OTPs.
