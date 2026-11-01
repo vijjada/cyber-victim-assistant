@@ -30,5 +30,6 @@ build/
 # --- editors / OS ---
 .idea/
 .vscode/
+.qoder/
 .DS_Store
 Thumbs.db

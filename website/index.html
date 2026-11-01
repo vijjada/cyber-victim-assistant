@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cybridge | Cyber Victim Assistant for Android (1930 & cybercrime.gov.in)</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Cybridge is an on-device, privacy-first Android assistant that helps Indian cybercrime victims act within the Golden Hour, extract verified evidence, and pre-fill cybercrime.gov.in reports.">
+  <meta name="keywords" content="Cybridge, cybercrime assistant, 1930 helpline, cyber fraud reporting, Indian Cyber Crime Coordination Centre, I4C, bank freeze notice, Section 91 CrPC, UTR extractor">
+  <meta name="author" content="Vijjada Prem Sai">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cybridge | Cyber Victim Assistant">
+  <meta property="og:description" content="On-device, privacy-first Android co-pilot for Indian cyber financial fraud victims. Act in the Golden Hour.">
+  <meta property="og:image" content="assets/logo/app_logo.png">
+  <meta property="og:url" content="https://vijjada.github.io/cyber-victim-assistant/">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo/app_logo.png">
+  <link rel="apple-touch-icon" href="assets/logo/app_logo.png">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#top" class="brand">
+        <img src="assets/logo/app_logo.png" alt="Cybridge Official Logo" class="brand-logo" width="40" height="40">
+        <div class="brand-text-group">
+          <span class="brand-name">Cybridge</span>
+          <span class="brand-sub">Cyber Victim Assistant</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#features" class="nav-link" data-i18n="navFeatures">Features</a></li>
+          <li><a href="#how-it-works" class="nav-link" data-i18n="navHow">How It Works</a></li>
+          <li><a href="#safety" class="nav-link" data-i18n="navSafety">Safety Boundary</a></li>
+          <li><a href="#privacy" class="nav-link" data-i18n="navPrivacy">Privacy</a></li>
+          <li><a href="#languages" class="nav-link" data-i18n="navLanguages">Languages</a></li>
+          <li><a href="#faq" class="nav-link" data-i18n="navFaq">FAQ</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button type="button" class="btn-lang" id="lang-toggle-btn" aria-label="Toggle language between English and Hindi">हिन्दी</button>
+          <a href="#download" class="btn btn-primary btn-sm" id="cfg-nav-download-btn" data-i18n="navDownload">Download App</a>
+          <button type="button" class="mobile-toggle" id="mobile-menu-toggle" aria-expanded="false" aria-controls="nav-links">Menu</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Emergency Strip -->
+  <aside class="emergency-strip" aria-label="Emergency Helpline">
+    <div class="container emergency-container">
+      <div class="emergency-text" data-i18n="emergencyTitle">
+        Lost money to cyber fraud right now? Call 1930 immediately.
+      </div>
+      <a href="tel:1930" class="emergency-link" data-i18n="emergencyBtn">Call 1930 Helpline</a>
+    </div>
+  </aside>
+
+  <main id="top">
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="badge badge-saffron">National Cyber Incident Co-Pilot</span>
+          <h1 class="hero-title" data-i18n="heroTitle">Cyber fraud happened? Act in the Golden Hour.</h1>
+          <p class="hero-subtitle" data-i18n="heroSubtitle">
+            Cybridge is an on-device, privacy-first Android assistant that helps Indian cybercrime victims prepare verified evidence and file accurate reports on cybercrime.gov.in.
+          </p>
+          <div class="hero-ctas">
+            <a href="#download" class="btn btn-primary" id="cfg-hero-download-btn" data-i18n="heroDownload">Download for Android</a>
+            <a href="#how-it-works" class="btn btn-secondary" data-i18n="heroHow">See How It Works</a>
+          </div>
+          <div class="hero-trust-row">
+            <span class="trust-item">Works offline</span>
+            <span class="trust-sep">|</span>
+            <span class="trust-item">Data stays on your phone</span>
+            <span class="trust-sep">|</span>
+            <span class="trust-item">12 Indian languages</span>
+            <span class="trust-sep">|</span>
+            <span class="trust-item">Completely free</span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="phone-mockup-frame">
+            <div class="phone-screen">
+              <img src="assets/screenshots/app_intake.png" alt="Cybridge Mobile Application Interface showing 8-step conversational intake" width="286" height="600" loading="eager">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Problem Section -->
+    <section class="section" id="problem">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge" data-i18n="problemBadge">The Problem</span>
+          <h2 class="section-title" data-i18n="problemHeading">Why cyber fraud reporting fails in the first critical hours</h2>
+          <p class="section-subtitle">
+            Under Ministry of Home Affairs (MHA) guidelines, defrauded funds move through mule accounts within 2 to 4 hours. Victims face three debilitating barriers during this window.
+          </p>
+        </div>
+
+        <div class="cards-grid-3">
+          <article class="card">
+            <div class="card-num">01 / BARRIER</div>
+            <h3 class="card-title">Panic & Technical Confusion</h3>
+            <p class="card-text">
+              Victims are distressed and rarely know the exact technical identifiers required by police and banks, such as 12-digit UTR/RRN numbers, beneficiary UPI VPAs, and SMS sender headers.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">02 / BARRIER</div>
+            <h3 class="card-title">Confusing Official Taxonomy</h3>
+            <p class="card-text">
+              The official portal contains multi-level nested categories. Picking the wrong subcategory delays investigation and police lien-marking on fraudster accounts.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">03 / BARRIER</div>
+            <h3 class="card-title">Critical Evidence Loss</h3>
+            <p class="card-text">
+              Panicked citizens frequently delete transaction receipts, suspect WhatsApp conversations, and banking debit SMS alerts, leaving nodal officers with zero verifiable trace.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section section-alt" id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge badge-green" data-i18n="howBadge">How It Works</span>
+          <h2 class="section-title" data-i18n="howHeading">Four guided steps from incident to formal submission</h2>
+          <p class="section-subtitle">
+            Cybridge eliminates guesswork and organizes your evidence into police-grade complaint packets in under five minutes.
+          </p>
+        </div>
+
+        <div class="cards-grid-4">
+          <article class="card step-card">
+            <div class="card-num">STEP 01</div>
+            <h3 class="card-title">Tell What Happened</h3>
+            <p class="card-text">
+              Explain the incident in plain text or use the hands-free "Speak out" voice mode in your mother tongue. Cybridge guides you through 8 simple questions.
+            </p>
+          </article>
+
+          <article class="card step-card">
+            <div class="card-num">STEP 02</div>
+            <h3 class="card-title">Add Evidence</h3>
+            <p class="card-text">
+              Add payment screenshots or let Cybridge read bank debit SMS alerts. On-device Google ML Kit OCR extracts UTRs, amounts, and dates without cloud uploads.
+            </p>
+          </article>
+
+          <article class="card step-card">
+            <div class="card-num">STEP 03</div>
+            <h3 class="card-title">Review & Pre-fill Portal</h3>
+            <p class="card-text">
+              Preview a 1:1 clone of the official form. The "Live Eye" assistant pre-fills official portal fields with a visible green highlight outline.
+            </p>
+          </article>
+
+          <article class="card step-card">
+            <div class="card-num">STEP 04</div>
+            <h3 class="card-title">Track & Follow Up</h3>
+            <p class="card-text">
+              Generate statutory Section 91 CrPC Bank Freeze notices immediately, and track critical follow-up deadlines at 24 hours, 3 days, and 7 days.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Grid Section -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge" data-i18n="featuresBadge">Capabilities</span>
+          <h2 class="section-title" data-i18n="featuresHeading">Purpose-built tools for cyber financial fraud</h2>
+          <p class="section-subtitle">
+            Every feature is designed specifically to help victims meet the strict statutory standards of Indian law enforcement and banking nodal officers.
+          </p>
+        </div>
+
+        <div class="cards-grid-3">
+          <article class="card">
+            <div class="card-num">FEATURE / 01</div>
+            <h3 class="card-title">Exact MHA Category Mapping</h3>
+            <p class="card-text">
+              Automatically selects the official category and subcategory based on the official MHA Citizen Manual, preventing mis-filing rejections.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">FEATURE / 02</div>
+            <h3 class="card-title">Live Portal Eye Highlighting</h3>
+            <p class="card-text">
+              Injects a bright green outline (#00C853) around active portal elements with an on-screen verified audit log so you see every action.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">FEATURE / 03</div>
+            <h3 class="card-title">Offline OCR Evidence Vault</h3>
+            <p class="card-text">
+              Extracts 12-digit UTR numbers, UPI VPAs, and timestamps locally using Google ML Kit. Raw images never leave your smartphone.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">FEATURE / 04</div>
+            <h3 class="card-title">Bank Debit SMS Reader</h3>
+            <p class="card-text">
+              Automatically identifies debit alerts from official Indian banking headers (-HDFCBK, -SBINB, -ICICIB) with user consent.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">FEATURE / 05</div>
+            <h3 class="card-title">Suspicious Email Check</h3>
+            <p class="card-text">
+              Parses raw EML files on-device, evaluates SPF, DKIM, and DMARC verification, and identifies typo-squatted lookalike bank domains.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">FEATURE / 06</div>
+            <h3 class="card-title">Statutory Legal Drafter</h3>
+            <p class="card-text">
+              Generates formal police complaints under Section 66D IT Act, Section 318(4) BNS, and Section 91 CrPC Bank Nodal freeze notices.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">FEATURE / 07</div>
+            <h3 class="card-title">Complaint PDF Pack</h3>
+            <p class="card-text">
+              Compiles facts, chronological narrative, and embedded evidence into a deterministic multi-page PDF guaranteed under 8 MB.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">FEATURE / 08</div>
+            <h3 class="card-title">Phone Trace Audit</h3>
+            <p class="card-text">
+              Scans installed applications for dangerous remote-access tools like AnyDesk, TeamViewer, or RustDesk commonly used by fraudsters.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">FEATURE / 09</div>
+            <h3 class="card-title">12 Indian Languages Voice Guide</h3>
+            <p class="card-text">
+              Full text and speech support across 12 Indian languages with dynamic screen context awareness to answer citizen doubts.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- You Stay in Control (Safety Boundary) -->
+    <section class="section section-alt" id="safety">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge badge-saffron" data-i18n="safetyBadge">Safety Boundary</span>
+          <h2 class="section-title" data-i18n="safetyHeading">You stay in complete control of your filing</h2>
+          <p class="section-subtitle" data-i18n="safetySub">
+            Cybridge enforces an immutable architectural boundary: the AI assists with preparation, but never submits for you.
+          </p>
+        </div>
+
+        <div class="safety-boundary-box">
+          <div class="safety-grid">
+            <div class="safety-col safety-col-ai">
+              <div class="safety-col-label">AI AUTO-FILLS (Safe Fields)</div>
+              <ul class="safety-list">
+                <li>Incident category dropdowns</li>
+                <li>Chronological complaint narrative</li>
+                <li>Transaction dates and amounts</li>
+                <li>Beneficiary UPI IDs and UTRs</li>
+                <li>Suspect phone numbers and handles</li>
+              </ul>
+            </div>
+
+            <div class="safety-col safety-col-you">
+              <div class="safety-col-label">YOU ENTER (Human Only)</div>
+              <ul class="safety-list">
+                <li>CAPTCHA security challenges</li>
+                <li>SMS One-Time Passwords (OTPs)</li>
+                <li>Net banking passwords</li>
+                <li>Aadhaar / Government ID numbers</li>
+                <li>Payment verification PINs</li>
+              </ul>
+            </div>
+
+            <div class="safety-col safety-col-decide">
+              <div class="safety-col-label">YOU DECIDE (Victim Lock)</div>
+              <ul class="safety-list">
+                <li>Review all pre-filled fields</li>
+                <li>Inspect evidence attachments</li>
+                <li>Preview official portal submission</li>
+                <li>Tap final "Submit Complaint"</li>
+                <li>Generate official token</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="safety-banner-message">
+            Important Invariant: Cybridge never submits for you, never bypasses CAPTCHA, and never handles your passwords.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy Section -->
+    <section class="section" id="privacy">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge badge-green" data-i18n="privacyBadge">Privacy Guarantee</span>
+          <h2 class="section-title" data-i18n="privacyHeading">Your evidence and personal details never leave your device</h2>
+          <p class="section-subtitle">
+            Unlike web chatbots that send your private chats and bank details to third-party cloud servers, Cybridge is built with a local-first privacy architecture.
+          </p>
+        </div>
+
+        <div class="cards-grid-3">
+          <article class="card">
+            <div class="card-num">PRIVACY / 01</div>
+            <h3 class="card-title">On-Device OCR Processing</h3>
+            <p class="card-text">
+              Payment screenshots are processed directly on your smartphone processor using Google ML Kit. Raw images are never uploaded to any remote server.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">PRIVACY / 02</div>
+            <h3 class="card-title">Hardware-Backed Encryption</h3>
+            <p class="card-text">
+              Case data and verified tokens are stored in Android Room SQLite database and protected via Android Keystore AES-256 GCM encryption.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-num">PRIVACY / 03</div>
+            <h3 class="card-title">Zero Commercial Telemetry</h3>
+            <p class="card-text">
+              Cybridge contains zero third-party advertising trackers, no user analytics tracking, and no monetization SDKs. It is 100% free and open-source.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Languages Section -->
+    <section class="section section-alt" id="languages">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge badge-saffron" data-i18n="languagesBadge">12 Indian Languages</span>
+          <h2 class="section-title" data-i18n="languagesHeading">Empowering every citizen in their native tongue</h2>
+          <p class="section-subtitle">
+            Cyber fraud affects citizens across all states. Cybridge breaks the English language barrier by offering complete voice and text guidance in 12 major Indian languages.
+          </p>
+        </div>
+
+        <div class="languages-grid">
+          <div class="lang-chip">
+            <div class="lang-script">English</div>
+            <div class="lang-name">English</div>
+          </div>
+          <div class="lang-chip">
+            <div class="lang-script">हिन्दी</div>
+            <div class="lang-name">Hindi</div>
+          </div>
+          <div class="lang-chip">
+            <div class="lang-script">తెలుగు</div>
+            <div class="lang-name">Telugu</div>
+          </div>
+          <div class="lang-chip">
+            <div class="lang-script">ਪੰਜਾਬੀ</div>
+            <div class="lang-name">Punjabi</div>
+          </div>
+          <div class="lang-chip">
+            <div class="lang-script">ગુજરાતી</div>
+            <div class="lang-name">Gujarati</div>
+          </div>
+          <div class="lang-chip">
+            <div class="lang-script">मराठी</div>
+            <div class="lang-name">Marathi</div>
+          </div>
+          <div class="lang-chip">
+            <div class="lang-script">தமிழ்</div>
+            <div class="lang-name">Tamil</div>
+          </div>
+          <div class="lang-chip">
+            <div class="lang-script">বাংলা</div>
+            <div class="lang-name">Bengali</div>
+          </div>
+          <div class="lang-chip">
+            <div class="lang-script">ಕನ್ನಡ</div>
+            <div class="lang-name">Kannada</div>
+          </div>
+          <div class="lang-chip">
+            <div class="lang-script">മലയാളം</div>
+            <div class="lang-name">Malayalam</div>
+          </div>
+          <div class="lang-chip">
+            <div class="lang-script">ଓଡ଼ିଆ</div>
+            <div class="lang-name">Odia</div>
+          </div>
+          <div class="lang-chip">
+            <div class="lang-script">অসমীয়া</div>
+            <div class="lang-name">Assamese</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="section" id="download">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge badge-green" data-i18n="downloadBadge">Direct Installation</span>
+          <h2 class="section-title" data-i18n="downloadHeading">Download Cybridge for Android</h2>
+          <p class="section-subtitle">
+            Get the latest production debug build directly on your device. Verify the cryptographic SHA-256 checksum to ensure complete package integrity.
+          </p>
+        </div>
+
+        <div class="download-card">
+          <div class="download-layout">
+            <div class="download-details">
+              <div>
+                <a href="downloads/cybridge.apk" class="btn btn-primary" id="cfg-download-btn">
+                  Download Cybridge for Android
+                </a>
+                <div class="badge-play-disabled">Google Play – coming soon</div>
+              </div>
+
+              <table class="download-meta-table">
+                <tbody>
+                  <tr>
+                    <td>Package Name</td>
+                    <td id="cfg-package">com.cybervictim.assistant</td>
+                  </tr>
+                  <tr>
+                    <td>Version</td>
+                    <td id="cfg-version">0.1.0</td>
+                  </tr>
+                  <tr>
+                    <td>File Size</td>
+                    <td id="cfg-size">55 MB</td>
+                  </tr>
+                  <tr>
+                    <td>Minimum Android</td>
+                    <td id="cfg-min-android">Android 8.0+ (API 26+)</td>
+                  </tr>
+                  <tr>
+                    <td>Release Date</td>
+                    <td id="cfg-updated">November 1, 2026</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="checksum-container">
+                <span class="checksum-label">SHA-256 Package Checksum:</span>
+                <span class="checksum-val" id="cfg-checksum">dee1d290f9366e28512e2cb188fbaa18becf90b7eb1d69252bf5f6ef55d5a664</span>
+                <button type="button" class="btn-copy" id="copy-checksum-btn">Copy SHA-256</button>
+              </div>
+            </div>
+
+            <div class="download-qr-box">
+              <img src="assets/qr_download.png" alt="QR Code to Download Cybridge APK directly to your smartphone" class="qr-image" width="170" height="170">
+              <p class="qr-caption">Scan with your smartphone camera to download the APK directly.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- How to Install Accordion -->
+        <div style="margin-top: 32px;">
+          <div class="accordion-item" style="max-width: 860px; margin: 0 auto;">
+            <button type="button" class="accordion-header" aria-expanded="false" aria-controls="install-steps">
+              <span>How to install the APK on Android</span>
+              <span class="accordion-indicator">Show Details</span>
+            </button>
+            <div id="install-steps" class="accordion-content" hidden>
+              <ol class="install-steps-list">
+                <li class="install-step-item">
+                  <span class="install-step-num">STEP 1</span>
+                  <span>Tap the "Download Cybridge for Android" button above to save <code>cybridge.apk</code> to your Downloads folder.</span>
+                </li>
+                <li class="install-step-item">
+                  <span class="install-step-num">STEP 2</span>
+                  <span>Once downloaded, tap the notification or open your Downloads manager and tap on <code>cybridge.apk</code>.</span>
+                </li>
+                <li class="install-step-item">
+                  <span class="install-step-num">STEP 3</span>
+                  <span>If prompted with "For your security, your phone is not allowed to install unknown apps from this source", tap Settings and enable "Allow from this source".</span>
+                </li>
+                <li class="install-step-item">
+                  <span class="install-step-num">STEP 4</span>
+                  <span>Tap "Install". Once installation finishes, open Cybridge, select your preferred language, and begin.</span>
+                </li>
+              </ol>
+              <p style="font-size: 13px; color: var(--color-text-muted); margin-top: 8px;">
+                Note: Only download the APK directly from this official GitHub repository page. Never download from unverified third-party file hosts.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section section-alt" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge" data-i18n="faqBadge">Questions and Answers</span>
+          <h2 class="section-title" data-i18n="faqHeading">Frequently Asked Questions</h2>
+          <p class="section-subtitle">
+            Clear, transparent answers on how Cybridge works, data security, and official portal filing.
+          </p>
+        </div>
+
+        <div class="accordion-group">
+          <div class="accordion-item">
+            <button type="button" class="accordion-header" aria-expanded="false" aria-controls="faq-1">
+              <span>Is Cybridge completely free to use?</span>
+              <span class="accordion-indicator">Show Details</span>
+            </button>
+            <div id="faq-1" class="accordion-content" hidden>
+              Yes. Cybridge is 100% free and open-source. There are no subscriptions, in-app purchases, or commercial advertisements. It is developed as a public-interest project to empower cybercrime victims in India.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-header" aria-expanded="false" aria-controls="faq-2">
+              <span>Does Cybridge file the official complaint automatically for me?</span>
+              <span class="accordion-indicator">Show Details</span>
+            </button>
+            <div id="faq-2" class="accordion-content" hidden>
+              No. By strict architectural design (ActionPolicy), Cybridge assists by pre-filling the official portal and drafting legal complaint narratives. The final submission must always be verified and clicked by you, the victim. Cybridge never submits without your conscious review.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-header" aria-expanded="false" aria-controls="faq-3">
+              <span>Are my personal bank details and screenshots safe?</span>
+              <span class="accordion-indicator">Show Details</span>
+            </button>
+            <div id="faq-3" class="accordion-content" hidden>
+              Yes. Cybridge uses on-device Google ML Kit OCR to process images locally on your phone processor. Raw screenshots and personal documents are never transmitted to external cloud servers. All local session data is stored in encrypted SQLite storage.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-header" aria-expanded="false" aria-controls="faq-4">
+              <span>Does Cybridge work without an active internet connection?</span>
+              <span class="accordion-indicator">Show Details</span>
+            </button>
+            <div id="faq-4" class="accordion-content" hidden>
+              Yes. Core features—including guided questionnaire intake, on-device OCR, bank SMS mining, Section 91 CrPC notice drafting, and PDF Complaint Pack generation—work 100% offline. Internet connectivity is only needed when interacting directly with the live cybercrime.gov.in portal.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-header" aria-expanded="false" aria-controls="faq-5">
+              <span>Is Cybridge an official Government of India application?</span>
+              <span class="accordion-indicator">Show Details</span>
+            </button>
+            <div id="faq-5" class="accordion-content" hidden>
+              No. Cybridge is an independent assistance tool and is not affiliated with or endorsed by the Government of India, I4C, or the Ministry of Home Affairs. It helps citizens prepare information; complaints must be submitted directly on the official portal (cybercrime.gov.in) or by calling 1930.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-header" aria-expanded="false" aria-controls="faq-6">
+              <span>Which Indian languages are supported?</span>
+              <span class="accordion-indicator">Show Details</span>
+            </button>
+            <div id="faq-6" class="accordion-content" hidden>
+              Cybridge supports 12 Indian languages: English, Hindi, Telugu, Punjabi, Gujarati, Marathi, Tamil, Bengali, Kannada, Malayalam, Odia, and Assamese. Both user interface text and the interactive voice assistant function across all 12 languages.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-header" aria-expanded="false" aria-controls="faq-7">
+              <span>Why is the APK not available on Google Play Store yet?</span>
+              <span class="accordion-indicator">Show Details</span>
+            </button>
+            <div id="faq-7" class="accordion-content" hidden>
+              Cybridge requires specific Android permissions (such as on-device SMS inspection with user consent and accessibility helpers) to assist distressed victims. It is currently distributed as an open-source APK while formal Google Play developer review and policy approvals are being finalized.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand" style="margin-bottom: 8px;">
+            <img src="assets/logo/app_logo.png" alt="Cybridge Logo" class="brand-logo" width="36" height="36" style="filter: brightness(0) invert(1);">
+            <div class="brand-text-group">
+              <span class="brand-name" style="color: #FFFFFF;">Cybridge</span>
+              <span class="brand-sub" style="color: #94A3B8;">Cyber Victim Assistant</span>
+            </div>
+          </div>
+          <p class="footer-desc">
+            An on-device, privacy-first Android assistant empowering Indian citizens during the critical Golden Hour of cyber financial fraud.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-title">Official Resources</div>
+          <ul class="footer-links">
+            <li><a href="tel:1930">National Cyber Helpline: 1930</a></li>
+            <li><a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer">National Cyber Crime Reporting Portal</a></li>
+            <li><a href="https://i4c.mha.gov.in" target="_blank" rel="noopener noreferrer">Indian Cyber Crime Coordination Centre (I4C)</a></li>
+            <li><a href="https://github.com/vijjada/cyber-victim-assistant" target="_blank" rel="noopener noreferrer">GitHub Repository</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-title">Documentation & Legal</div>
+          <ul class="footer-links">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="https://github.com/vijjada/cyber-victim-assistant/blob/main/CYBRIDGE_MASTER_HANDOVER_DOCUMENTATION.md" target="_blank" rel="noopener noreferrer">Architecture Specification</a></li>
+            <li><a href="mailto:vijjadapremsaiofficial@gmail.com">Contact Engineering Team</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Required Statutory Disclaimer -->
+      <div class="footer-disclaimer-card">
+        <div class="footer-disclaimer-title">Required Official Disclaimer</div>
+        <p>
+          Cybridge is an independent assistance tool and is not affiliated with or endorsed by the Government of India, I4C, or the Ministry of Home Affairs. It helps you prepare information; you submit your complaint yourself on the official portal (cybercrime.gov.in) or by calling 1930. This is not legal advice.
+        </p>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Cybridge Project. Open-source under MIT License.</div>
+        <div>Developed by Vijjada Prem Sai (GD Goenka University, Gurugram)</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
