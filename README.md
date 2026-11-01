@@ -40,6 +40,11 @@ However, non-technical victims face debilitating friction:
 
 ```mermaid
 flowchart TD
+    classDef startNode fill:#EFF6FF,stroke:#082B5B,stroke-width:2px,color:#082B5B,font-weight:bold;
+    classDef stepNode fill:#F0FDF4,stroke:#166534,stroke-width:2px,color:#166534,font-weight:bold;
+    classDef gateNode fill:#FFF7ED,stroke:#EA580C,stroke-width:2px,color:#9A3412,font-weight:bold;
+    classDef legalNode fill:#F8FAFC,stroke:#1E293B,stroke-width:2px,color:#0F172A,font-weight:bold;
+
     A["Victim Incident (Golden Hour: 2-4 Hours)"] --> B["Step 1: Intake (Text / Voice 'Speak out' in 12 Languages)"]
     B --> C["Step 2: On-Device Fact Mining (Google ML Kit OCR & Bank Debit SMS)"]
     C --> D["Step 3: Live Eye Pre-Fill (cybercrime.gov.in DOM Highlighting)"]
@@ -49,6 +54,11 @@ flowchart TD
     E -->|"Victim Lock"| H["Review Pre-filled Form & Personally Tap Submit"]
     H --> I["Step 4: Statutory Legal Pack (Sec 91 CrPC Bank Freeze & IT Act 66D PDF)"]
     I --> J["Step 5: Post-Filing Follow-Up Tracker (24h, 3-Day, 7-Day Nodal Compliance)"]
+
+    class A startNode;
+    class B,C,D stepNode;
+    class E,F,G,H gateNode;
+    class I,J legalNode;
 ```
 
 ---
@@ -59,6 +69,8 @@ Cybridge operates on a clean, modular, on-device architecture. Sensitive citizen
 
 ```mermaid
 flowchart TD
+    classDef uncolored fill:#FFFFFF,stroke:#57606A,stroke-width:1.5px,color:#24292F,font-weight:bold;
+
     subgraph S1 ["Stage 1: Citizen Interaction & Voice Ingestion"]
         A1["Android 15 Native UI (Jetpack Compose)"]
         A2["12 Indian Languages Voice Engine (STT / TTS)"]
@@ -86,6 +98,12 @@ flowchart TD
     S1 -->|"Extracted User Intent"| S2
     S2 -->|"Verified Case Facts"| S3
     S3 -->|"Citizen Verified Submission"| S4
+
+    class A1,A2,A3,B1,B2,B3,C1,C2,C3,D1,D2,D3 uncolored;
+    style S1 fill:#F6F8FA,stroke:#D0D7DE,stroke-width:1.5px,color:#24292F;
+    style S2 fill:#F6F8FA,stroke:#D0D7DE,stroke-width:1.5px,color:#24292F;
+    style S3 fill:#F6F8FA,stroke:#D0D7DE,stroke-width:1.5px,color:#24292F;
+    style S4 fill:#F6F8FA,stroke:#D0D7DE,stroke-width:1.5px,color:#24292F;
 ```
 
 ---
@@ -96,6 +114,10 @@ To guarantee absolute citizen safety and ethical AI operation, Cybridge enforces
 
 ```mermaid
 flowchart LR
+    classDef aiFill fill:#F0FDF4,stroke:#166534,stroke-width:2px,color:#166534,font-weight:bold;
+    classDef humanEnter fill:#FFF7ED,stroke:#EA580C,stroke-width:2px,color:#9A3412,font-weight:bold;
+    classDef victimLock fill:#EFF6FF,stroke:#082B5B,stroke-width:2px,color:#082B5B,font-weight:bold;
+
     subgraph G1 ["1. AI Auto-Fills (Safe Fields)"]
         direction TB
         F1["Official Category Dropdowns"]
@@ -120,7 +142,11 @@ flowchart LR
         V4["Official Token Generation"]
     end
 
-    G1 --> G2 --> G3
+    G1 ==> G2 ==> G3
+
+    class F1,F2,F3,F4 aiFill;
+    class H1,H2,H3,H4 humanEnter;
+    class V1,V2,V3,V4 victimLock;
 ```
 
 > **Core Safety Invariant**: Cybridge will **never** submit a government report on your behalf, will **never** attempt to bypass CAPTCHA, and will **never** inspect or store bank passwords or SMS OTPs.
