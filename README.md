@@ -17,7 +17,7 @@
 - **Official Live Website & APK Distribution**: **[cybridge.vijjadapremsaiofficial.workers.dev](https://cybridge.vijjadapremsaiofficial.workers.dev/)**
 - **GitHub Repository**: **[github.com/vijjada/cyber-victim-assistant](https://github.com/vijjada/cyber-victim-assistant)**
 - **Master Technical Specification**: [`CYBRIDGE_MASTER_HANDOVER_DOCUMENTATION.md`](CYBRIDGE_MASTER_HANDOVER_DOCUMENTATION.md)
-- **Official Pitch Deck (Bharat 5.0)**: [`bharat-hackathon/Cybridge_BuildWithBharat5.0.pptx`](bharat-hackathon/Cybridge_BuildWithBharat5.0.pptx)
+- **Official Pitch Deck (Bharat 5.0)**: [`bharat-hackathon/CYBRIDGE_Build_with_Bharat_5.0_body_text_enlarged.pptx`](bharat-hackathon/CYBRIDGE_Build_with_Bharat_5.0_body_text_enlarged.pptx)
 - **National Cybercrime Helpline**: Dial **1930** | Official Portal: **[cybercrime.gov.in](https://cybercrime.gov.in)**
 
 ---
