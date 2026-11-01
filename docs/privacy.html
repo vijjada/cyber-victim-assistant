@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | Cybridge (Cyber Victim Assistant)</title>
+  <meta name="description" content="Privacy Policy for Cybridge - on-device, local-first privacy commitments.">
+  <link rel="icon" type="image/png" href="assets/logo/app_logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .legal-content {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #FFFFFF;
+      padding: 40px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+    }
+    .legal-content h1 {
+      font-size: 32px;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+    .legal-date {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .legal-content h2 {
+      font-size: 20px;
+      color: var(--color-primary);
+      margin-top: 28px;
+      margin-bottom: 12px;
+    }
+    .legal-content p, .legal-content li {
+      font-size: 15px;
+      color: var(--color-text);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .legal-content ul {
+      margin-left: 20px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand">
+        <img src="assets/logo/app_logo.png" alt="Cybridge Official Logo" class="brand-logo" width="40" height="40">
+        <div class="brand-text-group">
+          <span class="brand-name">Cybridge</span>
+          <span class="brand-sub">Cyber Victim Assistant</span>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-secondary btn-sm">Back to Home</a>
+        <a href="index.html#download" class="btn btn-primary btn-sm">Download App</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="legal-content">
+      <h1>Privacy Policy</h1>
+      <div class="legal-date">Last Updated: November 1, 2026 | Effective Date: November 1, 2026</div>
+
+      <p>
+        Cybridge ("Cyber Victim Assistant", package <code>com.cybervictim.assistant</code>) is an open-source, on-device mobile utility built to assist citizens dealing with financial cyber fraud. We operate under a fundamental commitment: <strong>your data belongs exclusively to you and remains on your physical smartphone.</strong>
+      </p>
+
+      <h2>1. On-Device Local Processing</h2>
+      <p>
+        Cybridge is engineered as a local-first application. When you upload payment screenshots, bank debit transaction alerts, or email files:
+      </p>
+      <ul>
+        <li>Optical Character Recognition (OCR) is performed entirely on your device using on-device Google ML Kit models.</li>
+        <li>Raw images, screenshot bitmaps, and original SMS messages are never uploaded to our servers, third-party cloud AI vendors, or analytics platforms.</li>
+        <li>Only extracted text strings necessary for filling the complaint form are processed in local memory.</li>
+      </ul>
+
+      <h2>2. Device Permissions and Usage</h2>
+      <p>
+        Cybridge requests only permissions strictly necessary to assist with urgent cyber fraud reporting:
+      </p>
+      <ul>
+        <li><strong>SMS Read Permission (Optional):</strong> Used exclusively to search for official bank debit alerts (-HDFCBK, -SBINB, -ICICIB) to automatically extract transaction timestamps, 12-digit UTR numbers, and lost amounts with user consent.</li>
+        <li><strong>Storage / Media Access:</strong> Used exclusively to allow you to select payment receipts and export the generated Complaint Pack PDF.</li>
+        <li><strong>Microphone / Audio (Optional):</strong> Used exclusively to support the hands-free "Speak out" voice intake in 12 Indian languages using Android's native SpeechRecognizer. Audio streams are transcribed locally and never retained.</li>
+      </ul>
+
+      <h2>3. Data Storage and Hardware Encryption</h2>
+      <p>
+        All case facts, evidence items, and generated narratives are stored inside an encrypted Android Room SQLite database on your device's private storage sandbox. Sensitive tokens are encrypted using hardware-backed AES-256 GCM encryption via Android Keystore.
+      </p>
+
+      <h2>4. Zero Third-Party Advertising & Tracking</h2>
+      <p>
+        Cybridge contains zero advertising SDKs, zero marketing tracking pixels, and zero third-party commercial analytics. We do not monetize your data in any manner.
+      </p>
+
+      <h2>5. Statutory Disclaimer</h2>
+      <p>
+        Cybridge is an independent assistance tool and is not affiliated with or endorsed by the Government of India, I4C, or the Ministry of Home Affairs. It helps you prepare information; you submit your complaint yourself on the official portal (cybercrime.gov.in) or by calling 1930. This is not legal advice.
+      </p>
+
+      <h2>6. Contact</h2>
+      <p>
+        For security questions, source code audits, or privacy inquiries, contact the lead engineer at: <code>vijjadapremsaiofficial@gmail.com</code>.
+      </p>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 Cybridge Project. Open-source under MIT License.</div>
+        <div><a href="index.html" style="color: #93C5FD;">Return to Main Website</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
