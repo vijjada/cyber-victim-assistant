@@ -40,25 +40,15 @@ However, non-technical victims face debilitating friction:
 
 ```mermaid
 flowchart TD
-    classDef startNode fill:#EFF6FF,stroke:#082B5B,stroke-width:2px,color:#082B5B,font-weight:bold;
-    classDef stepNode fill:#F0FDF4,stroke:#166534,stroke-width:2px,color:#166534,font-weight:bold;
-    classDef gateNode fill:#FFF7ED,stroke:#EA580C,stroke-width:2px,color:#9A3412,font-weight:bold;
-    classDef legalNode fill:#F8FAFC,stroke:#1E293B,stroke-width:2px,color:#0F172A,font-weight:bold;
-
     A["Victim Incident (Golden Hour: 2-4 Hours)"] --> B["Step 1: Intake (Text / Voice 'Speak out' in 12 Languages)"]
     B --> C["Step 2: On-Device Fact Mining (Google ML Kit OCR & Bank Debit SMS)"]
-    C --> D["Step 3: Live Eye Pre-Fill (cybercrime.gov.in DOM Highlighting)"]
+    C --> D["Step 3: Live Eye Pre-Fill (cybercrime.gov.in DOM Highlighting #00C853)"]
     D --> E{"ActionPolicy Gating Machine"}
     E -->|"AI Auto-Fills"| F["Safe Fields (MHA Categories, Narrative, 12-digit UTR, Dates)"]
     E -->|"Human Only"| G["CAPTCHA, SMS OTPs, Net Banking Passwords"]
     E -->|"Victim Lock"| H["Review Pre-filled Form & Personally Tap Submit"]
     H --> I["Step 4: Statutory Legal Pack (Sec 91 CrPC Bank Freeze & IT Act 66D PDF)"]
     I --> J["Step 5: Post-Filing Follow-Up Tracker (24h, 3-Day, 7-Day Nodal Compliance)"]
-
-    class A startNode;
-    class B,C,D stepNode;
-    class E,F,G,H gateNode;
-    class I,J legalNode;
 ```
 
 ---
