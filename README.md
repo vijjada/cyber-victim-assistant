@@ -59,41 +59,39 @@ Cybridge operates on a clean, modular, on-device architecture. Sensitive citizen
 
 ```mermaid
 flowchart TD
-    classDef uncolored fill:#FFFFFF,stroke:#57606A,stroke-width:1.5px,color:#24292F,font-weight:bold;
+    classDef uncolored fill:#FFFFFF,stroke:#57606A,stroke-width:1.5px,color:#24292F;
 
-    subgraph S1 ["Stage 1: Citizen Interaction & Voice Ingestion"]
-        A1["Android 15 Native UI (Jetpack Compose)"]
-        A2["12 Indian Languages Voice Engine (STT / TTS)"]
-        A3["Hands-Free 'Speak out' Oral Intake"]
-    end
+    A["Citizen Interface (Android 15 UI & 12-Language Voice STT)"] --> B["Intake & Triage (Deterministic MHA Category Decision Tree)"]
+    
+    B --> C["On-Device Fact Mining Engine"]
+    C --> C1["Google ML Kit Offline OCR (Receipts, 12-Digit UTR, VPAs)"]
+    C --> C2["Bank Debit SMS Parser (-HDFCBK, -SBINB, -ICICIB)"]
+    C --> C3["Phishing Analyzer (RFC 822 & SPF/DKIM/DMARC)"]
+    
+    C1 --> D[("Encrypted Local Vault (Room SQLite & Keystore AES-256)")]
+    C2 --> D
+    C3 --> D
+    
+    D --> E["Live Companion Engine (WebView DOM Automation)"]
+    E --> E1["Live Eye Visual Highlighting (Verified DOM Outlines)"]
+    E --> E2{"ActionPolicy Safety Machine"}
+    
+    E2 -->|"Safe Fields Only"| E3["Pre-fills Narrative, Dates & UTRs"]
+    E2 -->|"Zero-Touch Invariant"| E4["Human Enters CAPTCHA & Passwords"]
+    
+    E3 --> F["Citizen Review & Personal Final Submit"]
+    E4 --> F
+    
+    F --> G["Statutory Legal Pack Drafter"]
+    G --> G1["Section 91 CrPC Bank Nodal Freeze Notice"]
+    G --> G2["Formal Police Complaint (IT Act 66D & BNS 318)"]
+    G --> G3["Deterministic Complaint PDF (< 8MB)"]
+    
+    G1 --> H["Post-Filing Follow-Up Tracker (24h, 3-Day, 7-Day Compliance)"]
+    G2 --> H
+    G3 --> H
 
-    subgraph S2 ["Stage 2: On-Device Intelligence & Privacy Core"]
-        B1["Google ML Kit Offline OCR (Receipts/VPAs)"]
-        B2["Bank Debit SMS Mining (-HDFCBK, -SBINB)"]
-        B3["Phishing Analyzer (RFC 822 / SPF / DKIM)"]
-    end
-
-    subgraph S3 ["Stage 3: Visual Trust & Companion Automation"]
-        C1["Live Eye DOM Highlighting (Verified Outlines)"]
-        C2["ActionPolicy Safety Machine (AI Never Submits)"]
-        C3["Official cybercrime.gov.in Form Mirror"]
-    end
-
-    subgraph S4 ["Stage 4: Statutory Legal Action & Fund Freezing"]
-        D1["Section 91 CrPC Bank Nodal Freeze Notice"]
-        D2["Police Complaint (IT Act 66D & BNS 318)"]
-        D3["Deterministic Complaint Pack PDF (< 8MB)"]
-    end
-
-    S1 -->|"Extracted User Intent"| S2
-    S2 -->|"Verified Case Facts"| S3
-    S3 -->|"Citizen Verified Submission"| S4
-
-    class A1,A2,A3,B1,B2,B3,C1,C2,C3,D1,D2,D3 uncolored;
-    style S1 fill:#F6F8FA,stroke:#D0D7DE,stroke-width:1.5px,color:#24292F;
-    style S2 fill:#F6F8FA,stroke:#D0D7DE,stroke-width:1.5px,color:#24292F;
-    style S3 fill:#F6F8FA,stroke:#D0D7DE,stroke-width:1.5px,color:#24292F;
-    style S4 fill:#F6F8FA,stroke:#D0D7DE,stroke-width:1.5px,color:#24292F;
+    class A,B,C,C1,C2,C3,D,E,E1,E2,E3,E4,F,G,G1,G2,G3,H uncolored;
 ```
 
 ---
