@@ -33,3 +33,4 @@ build/
 .qoder/
 .DS_Store
 Thumbs.db
+*.zip

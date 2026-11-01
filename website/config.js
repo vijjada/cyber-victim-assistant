@@ -18,6 +18,7 @@ const CYBRIDGE_CONFIG = {
   sha256Checksum: "dee1d290f9366e28512e2cb188fbaa18becf90b7eb1d69252bf5f6ef55d5a664",
   
   // External Official References
+  liveWebsiteUrl: "https://cybridge.vijjadapremsaiofficial.workers.dev/",
   helplineNumber: "1930",
   helplineTel: "tel:1930",
   portalUrl: "https://cybercrime.gov.in",
